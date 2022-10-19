@@ -1,6 +1,8 @@
-package com.fhdw.loeppe.data;
+package com.fhdw.loeppe.dto;
 
 import com.fhdw.loeppe.OrderStatus;
+import com.fhdw.loeppe.dto.Artikel;
+import com.fhdw.loeppe.dto.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

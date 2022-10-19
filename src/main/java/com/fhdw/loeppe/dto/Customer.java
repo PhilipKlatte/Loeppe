@@ -1,4 +1,4 @@
-package com.fhdw.loeppe.data;
+package com.fhdw.loeppe.dto;
 
 import com.fhdw.loeppe.AbstractEntity;
 import lombok.AllArgsConstructor;

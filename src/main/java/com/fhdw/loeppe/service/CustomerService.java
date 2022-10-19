@@ -1,6 +1,6 @@
 package com.fhdw.loeppe.service;
 
-import com.fhdw.loeppe.data.Customer;
+import com.fhdw.loeppe.dto.Customer;
 import com.fhdw.loeppe.repo.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

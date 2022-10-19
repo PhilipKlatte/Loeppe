@@ -1,6 +1,6 @@
 package com.fhdw.loeppe.views.main;
 
-import com.fhdw.loeppe.data.Customer;
+import com.fhdw.loeppe.dto.Customer;
 import com.fhdw.loeppe.service.CustomerService;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;

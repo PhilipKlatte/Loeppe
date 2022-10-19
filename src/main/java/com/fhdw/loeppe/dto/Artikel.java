@@ -1,4 +1,4 @@
-package com.fhdw.loeppe.data;
+package com.fhdw.loeppe.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
