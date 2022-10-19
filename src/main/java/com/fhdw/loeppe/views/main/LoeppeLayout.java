@@ -18,10 +18,13 @@ public class LoeppeLayout extends AppLayout {
     private void createHeader() {
         Image img = new Image("images/Logo_gut.png", "loeppe logo");
         img.setHeight("50px");
+        img.getStyle().set("margin", "10px");
+        DrawerToggle drawerToggle = new DrawerToggle();
+        drawerToggle.getStyle().set("margin", "0");
 
         HorizontalLayout header = new HorizontalLayout(
                 img,
-                new DrawerToggle()
+                drawerToggle
         );
 
         header.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
