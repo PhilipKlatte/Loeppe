@@ -16,13 +16,12 @@ public class LoeppeLayout extends AppLayout {
     }
 
     private void createHeader() {
-        Image img = new Image("Logo_gut.png", "loeppe logo");
+        Image img = new Image("images/Logo_gut.png", "loeppe logo");
         img.setHeight("50px");
 
         HorizontalLayout header = new HorizontalLayout(
                 img,
                 new DrawerToggle()
-
         );
 
         header.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
@@ -37,7 +36,8 @@ public class LoeppeLayout extends AppLayout {
 
         addToDrawer(new VerticalLayout(
                 startLink,
-                new RouterLink("Kunden", CustomerView.class)));
+                new RouterLink("Kunden", CustomerListView.class),
+                new RouterLink("Artikel", ItemListView.class)));
     }
 
 }
