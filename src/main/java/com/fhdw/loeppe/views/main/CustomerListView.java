@@ -1,5 +1,6 @@
 package com.fhdw.loeppe.views.main;
 
+import com.fhdw.loeppe.Entity.CustomerEntity;
 import com.fhdw.loeppe.dto.Customer;
 import com.fhdw.loeppe.service.CustomerService;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -9,6 +10,8 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+
+import java.util.stream.Stream;
 
 @PageTitle("Loeppe | Kunden")
 @Route(value = "customer", layout = LoeppeLayout.class)
@@ -23,7 +26,7 @@ public class CustomerListView extends VerticalLayout {
 
     public CustomerListView(CustomerService service) {
         this.service = service;
-        service.save(new Customer("Harald", "Bernd", "Coole-Straße"));
+        service.save(new Customer(1,"Harald", "Bernd", "Coole-Straße"));
 
         H2 headline = new H2("Kundenliste");
         headline.getStyle().set("margin-top", "10px");
@@ -55,7 +58,7 @@ public class CustomerListView extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(service.getAll());
+        grid.setItems( service.getAll());
     }
 
 }
