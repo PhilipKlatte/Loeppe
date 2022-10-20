@@ -1,8 +1,6 @@
 package com.fhdw.loeppe.dto;
 
-import com.fhdw.loeppe.OrderStatus;
-import com.fhdw.loeppe.dto.Artikel;
-import com.fhdw.loeppe.dto.Customer;
+import com.fhdw.loeppe.util.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,6 +12,6 @@ public class Order {
     private Integer id;
     private Customer customer;
     private List<Artikel> artikels;
-    private Boolean bezahlt;
+    private Boolean paid;
     private OrderStatus orderStatus;
 }
