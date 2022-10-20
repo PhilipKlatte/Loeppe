@@ -50,7 +50,7 @@ public class CustomerService {
         List<Customer> customers = new ArrayList<>();
         mapper.map(entities, customers);
 
-        return customers; 
+        return customers;
     }
 
     public void delete(Integer id) {
