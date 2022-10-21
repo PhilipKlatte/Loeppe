@@ -3,6 +3,7 @@ package com.fhdw.loeppe.views.main;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
@@ -18,6 +19,7 @@ public class MainView extends VerticalLayout {
     private final TextField userName;
 
     public MainView() {
+        Image flo = new Image("images/Flo.png", "Flo");
         welcome = new H1("Willkommen in der Loeppe Auftagsverwaltung");
         user = new H2("Angemeldet als:");
         userId = new TextField();
@@ -25,7 +27,7 @@ public class MainView extends VerticalLayout {
 
         configureTextFields();
 
-        add(welcome, user, createLoggedInAs());
+        add(flo, welcome, user, createLoggedInAs());
     }
 
     private void configureTextFields() {
