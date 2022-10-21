@@ -20,8 +20,15 @@ public class MainView extends VerticalLayout {
 
     public MainView() {
         Image flo = new Image("images/Flo.png", "Flo");
+        flo.getStyle().set("width", "100%")
+                      .set("height", "600px");
+
+
         welcome = new H1("Willkommen in der Loeppe Auftagsverwaltung");
+        welcome.getStyle().set("margin-top", "10px")
+                          .set("margin-bottom", "10px");
         user = new H2("Angemeldet als:");
+        user.getStyle().set("margin-top", "10px");
         userId = new TextField();
         userName = new TextField();
 
