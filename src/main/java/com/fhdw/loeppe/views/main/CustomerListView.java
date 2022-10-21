@@ -26,7 +26,7 @@ public class CustomerListView extends VerticalLayout {
 
     public CustomerListView(CustomerService service) {
         this.service = service;
-        service.save(new Customer(1,"Harald", "Bernd", "Coole-Straße"));
+        service.createCustomer(new Customer(1,"Harald", "Bernd", "Coole-Straße"));
 
         H2 headline = new H2("Kundenliste");
         headline.getStyle().set("margin-top", "10px");
@@ -58,7 +58,7 @@ public class CustomerListView extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems( service.getAll());
+        grid.setItems( service.readAllCustomer());
     }
 
 }

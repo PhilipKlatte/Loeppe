@@ -23,7 +23,7 @@ public class CustomerService {
         this.mapper = mapper;
     }
 
-    public void save(Customer customer){
+    public void createCustomer(Customer customer){
         CustomerEntity entity = new CustomerEntity();
         mapper.map(customer, entity);
 
@@ -37,7 +37,7 @@ public class CustomerService {
         repository.saveAll(entitys);
     }*/
 
-    public Optional<Customer> getCustomer(Integer id) {
+    public Optional<Customer> readCustomer(Integer id) {
         Optional<CustomerEntity> entity = repository.findById(id);
         Optional<Customer> customer = Optional.of(new Customer());
         mapper.map(entity, customer);
@@ -45,7 +45,7 @@ public class CustomerService {
         return customer;
     }
 
-    public List<Customer> getAllCustomer(){
+    public List<Customer> readAllCustomer(){
         List<CustomerEntity> entities = repository.findAll();
         List<Customer> customers = new ArrayList<>();
         mapper.map(entities, customers);
@@ -53,12 +53,17 @@ public class CustomerService {
         return customers;
     }
 
-    public void delete(Integer id) {
+    /*public void updateCustomer(Customer customer) {
+        CustomerEntity entity = repository.findById(customer.getId());
+        repository.
+    }*/
+
+    public void deleteCustomer(Integer id) {
         repository.deleteById(id);
     }
 
     //Eine Delete all klingt riskant xD
-    public void deleteAll() {
+    public void deleteAllCustomer() {
         repository.deleteAll();
     }
 }
