@@ -1,5 +1,6 @@
 package com.fhdw.loeppe.views.main;
 
+import com.fhdw.loeppe.service.TestService;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
@@ -18,6 +19,8 @@ public class MainView extends VerticalLayout {
     private final TextField userId;
     private final TextField userName;
 
+    private final TestView testView = new TestView(new TestService());
+
     public MainView() {
         Image flo = new Image("images/Flo.png", "Flo");
         flo.getStyle().set("width", "100%")
@@ -34,7 +37,7 @@ public class MainView extends VerticalLayout {
 
         configureTextFields();
 
-        add(flo, welcome, user, createLoggedInAs());
+        add(flo, welcome, user, createLoggedInAs(), testView);
     }
 
     private void configureTextFields() {
