@@ -1,43 +1,67 @@
 package com.fhdw.loeppe.service;
 
+import com.fhdw.loeppe.Entity.CustomerEntity;
 import com.fhdw.loeppe.dto.Customer;
 import com.fhdw.loeppe.repo.CustomerRepository;
+import com.fhdw.loeppe.util.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class CustomerService {
     
     private final CustomerRepository repository;
+    private final Mapper mapper;
 
     @Autowired
-    public CustomerService(CustomerRepository repository){
+    public CustomerService(CustomerRepository repository, Mapper mapper){
         this.repository = repository;
+        this.mapper = mapper;
     }
 
-    public Customer save(Customer customer){
-        return repository.save(customer);
+    public void createCustomer(Customer customer){
+        CustomerEntity entity = new CustomerEntity();
+        mapper.map(customer, entity);
+        repository.saveAndFlush(entity);
     }
 
-    public List<Customer> saveAll(List<Customer> customers){
-        return repository.saveAll(customers);
+    public void saveAllCustomer(List<Customer> customers){
+        List<CustomerEntity> entitys = new ArrayList<>();
+        mapper.map(customers, entitys);
+        repository.saveAll(entitys);
     }
 
-    public Optional<Customer> get(UUID id) {
-        return repository.findById(id);
+    public Optional<Customer> readCustomer(Integer id) {
+        Optional<CustomerEntity> entity = repository.findById(id);
+        Optional<Customer> customer = Optional.of(new Customer());
+        mapper.map(entity, customer);
+
+        return customer;
     }
 
-    public List<Customer> getAll(){ return repository.findAll(); }
+    public List<Customer> readAllCustomer(){
+        List<CustomerEntity> entities = repository.findAll();
+        List<Customer> customers = new ArrayList<>();
+        mapper.map(entities, customers);
 
-    public void delete(UUID id) {
+        return customers;
+    }
+
+    public void updateCustomer(Customer customer) {
+        CustomerEntity entity = new CustomerEntity();
+        mapper.map(customer, entity);
+        repository.saveAndFlush(entity);
+    }
+
+    public void deleteCustomer(Integer id) {
         repository.deleteById(id);
     }
 
-    public void deleteAll() {
+    public void deleteAllCustomer() {
         repository.deleteAll();
     }
 }
