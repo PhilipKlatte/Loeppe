@@ -26,16 +26,14 @@ public class CustomerService {
     public void createCustomer(Customer customer){
         CustomerEntity entity = new CustomerEntity();
         mapper.map(customer, entity);
-
         repository.saveAndFlush(entity);
     }
     //Brauchen wir eine save All?
-    /*public void saveAll(List<Customer> customers){
-        List<CustomerEntity> entitys = ;
+    public void saveAllCustomer(List<Customer> customers){
+        List<CustomerEntity> entitys = new ArrayList<>();
         mapper.map(customers, entitys);
-
         repository.saveAll(entitys);
-    }*/
+    }
 
     public Optional<Customer> readCustomer(Integer id) {
         Optional<CustomerEntity> entity = repository.findById(id);
@@ -53,20 +51,19 @@ public class CustomerService {
         return customers;
     }
 
-    /*public void updateCustomer(Customer customer) {
-        CustomerEntity entity = repository.findById(customer.getId());
-        repository.
-    }*/
+    public void updateCustomer(Customer customer) {
+        CustomerEntity entity = new CustomerEntity();
+        mapper.map(customer, entity);
+        repository.saveAndFlush(entity);
+    }
 
     public void deleteCustomer(Integer id) {
         repository.deleteById(id);
     }
 
-    //Eine Delete all klingt riskant xD
     public void deleteAllCustomer() {
         repository.deleteAll();
     }
 }
 
 //TODO: ServiceTest
-//TODO: Mapper einbauen um zwischen Entity und Dto zu wechseln um nur Objekte raus zu geben
