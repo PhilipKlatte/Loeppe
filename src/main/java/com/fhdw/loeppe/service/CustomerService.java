@@ -28,7 +28,7 @@ public class CustomerService {
         mapper.map(customer, entity);
         repository.saveAndFlush(entity);
     }
-    //Brauchen wir eine save All?
+
     public void saveAllCustomer(List<Customer> customers){
         List<CustomerEntity> entitys = new ArrayList<>();
         mapper.map(customers, entitys);
