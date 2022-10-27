@@ -29,7 +29,7 @@ public class CustomerService {
         repository.saveAndFlush(entity);
     }
 
-    public void saveAllCustomer(List<Customer> customers){
+    public void saveAllCustomers(List<Customer> customers){
         List<CustomerEntity> entitys = new ArrayList<>();
         mapper.map(customers, entitys);
         repository.saveAll(entitys);
@@ -51,16 +51,14 @@ public class CustomerService {
     }
 
     public void updateCustomer(Customer customer) {
-        CustomerEntity entity = new CustomerEntity();
-        mapper.map(customer, entity);
-        repository.saveAndFlush(entity);
+        createCustomer(customer);
     }
 
     public void deleteCustomer(Integer id) {
         repository.deleteById(id);
     }
 
-    public void deleteAllCustomer() {
+    public void deleteAllCustomers() {
         repository.deleteAll();
     }
 }

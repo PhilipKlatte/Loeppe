@@ -42,5 +42,4 @@ public class LoeppeLayout extends AppLayout {
                 new RouterLink("Kunden", CustomerListView.class),
                 new RouterLink("Artikel", ItemListView.class)));
     }
-
 }

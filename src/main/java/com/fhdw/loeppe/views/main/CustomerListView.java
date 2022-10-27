@@ -58,8 +58,6 @@ public class CustomerListView extends VerticalLayout {
     }
 
     private void updateList() {
-        service.createCustomer(new Customer(1,"Harald", "Bernd", "Coole-Straße"));
-        grid.setItems( service.readAllCustomer());
+        grid.setItems(service.readAllCustomer());
     }
-
 }

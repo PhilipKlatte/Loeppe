@@ -9,9 +9,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class Order {
+
     private Integer id;
     private Customer customer;
-    private List<Artikel> artikels;
+    private List<Article> articles;
     private Boolean paid;
     private OrderStatus orderStatus;
 }

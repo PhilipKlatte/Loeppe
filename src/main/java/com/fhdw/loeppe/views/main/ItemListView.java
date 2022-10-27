@@ -47,6 +47,4 @@ public class ItemListView extends VerticalLayout {
         formLayout.addFormItem(itemPrice, "Preis");
         return formLayout;
     }
-
-
 }

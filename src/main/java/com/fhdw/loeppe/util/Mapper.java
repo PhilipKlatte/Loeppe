@@ -7,9 +7,7 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class Mapper {
@@ -33,11 +31,11 @@ public class Mapper {
                 .collect(Collectors.toList());
     }*/
     
-    public ArrayList<Customer> mapAll(List<CustomerEntity> entitys) {
+    public ArrayList<Customer> mapAll(List<CustomerEntity> entities) {
         ArrayList<Customer> customers = new ArrayList<>();
         Customer customer = new Customer();
 
-        for (CustomerEntity entity : entitys) {
+        for (CustomerEntity entity : entities) {
             map(entity, customer);
             customers.add(customer);
         }

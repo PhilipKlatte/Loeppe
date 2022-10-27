@@ -10,6 +10,7 @@ import java.security.PrivateKey;
 @NoArgsConstructor
 @Data
 public class Customer {
+
     private Integer id;
     private String firstname;
     private String lastname;
