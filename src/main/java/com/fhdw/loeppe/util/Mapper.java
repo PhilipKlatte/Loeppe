@@ -1,9 +1,12 @@
 package com.fhdw.loeppe.util;
 
+import com.fhdw.loeppe.Entity.CustomerEntity;
+import com.fhdw.loeppe.dto.Customer;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,9 +27,21 @@ public class Mapper {
         return modelMapper.map(entity, outClass);
     }
 
-    public <D, T> List<D> mapAll(final Collection<T> entityList, Class<D> outClass) {
-        return entityList.stream()
+    /*public <D, T> List<D> mapAll(final Collection<T> list, Class<D> outClass) {
+        return list.stream()
                 .map(entity ->map(entity, outClass))
                 .collect(Collectors.toList());
+    }*/
+    
+    public ArrayList<Customer> mapAll(List<CustomerEntity> entitys) {
+        ArrayList<Customer> customers = new ArrayList<>();
+        Customer customer = new Customer();
+
+        for (CustomerEntity entity : entitys) {
+            map(entity, customer);
+            customers.add(customer);
+        }
+
+        return customers;
     }
 }

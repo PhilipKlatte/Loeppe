@@ -54,10 +54,11 @@ public class CustomerListView extends VerticalLayout {
 
     private void configureGrid() {
         //grid.setSizeFull();
-        grid.setColumns("vorname", "nachname", "adresse");
+        grid.setColumns("id", "firstname", "lastname", "address");
     }
 
     private void updateList() {
+        service.createCustomer(new Customer(1,"Harald", "Bernd", "Coole-Straße"));
         grid.setItems( service.readAllCustomer());
     }
 

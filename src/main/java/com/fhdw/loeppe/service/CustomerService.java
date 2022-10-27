@@ -45,8 +45,7 @@ public class CustomerService {
 
     public List<Customer> readAllCustomer(){
         List<CustomerEntity> entities = repository.findAll();
-        List<Customer> customers = new ArrayList<>();
-        mapper.map(entities, customers);
+        ArrayList<Customer> customers = mapper.mapAll(entities);
 
         return customers;
     }
