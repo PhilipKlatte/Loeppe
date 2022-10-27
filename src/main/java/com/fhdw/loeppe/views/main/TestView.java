@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class TestView extends VerticalLayout {
 
-    @Autowired    public TestView(TestService testService){
+    @Autowired
+    public TestView(TestService testService){
         Button button = new Button("test");
         button.addClickListener(ev -> testService.test());
 
