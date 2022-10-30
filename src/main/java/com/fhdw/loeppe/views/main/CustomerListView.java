@@ -1,6 +1,5 @@
 package com.fhdw.loeppe.views.main;
 
-import com.fhdw.loeppe.Entity.CustomerEntity;
 import com.fhdw.loeppe.dto.Customer;
 import com.fhdw.loeppe.service.CustomerService;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -11,8 +10,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-import java.util.stream.Stream;
-
 @PageTitle("Loeppe | Kunden")
 @Route(value = "customer", layout = LoeppeLayout.class)
 public class CustomerListView extends VerticalLayout {
@@ -22,7 +19,7 @@ public class CustomerListView extends VerticalLayout {
     private final TextField custLastName;
     private final TextField custFirstName;
     private final TextField custPhone;
-    CustomerService service;
+    private final CustomerService service;
 
     public CustomerListView(CustomerService service) {
         this.service = service;

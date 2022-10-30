@@ -1,10 +1,10 @@
 package com.fhdw.loeppe.service;
 
-import com.fhdw.loeppe.Entity.CustomerEntity;
+import com.fhdw.loeppe.entity.CustomerEntity;
 import com.fhdw.loeppe.dto.Customer;
 import com.fhdw.loeppe.repo.CustomerRepository;
 import com.fhdw.loeppe.util.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,16 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CustomerService {
     
     private final CustomerRepository repository;
     private final Mapper mapper;
-
-    @Autowired
-    public CustomerService(CustomerRepository repository, Mapper mapper){
-        this.repository = repository;
-        this.mapper = mapper;
-    }
 
     public void createCustomer(Customer customer){
         CustomerEntity entity = new CustomerEntity();

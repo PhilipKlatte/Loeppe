@@ -1,9 +1,7 @@
-package com.fhdw.loeppe.Entity;
+package com.fhdw.loeppe.entity;
 
 import lombok.*;
-import org.springframework.context.annotation.Primary;
 
-import javax.annotation.processing.Generated;
 import javax.persistence.*;
 
 @Table(name = "CUSTOMER")

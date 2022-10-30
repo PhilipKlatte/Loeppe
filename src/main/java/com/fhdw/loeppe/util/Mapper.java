@@ -1,6 +1,6 @@
 package com.fhdw.loeppe.util;
 
-import com.fhdw.loeppe.Entity.CustomerEntity;
+import com.fhdw.loeppe.entity.CustomerEntity;
 import com.fhdw.loeppe.dto.Customer;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
