@@ -1,7 +1,7 @@
 package com.fhdw.loeppe.util;
 
-import com.fhdw.loeppe.entity.CustomerEntity;
-import com.fhdw.loeppe.dto.Customer;
+import com.fhdw.loeppe.entity.OrderEntity;
+import com.fhdw.loeppe.dto.Order;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class Mapper {
+public class OrderMapper {
     private final ModelMapper modelMapper;
 
-    public Mapper() {
+    public OrderMapper() {
         modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
     }
@@ -30,16 +30,16 @@ public class Mapper {
                 .map(entity ->map(entity, outClass))
                 .collect(Collectors.toList());
     }*/
-    
-    public ArrayList<Customer> mapAll(List<CustomerEntity> entities) {
-        ArrayList<Customer> customers = new ArrayList<>();
-        Customer customer = new Customer();
 
-        for (CustomerEntity entity : entities) {
-            map(entity, customer);
-            customers.add(customer);
+    public ArrayList<Order> mapAll(List<OrderEntity> entities) {
+        ArrayList<Order> orders = new ArrayList<>();
+        Order order = new Order();
+
+        for (OrderEntity entity : entities) {
+            map(entity, order);
+            orders.add(order);
         }
 
-        return customers;
+        return orders;
     }
 }
