@@ -21,10 +21,10 @@ public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
-    private CustomerEntity customerEntity;
-
     @OneToMany
     private List<ArticleEntity> articles; //TODO: Mapping
     private OrderStatus orderStatus;
+
+    @OneToOne
+    private CustomerEntity customerEntity;
 }

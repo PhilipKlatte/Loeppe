@@ -40,6 +40,7 @@ public class LoeppeLayout extends AppLayout {
         addToDrawer(new VerticalLayout(
                 startLink,
                 new RouterLink("Kunden", CustomerListView.class),
-                new RouterLink("Artikel", ItemListView.class)));
+                new RouterLink("Artikel", ItemListView.class),
+                new RouterLink("Aufträge", OrderView.class)));
     }
 }

@@ -14,8 +14,6 @@ import com.vaadin.flow.router.Route;
 @Route(value = "", layout = LoeppeLayout.class)
 public class MainView extends VerticalLayout {
 
-    private final H1 welcome;
-    private final H2 user;
     private final TextField userId;
     private final TextField userName;
 
@@ -23,14 +21,12 @@ public class MainView extends VerticalLayout {
 
     public MainView() {
         Image flo = new Image("images/Flo.png", "Flo");
-        flo.getStyle().set("width", "100%")
-                      .set("height", "600px");
+        flo.getStyle().set("margin", "auto");
 
-
-        welcome = new H1("Willkommen in der Loeppe Auftagsverwaltung");
+        H1 welcome = new H1("Willkommen in der Loeppe Auftagsverwaltung");
         welcome.getStyle().set("margin-top", "10px")
                           .set("margin-bottom", "10px");
-        user = new H2("Angemeldet als:");
+        H2 user = new H2("Angemeldet als:");
         user.getStyle().set("margin-top", "10px");
         userId = new TextField();
         userName = new TextField();

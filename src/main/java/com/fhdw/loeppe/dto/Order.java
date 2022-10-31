@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class Order {
 
     private Integer id;
-    private Customer customer;
     private Boolean paid;
     private OrderStatus orderStatus;
+    private Customer customer;
 }
