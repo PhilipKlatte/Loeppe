@@ -1,5 +1,6 @@
 package com.fhdw.loeppe.entity;
 
+import com.fhdw.loeppe.util.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,8 +29,8 @@ public class OrderEntity {
     )
     private List<ArticleEntity> articles;
 
-    //private OrderStatus orderStatus;
+    private OrderStatus orderStatus;
 
-    //@OneToOne
-    //private CustomerEntity customerEntity;
+    @OneToOne
+    private CustomerEntity customerEntity;
 }
