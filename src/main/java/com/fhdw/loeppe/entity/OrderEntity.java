@@ -1,6 +1,5 @@
 package com.fhdw.loeppe.entity;
 
-import com.fhdw.loeppe.util.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
-@Table(name = "ORDER")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,12 +17,19 @@ public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "ID")
+    private long id;
 
-    @OneToMany
-    private List<ArticleEntity> articles; //TODO: Mapping
-    private OrderStatus orderStatus;
+    @ManyToMany
+    @JoinTable(
+            name = "ORDERS_ARTICLES",
+            joinColumns = @JoinColumn(name = "ORD_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "ART_ID", referencedColumnName = "ID")
+    )
+    private List<ArticleEntity> articles;
 
-    @OneToOne
-    private CustomerEntity customerEntity;
+    //private OrderStatus orderStatus;
+
+    //@OneToOne
+    //private CustomerEntity customerEntity;
 }

@@ -30,7 +30,7 @@ public class CustomerService {
         repository.saveAll(entitys);
     }
 
-    public Optional<Customer> readCustomer(Integer id) {
+    public Optional<Customer> readCustomer(long id) {
         Optional<CustomerEntity> entity = repository.findById(id);
         Optional<Customer> customer = Optional.of(new Customer());
         customerMapper.map(entity, customer);
@@ -49,7 +49,7 @@ public class CustomerService {
         createCustomer(customer);
     }
 
-    public void deleteCustomer(Integer id) {
+    public void deleteCustomer(long id) {
         repository.deleteById(id);
     }
 

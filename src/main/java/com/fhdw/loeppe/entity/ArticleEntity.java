@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Table(name = "ARTICLE")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,7 +13,8 @@ public class ArticleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "ID")
+    private long id;
 
     private String name;
     private String description;

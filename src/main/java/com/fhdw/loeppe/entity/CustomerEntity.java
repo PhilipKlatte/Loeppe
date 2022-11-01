@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Table(name = "CUSTOMER")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,7 +13,7 @@ public class CustomerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private long id;
 
     private String firstname;
     private String lastname;

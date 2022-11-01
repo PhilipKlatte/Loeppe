@@ -30,7 +30,7 @@ public class OrderService {
         repository.saveAll(entitys);
     }
 
-    public Optional<Order> readOrder(Integer id) {
+    public Optional<Order> readOrder(long id) {
         Optional<OrderEntity> entity = repository.findById(id);
         Optional<Order> order = Optional.of(new Order());
         orderMapper.map(entity, order);
@@ -49,7 +49,7 @@ public class OrderService {
         createOrder(order);
     }
 
-    public void deleteOrder(Integer id) {
+    public void deleteOrder(long id) {
         repository.deleteById(id);
     }
 

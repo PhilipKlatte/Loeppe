@@ -30,7 +30,7 @@ public class ArticleService {
         repository.saveAll(entitys);
     }
 
-    public Optional<Article> readArticle(Integer id) {
+    public Optional<Article> readArticle(long id) {
         Optional<ArticleEntity> entity = repository.findById(id);
         Optional<Article> article = Optional.of(new Article());
         articleMapper.map(entity, article);
@@ -49,7 +49,7 @@ public class ArticleService {
         createArticle(article);
     }
 
-    public void deleteArticle(Integer id) {
+    public void deleteArticle(long id) {
         repository.deleteById(id);
     }
 

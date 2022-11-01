@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class Order {
 
-    private Integer id;
+    private long id;
     private Boolean paid;
     private OrderStatus orderStatus;
     private Customer customer;
