@@ -1,20 +1,16 @@
 package com.fhdw.loeppe.dto;
 
-import com.fhdw.loeppe.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import javax.persistence.Entity;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
-@Entity
+@NoArgsConstructor
 @Data
-public class Customer extends AbstractEntity {
-    private String vorname;
-    private String nachname;
-    private String adresse;
+public class Customer {
 
-    public Customer() {
-
-    }
+    private long id;
+    private String firstname;
+    private String lastname;
+    private String address;
 }

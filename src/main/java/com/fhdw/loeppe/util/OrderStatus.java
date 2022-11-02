@@ -1,4 +1,4 @@
-package com.fhdw.loeppe;
+package com.fhdw.loeppe.util;
 
 public enum OrderStatus {
     NOTPAID,
