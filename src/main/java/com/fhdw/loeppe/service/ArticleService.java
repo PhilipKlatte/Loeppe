@@ -18,7 +18,7 @@ public class ArticleService {
     private final ArticleRepository repository;
     private final ArticleMapper articleMapper;
 
-    public void createArticle(Article article){
+    public void saveArticle(Article article){
         ArticleEntity entity = new ArticleEntity();
         articleMapper.map(article, entity);
         repository.saveAndFlush(entity);
@@ -30,7 +30,7 @@ public class ArticleService {
         repository.saveAll(entitys);
     }
 
-    public Optional<Article> readArticle(long id) {
+    public Optional<Article> getArticle(long id) {
         Optional<ArticleEntity> entity = repository.findById(id);
         Optional<Article> article = Optional.of(new Article());
         articleMapper.map(entity, article);
@@ -38,15 +38,14 @@ public class ArticleService {
         return article;
     }
 
-    public List<Article> readAllArticle(){
+    public List<Article> getAllArticles(){
         List<ArticleEntity> entities = repository.findAll();
-        ArrayList<Article> articles = articleMapper.mapAll(entities);
 
-        return articles;
+        return articleMapper.mapAll(entities);
     }
 
     public void updateArticle(Article article) {
-        createArticle(article);
+        saveArticle(article);
     }
 
     public void deleteArticle(long id) {
