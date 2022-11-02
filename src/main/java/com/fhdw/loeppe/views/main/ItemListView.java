@@ -26,7 +26,7 @@ public class ItemListView extends VerticalLayout {
 
     public ItemListView(ArticleService service) {
         this.service = service;
-        service.createArticle(new Article(1,"Weniger Torben",  "Erzeugt weniger Torben", 25.00));
+        service.saveArticle(new Article(1,"Weniger Torben",  "Erzeugt weniger Torben", 25.00));
 
         H2 headline = new H2("Artikelliste");
         headline.getStyle().set("margin-top", "10px");
@@ -64,6 +64,6 @@ public class ItemListView extends VerticalLayout {
     }
 
     private void updateGrid() {
-        grid.setItems(service.readAllArticle());
+        grid.setItems(service.getAllArticles());
     }
 }

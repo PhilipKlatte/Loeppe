@@ -29,7 +29,7 @@ public class OrderView extends VerticalLayout {
 
     public OrderView(OrderService service) {
         this.service = service;
-        //service.createOrder(makeOrder());
+        service.saveOrder(makeOrder());
 
         H2 headline = new H2("Auftragsliste");
         headline.getStyle().set("margin-top", "10px");
@@ -46,7 +46,7 @@ public class OrderView extends VerticalLayout {
 
         add(headline, createSearchForm(), grid);
 
-        //updateList();
+        updateList();
     }
 
     private FormLayout createSearchForm() {
@@ -63,15 +63,15 @@ public class OrderView extends VerticalLayout {
 
     private void configureGrid() {
         grid.setColumns("id", "paid", "orderStatus");
+
         grid.addColumn(order -> order.getCustomer().getId()).setHeader("Kunden ID");
         grid.addColumn(order -> order.getCustomer().getFirstname()).setHeader("Vorname");
         grid.addColumn(order -> order.getCustomer().getLastname()).setHeader("Nachname");
         grid.addColumn(order -> order.getCustomer().getAddress()).setHeader("Adresse");
-
     }
 
     private void updateList() {
-        grid.setItems(service.readAllOrder());
+        grid.setItems(service.getAllOrders());
     }
 
     private Order makeOrder() {

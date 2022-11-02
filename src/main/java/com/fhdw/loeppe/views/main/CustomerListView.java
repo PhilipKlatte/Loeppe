@@ -10,7 +10,6 @@ import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
-import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -31,7 +30,7 @@ public class CustomerListView extends VerticalLayout {
     public CustomerListView(CustomerService service) {
         this.service = service;
 
-        service.createCustomer(new Customer(1,"Harald", "Bernd", "Coole-Straße"));
+        service.saveCustomer(new Customer(1,"Harald", "Bernd", "Coole-Straße"));
 
         H2 headline = new H2("Kundenliste");
         headline.getStyle().set("margin-top", "10px");
@@ -80,7 +79,7 @@ public class CustomerListView extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(service.readAllCustomer());
+        grid.setItems(service.getAllCustomer());
     }
 
     private void createBListener(Button b) {
