@@ -1,7 +1,11 @@
 package com.fhdw.loeppe.util;
 
+import com.fhdw.loeppe.dto.Article;
+import com.fhdw.loeppe.dto.Order;
+import com.fhdw.loeppe.entity.ArticleEntity;
 import com.fhdw.loeppe.entity.CustomerEntity;
 import com.fhdw.loeppe.dto.Customer;
+import com.fhdw.loeppe.entity.OrderEntity;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
@@ -10,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CustomerMapper {
+public class Mapper {
     private final ModelMapper modelMapper;
 
-    public CustomerMapper() {
+    public Mapper() {
         modelMapper = new ModelMapper();
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
     }
 
     public void map(Object entityFrom, Object entityTo) {
@@ -31,7 +35,7 @@ public class CustomerMapper {
                 .collect(Collectors.toList());
     }*/
     
-    public ArrayList<Customer> mapAll(List<CustomerEntity> entities) {
+    public ArrayList<Customer> mapAllCustomers(List<CustomerEntity> entities) {
         ArrayList<Customer> customers = new ArrayList<>();
         Customer customer = new Customer();
 
@@ -41,5 +45,29 @@ public class CustomerMapper {
         }
 
         return customers;
+    }
+
+    public ArrayList<Order> mapAllOrders(List<OrderEntity> entities) {
+        ArrayList<Order> orders = new ArrayList<>();
+        Order order = new Order();
+
+        for (OrderEntity entity : entities) {
+            map(entity, order);
+            orders.add(order);
+        }
+
+        return orders;
+    }
+
+    public ArrayList<Article> mapAllArticles(List<ArticleEntity> entities) {
+        ArrayList<Article> articles = new ArrayList<>();
+        Article article = new Article();
+
+        for (ArticleEntity entity : entities) {
+            map(entity, article);
+            articles.add(article);
+        }
+
+        return articles;
     }
 }
