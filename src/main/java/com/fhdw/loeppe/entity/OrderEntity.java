@@ -1,30 +1,36 @@
 package com.fhdw.loeppe.entity;
 
 import com.fhdw.loeppe.util.OrderStatus;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Table(name = "ORDER")
 @Entity
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
+@RequiredArgsConstructor
 public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "ID")
+    private long id;
 
-    @OneToMany
-    private List<ArticleEntity> articles; //TODO: Mapping
+    @ManyToOne
+    @NonNull
+    private CustomerEntity customerEntity;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "ORDERS_ARTICLES",
+            joinColumns = @JoinColumn(name = "ORD_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "ART_ID", referencedColumnName = "ID")
+    )
+    @NonNull
+    private List<ArticleEntity> articles;
+
+    @NonNull
     private OrderStatus orderStatus;
 
-    @OneToOne
-    private CustomerEntity customerEntity;
 }

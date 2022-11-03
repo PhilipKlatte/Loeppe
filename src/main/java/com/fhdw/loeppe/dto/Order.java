@@ -5,13 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class Order {
 
-    private Integer id;
-    private Boolean paid;
-    private OrderStatus orderStatus;
+    private long id;
     private Customer customer;
+    private List<Article>articles;
+    private OrderStatus orderStatus;
 }

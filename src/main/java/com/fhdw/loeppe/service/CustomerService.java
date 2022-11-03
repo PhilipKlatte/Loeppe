@@ -18,7 +18,7 @@ public class CustomerService {
     private final CustomerRepository repository;
     private final Mapper customerMapper;
 
-    public void createCustomer(Customer customer){
+    public void saveCustomer(Customer customer){
         CustomerEntity entity = new CustomerEntity();
         customerMapper.map(customer, entity);
         repository.saveAndFlush(entity);
@@ -30,7 +30,7 @@ public class CustomerService {
         repository.saveAll(entitys);
     }
 
-    public Optional<Customer> readCustomer(Integer id) {
+    public Optional<Customer> getCustomer(long id) {
         Optional<CustomerEntity> entity = repository.findById(id);
         Optional<Customer> customer = Optional.of(new Customer());
         customerMapper.map(entity, customer);
@@ -38,17 +38,17 @@ public class CustomerService {
         return customer;
     }
 
-    public List<Customer> readAllCustomer(){
+    public List<Customer> getAllCustomer(){
         List<CustomerEntity> entities = repository.findAll();
 
-        return customerMapper.mapAllCustomers(entities);
+        return mapper.mapAllCustomers(entities);
     }
 
     public void updateCustomer(Customer customer) {
-        createCustomer(customer);
+        saveCustomer(customer);
     }
 
-    public void deleteCustomer(Integer id) {
+    public void deleteCustomer(long id) {
         repository.deleteById(id);
     }
 

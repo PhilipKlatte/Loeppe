@@ -4,19 +4,23 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Table(name = "ARTICLE")
 @Entity
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
+@RequiredArgsConstructor
 public class ArticleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "ID")
+    private long id;
 
+    @NonNull
     private String name;
+
+    @NonNull
     private String description;
+
+    @NonNull
     private Double price;
 }

@@ -18,7 +18,7 @@ public class OrderService {
     private final OrderRepository repository;
     private final Mapper mapper;
 
-    public void createOrder(Order order){
+    public void saveOrder(Order order){
         OrderEntity entity = new OrderEntity();
         mapper.map(order, entity);
         repository.saveAndFlush(entity);
@@ -30,7 +30,7 @@ public class OrderService {
         repository.saveAll(entitys);
     }
 
-    public Optional<Order> readOrder(Integer id) {
+    public Optional<Order> getOrder(long id) {
         Optional<OrderEntity> entity = repository.findById(id);
         Optional<Order> order = Optional.of(new Order());
         mapper.map(entity, order);
@@ -38,17 +38,17 @@ public class OrderService {
         return order;
     }
 
-    public List<Order> readAllOrder(){
+    public List<Order> getAllOrders(){
         List<OrderEntity> entities = repository.findAll();
-
+        
         return mapper.mapAllOrders(entities);
     }
 
     public void updateOrder(Order order) {
-        createOrder(order);
+        saveOrder(order);
     }
 
-    public void deleteOrder(Integer id) {
+    public void deleteOrder(long id) {
         repository.deleteById(id);
     }
 

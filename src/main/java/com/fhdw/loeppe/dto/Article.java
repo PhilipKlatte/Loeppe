@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class Article {
 
-    private Integer id;
+    private long id;
     private String name;
     private String description;
     private Double price;

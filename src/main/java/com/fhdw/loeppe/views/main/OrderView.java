@@ -1,7 +1,10 @@
 package com.fhdw.loeppe.views.main;
 
+import com.fhdw.loeppe.dto.Article;
 import com.fhdw.loeppe.dto.Customer;
 import com.fhdw.loeppe.dto.Order;
+import com.fhdw.loeppe.service.ArticleService;
+import com.fhdw.loeppe.service.CustomerService;
 import com.fhdw.loeppe.service.OrderService;
 import com.fhdw.loeppe.util.OrderStatus;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -14,6 +17,8 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import java.util.List;
+
 @PageTitle("Loeppe | Aufträge")
 @Route(value = "auftrag", layout = LoeppeLayout.class)
 public class OrderView extends VerticalLayout {
@@ -25,11 +30,17 @@ public class OrderView extends VerticalLayout {
     final private TextField customerLastname;
     final private TextField customerAddress;
     final private ComboBox<OrderStatus> orderStatus;
-    final private OrderService service;
+    private final OrderService orderService;
 
-    public OrderView(OrderService service) {
-        this.service = service;
-        //service.createOrder(makeOrder());
+    private final ArticleService articleService;
+    private final CustomerService customerService;
+
+    public OrderView(OrderService orderService, ArticleService articleService, CustomerService customerService) {
+        this.orderService = orderService;
+        this.articleService = articleService;
+        this.customerService = customerService;
+
+        createSampleData();
 
         H2 headline = new H2("Auftragsliste");
         headline.getStyle().set("margin-top", "10px");
@@ -46,7 +57,7 @@ public class OrderView extends VerticalLayout {
 
         add(headline, createSearchForm(), grid);
 
-        //updateList();
+        updateList();
     }
 
     private FormLayout createSearchForm() {
@@ -63,23 +74,27 @@ public class OrderView extends VerticalLayout {
 
     private void configureGrid() {
         grid.setColumns("id", "paid", "orderStatus");
+
         grid.addColumn(order -> order.getCustomer().getId()).setHeader("Kunden ID");
         grid.addColumn(order -> order.getCustomer().getFirstname()).setHeader("Vorname");
         grid.addColumn(order -> order.getCustomer().getLastname()).setHeader("Nachname");
         grid.addColumn(order -> order.getCustomer().getAddress()).setHeader("Adresse");
-
     }
 
     private void updateList() {
-        grid.setItems(service.readAllOrder());
+        grid.setItems(orderService.getAllOrders());
     }
 
-    private Order makeOrder() {
-        return new Order(1, true, OrderStatus.DELIVERED, createCustomer());
-    }
+    private void createSampleData(){
+        Customer customer = new Customer(1L,"John", "Doe", "Berlin");
+        customerService.saveCustomer(customer);
 
-    private Customer createCustomer() {
-        return new Customer(1,"Herbert", "Maier", "Flötenstraße 12");
-    }
+        Article article1 = new Article(1L, "Taschentücher", "weiß", 1.10);
+        Article article2 = new Article(2L, "Handseife", "Aloe Vera", 2.59);
+        List<Article> articles = List.of(article1, article2);
+        articleService.saveAllArticles(articles);
 
+        Order entity = new Order(1L, customer, articles, OrderStatus.PAID);
+        orderService.saveOrder(entity);
+    }
 }
