@@ -1,4 +1,4 @@
-package com.fhdw.loeppe;
+package com.fhdw.loeppe.repositories;
 
 import com.fhdw.loeppe.entity.CustomerEntity;
 import com.fhdw.loeppe.repo.CustomerRepository;
