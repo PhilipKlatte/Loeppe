@@ -19,7 +19,7 @@ public class Mapper {
 
     public Mapper() {
         modelMapper = new ModelMapper();
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
     }
 
     public void map(Object entityFrom, Object entityTo) {
