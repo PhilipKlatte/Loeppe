@@ -3,19 +3,24 @@ package com.fhdw.loeppe.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
+@RequiredArgsConstructor
 public class CustomerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NonNull
     private String firstname;
+
+    @NonNull
     private String lastname;
+
+    @NonNull
     private String address;
 }

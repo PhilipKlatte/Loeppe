@@ -3,7 +3,7 @@ package com.fhdw.loeppe.service;
 import com.fhdw.loeppe.entity.CustomerEntity;
 import com.fhdw.loeppe.dto.Customer;
 import com.fhdw.loeppe.repo.CustomerRepository;
-import com.fhdw.loeppe.util.CustomerMapper;
+import com.fhdw.loeppe.util.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import java.util.Optional;
 public class CustomerService {
     
     private final CustomerRepository repository;
-    private final CustomerMapper customerMapper;
+    private final Mapper customerMapper;
 
     public void saveCustomer(Customer customer){
         CustomerEntity entity = new CustomerEntity();
@@ -41,7 +41,7 @@ public class CustomerService {
     public List<Customer> getAllCustomer(){
         List<CustomerEntity> entities = repository.findAll();
 
-        return customerMapper.mapAll(entities);
+        return mapper.mapAllCustomers(entities);
     }
 
     public void updateCustomer(Customer customer) {
