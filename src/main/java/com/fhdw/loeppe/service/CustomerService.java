@@ -16,24 +16,24 @@ import java.util.Optional;
 public class CustomerService {
     
     private final CustomerRepository repository;
-    private final Mapper customerMapper;
+    private final Mapper mapper;
 
     public void saveCustomer(Customer customer){
         CustomerEntity entity = new CustomerEntity();
-        customerMapper.map(customer, entity);
+        mapper.map(customer, entity);
         repository.saveAndFlush(entity);
     }
 
     public void saveAllCustomers(List<Customer> customers){
         List<CustomerEntity> entitys = new ArrayList<>();
-        customerMapper.map(customers, entitys);
+        mapper.map(customers, entitys);
         repository.saveAll(entitys);
     }
 
     public Optional<Customer> getCustomer(long id) {
         Optional<CustomerEntity> entity = repository.findById(id);
         Optional<Customer> customer = Optional.of(new Customer());
-        customerMapper.map(entity, customer);
+        mapper.map(entity, customer);
 
         return customer;
     }
