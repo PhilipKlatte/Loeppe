@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,9 +26,15 @@ public class ArticleService {
     }
 
     public void saveAllArticles(List<Article> articles){
-        List<ArticleEntity> entitys = new ArrayList<>();
-        mapper.map(articles, entitys);
-        repository.saveAll(entitys);
+        List<ArticleEntity> entities = new ArrayList<>();
+
+        articles.forEach(article -> {
+            ArticleEntity entity = new ArticleEntity();
+            mapper.map(article, entity);
+            entities.add(entity);
+        });
+
+        repository.saveAll(entities);
     }
 
     public Optional<Article> getArticle(long id) {
