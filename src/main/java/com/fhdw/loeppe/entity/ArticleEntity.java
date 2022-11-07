@@ -5,10 +5,9 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
+@RequiredArgsConstructor
 public class ArticleEntity {
 
     @Id
@@ -16,7 +15,12 @@ public class ArticleEntity {
     @Column(name = "ID")
     private long id;
 
+    @NonNull
     private String name;
+
+    @NonNull
     private String description;
+
+    @NonNull
     private Double price;
 }
