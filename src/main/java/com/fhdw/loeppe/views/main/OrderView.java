@@ -24,12 +24,12 @@ import java.util.List;
 public class OrderView extends VerticalLayout {
 
     private final Grid<Order> grid = new Grid<>(Order.class);
-    final private IntegerField orderID;
-    final private IntegerField customerID;
-    final private TextField customerFirstname;
-    final private TextField customerLastname;
-    final private TextField customerAddress;
-    final private ComboBox<OrderStatus> orderStatus;
+    final private IntegerField orderID = new IntegerField();
+    final private IntegerField customerID = new IntegerField();
+    final private TextField customerFirstname = new TextField();
+    final private TextField customerLastname = new TextField();
+    final private TextField customerAddress = new TextField();
+    final private ComboBox<OrderStatus> orderStatus = new ComboBox<>();
     private final OrderService orderService;
 
     private final ArticleService articleService;
@@ -45,12 +45,6 @@ public class OrderView extends VerticalLayout {
         H2 headline = new H2("Auftragsliste");
         headline.getStyle().set("margin-top", "10px");
 
-        orderID = new IntegerField();
-        customerID = new IntegerField();
-        customerFirstname = new TextField();
-        customerLastname = new TextField();
-        customerAddress = new TextField();
-        orderStatus = new ComboBox<>();
         orderStatus.setItems(OrderStatus.values());
 
         configureGrid();
@@ -86,15 +80,15 @@ public class OrderView extends VerticalLayout {
     }
 
     private void createSampleData(){
-        Customer customer = new Customer(1L,"John", "Doe", "Berlin");
+        Customer customer = new Customer(1,"John", "Doe", "Berlin");
         customerService.saveCustomer(customer);
 
-        Article article1 = new Article(1L, "Taschentücher", "weiß", 1.10);
-        Article article2 = new Article(2L, "Handseife", "Aloe Vera", 2.59);
+        Article article1 = new Article(1, "Taschentücher", "weiß", 1.10);
+        Article article2 = new Article(2, "Handseife", "Aloe Vera", 2.59);
         List<Article> articles = List.of(article1, article2);
         articleService.saveAllArticles(articles);
 
-        Order entity = new Order(1L, customer, articles, OrderStatus.PAID);
+        Order entity = new Order(1, customer, articles, OrderStatus.PAID);
         orderService.saveOrder(entity);
     }
 }
