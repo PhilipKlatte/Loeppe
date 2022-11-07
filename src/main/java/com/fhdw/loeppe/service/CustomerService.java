@@ -41,15 +41,17 @@ public class CustomerService {
     public List<Customer> getAllCustomer(){
         List<CustomerEntity> entities = repository.findAll();
 
-        return mapper.mapAllCustomers(entities);
+        return customerMapper.mapAllCustomers(entities);
     }
 
     public void updateCustomer(Customer customer) {
         saveCustomer(customer);
     }
 
-    public void deleteCustomer(long id) {
-        repository.deleteById(id);
+    public void deleteCustomer(Customer customer) {
+        CustomerEntity entity = new CustomerEntity();
+        customerMapper.map(customer, entity);
+        repository.delete(entity);
     }
 
     public void deleteAllCustomers() {
