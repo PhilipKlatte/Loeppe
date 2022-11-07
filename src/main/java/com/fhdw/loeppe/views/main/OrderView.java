@@ -40,7 +40,7 @@ public class OrderView extends VerticalLayout {
         this.articleService = articleService;
         this.customerService = customerService;
 
-        createSampleData();
+        //createSampleData();
 
         H2 headline = new H2("Auftragsliste");
         headline.getStyle().set("margin-top", "10px");
