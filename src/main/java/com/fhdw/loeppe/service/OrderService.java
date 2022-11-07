@@ -3,7 +3,7 @@ package com.fhdw.loeppe.service;
 import com.fhdw.loeppe.entity.OrderEntity;
 import com.fhdw.loeppe.dto.Order;
 import com.fhdw.loeppe.repo.OrderRepository;
-import com.fhdw.loeppe.util.OrderMapper;
+import com.fhdw.loeppe.util.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,32 +16,22 @@ import java.util.Optional;
 public class OrderService {
 
     private final OrderRepository repository;
-    private final OrderMapper orderMapper;
+    private final Mapper mapper;
 
     public void saveOrder(Order order){
-        OrderEntity entity = new OrderEntity();
-        orderMapper.map(order, entity);
-        repository.saveAndFlush(entity);
+        repository.saveAndFlush(mapper.map(order, OrderEntity.class));
     }
 
     public void saveAllOrders(List<Order> orders){
-        List<OrderEntity> entitys = new ArrayList<>();
-        orderMapper.map(orders, entitys);
-        repository.saveAll(entitys);
+        repository.saveAll(mapper.mapAll(orders, OrderEntity.class));
     }
 
-    public Optional<Order> getOrder(long id) {
-        Optional<OrderEntity> entity = repository.findById(id);
-        Optional<Order> order = Optional.of(new Order());
-        orderMapper.map(entity, order);
-
-        return order;
+    public Order getOrder(long id) {
+        return mapper.map(repository.findById(id), Order.class);
     }
 
     public List<Order> getAllOrders(){
-        List<OrderEntity> entities = repository.findAll();
-
-        return orderMapper.mapAll(entities);
+        return mapper.mapAll(repository.findAll(), Order.class);
     }
 
     public void updateOrder(Order order) {
