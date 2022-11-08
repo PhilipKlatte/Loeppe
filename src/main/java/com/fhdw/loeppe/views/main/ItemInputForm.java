@@ -42,7 +42,8 @@ public class ItemInputForm extends FormLayout {
     }
 
     public void setContent(Article article) {
-        id.setValue(article.getId());
+
+        id.setValue((int)article.getId());
         name.setValue(article.getName());
         description.setValue(article.getDescription());
         price.setValue(article.getPrice());

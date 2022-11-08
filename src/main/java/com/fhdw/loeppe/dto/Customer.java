@@ -10,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 @Data
 public class Customer {
-    private int id;
+    private long id;
     private String firstname;
     private String lastname;
     private String address;

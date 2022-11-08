@@ -16,32 +16,23 @@ import java.util.Optional;
 public class CustomerService {
     
     private final CustomerRepository repository;
-    private final Mapper customerMapper;
+    private final Mapper mapper;
 
     public void saveCustomer(Customer customer){
-        CustomerEntity entity = new CustomerEntity();
-        customerMapper.map(customer, entity);
-        repository.saveAndFlush(entity);
+        repository.saveAndFlush(mapper.map(customer, CustomerEntity.class));
     }
 
     public void saveAllCustomers(List<Customer> customers){
-        List<CustomerEntity> entitys = new ArrayList<>();
-        customerMapper.map(customers, entitys);
+        List<CustomerEntity> entitys = mapper.mapAll(customers, CustomerEntity.class);
         repository.saveAll(entitys);
     }
 
-    public Optional<Customer> getCustomer(long id) {
-        Optional<CustomerEntity> entity = repository.findById(id);
-        Optional<Customer> customer = Optional.of(new Customer());
-        customerMapper.map(entity, customer);
-
-        return customer;
+    public Customer getCustomer(long id) {
+        return mapper.map(repository.findById(id), Customer.class);
     }
 
     public List<Customer> getAllCustomer(){
-        List<CustomerEntity> entities = repository.findAll();
-
-        return customerMapper.mapAllCustomers(entities);
+        return mapper.mapAll(repository.findAll(), Customer.class);
     }
 
     public void updateCustomer(Customer customer) {
@@ -49,9 +40,7 @@ public class CustomerService {
     }
 
     public void deleteCustomer(Customer customer) {
-        CustomerEntity entity = new CustomerEntity();
-        customerMapper.map(customer, entity);
-        repository.delete(entity);
+        repository.delete(mapper.map(customer, CustomerEntity.class));
     }
 
     public void deleteAllCustomers() {
