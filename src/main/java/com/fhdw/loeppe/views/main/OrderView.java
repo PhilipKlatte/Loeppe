@@ -40,7 +40,7 @@ public class OrderView extends VerticalLayout {
         this.articleService = articleService;
         this.customerService = customerService;
 
-        //createSampleData();
+        createSampleData();
 
         H2 headline = new H2("Auftragsliste");
         headline.getStyle().set("margin-top", "10px");
@@ -75,18 +75,20 @@ public class OrderView extends VerticalLayout {
     private void configureGrid() {
         grid.setColumns("id", "orderStatus");
 
-        grid.addColumn(order -> order.getCustomer().getId()).setHeader("Kunden ID");
+        /*grid.addColumn(order -> order.getCustomer().getId()).setHeader("Kunden ID");
         grid.addColumn(order -> order.getCustomer().getFirstname()).setHeader("Vorname");
         grid.addColumn(order -> order.getCustomer().getLastname()).setHeader("Nachname");
-        grid.addColumn(order -> order.getCustomer().getAddress()).setHeader("Adresse");
+        grid.addColumn(order -> order.getCustomer().getAddress()).setHeader("Adresse");*/
     }
 
     private void updateList() {
+        Order order = orderService.getOrder(1);
+        Customer customer = customerService.getCustomer(3);
         grid.setItems(orderService.getAllOrders());
     }
 
     private void createSampleData(){
-        Customer customer = new Customer(1L,"John", "Doe", "Berlin");
+        Customer customer = new Customer(3,"John", "Doe", "Berlin");
         customerService.saveCustomer(customer);
 
         Article article1 = new Article(1L, "Taschentücher", "weiß", 1.10);

@@ -1,7 +1,9 @@
 package com.fhdw.loeppe.service;
 
+import com.fhdw.loeppe.entity.CustomerEntity;
 import com.fhdw.loeppe.entity.OrderEntity;
 import com.fhdw.loeppe.dto.Order;
+import com.fhdw.loeppe.repo.CustomerRepository;
 import com.fhdw.loeppe.repo.OrderRepository;
 import com.fhdw.loeppe.util.Mapper;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +17,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OrderService {
 
+    private final CustomerRepository customerRepository;
     private final OrderRepository repository;
     private final Mapper mapper;
 
     public void saveOrder(Order order){
-        repository.saveAndFlush(mapper.map(order, OrderEntity.class));
+        OrderEntity entity = mapper.map(order, OrderEntity.class);
+        entity.setCustomerEntity(mapper.map(order.getCustomer(), CustomerEntity.class));
+        repository.saveAndFlush(entity);
     }
 
     public void saveAllOrders(List<Order> orders){
