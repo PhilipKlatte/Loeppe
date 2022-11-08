@@ -40,7 +40,7 @@ public class OrderView extends VerticalLayout {
         this.articleService = articleService;
         this.customerService = customerService;
 
-        createSampleData();
+        //createSampleData();
 
         H2 headline = new H2("Auftragsliste");
         headline.getStyle().set("margin-top", "10px");
@@ -73,7 +73,7 @@ public class OrderView extends VerticalLayout {
     }
 
     private void configureGrid() {
-        grid.setColumns("id", "paid", "orderStatus");
+        grid.setColumns("id", "orderStatus");
 
         grid.addColumn(order -> order.getCustomer().getId()).setHeader("Kunden ID");
         grid.addColumn(order -> order.getCustomer().getFirstname()).setHeader("Vorname");

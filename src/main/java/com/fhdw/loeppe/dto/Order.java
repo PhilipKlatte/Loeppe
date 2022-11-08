@@ -14,6 +14,6 @@ public class Order {
 
     private long id;
     private Customer customer;
-    private List<Article>articles;
+    private List<Article> articles;
     private OrderStatus orderStatus;
 }
