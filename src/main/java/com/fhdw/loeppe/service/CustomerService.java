@@ -19,29 +19,20 @@ public class CustomerService {
     private final Mapper mapper;
 
     public void saveCustomer(Customer customer){
-        CustomerEntity entity = new CustomerEntity();
-        mapper.map(customer, entity);
-        repository.saveAndFlush(entity);
+        repository.saveAndFlush(mapper.map(customer, CustomerEntity.class));
     }
 
     public void saveAllCustomers(List<Customer> customers){
-        List<CustomerEntity> entitys = new ArrayList<>();
-        mapper.map(customers, entitys);
+        List<CustomerEntity> entitys = mapper.mapAll(customers, CustomerEntity.class);
         repository.saveAll(entitys);
     }
 
-    public Optional<Customer> getCustomer(long id) {
-        Optional<CustomerEntity> entity = repository.findById(id);
-        Optional<Customer> customer = Optional.of(new Customer());
-        mapper.map(entity, customer);
-
-        return customer;
+    public Customer getCustomer(long id) {
+        return mapper.map(repository.findById(id), Customer.class);
     }
 
     public List<Customer> getAllCustomer(){
-        List<CustomerEntity> entities = repository.findAll();
-
-        return mapper.mapAllCustomers(entities);
+        return mapper.mapAll(repository.findAll(), Customer.class);
     }
 
     public void updateCustomer(Customer customer) {

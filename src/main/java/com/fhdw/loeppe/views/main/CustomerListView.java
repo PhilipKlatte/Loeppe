@@ -30,6 +30,9 @@ public class CustomerListView extends VerticalLayout {
     public CustomerListView(CustomerService service) {
         this.service = service;
 
+        service.saveCustomer(new Customer(1,"Harald", "Bernd", "Coole-Straße"));
+        service.saveCustomer(new Customer(2,"arald", "ernd", "oole-Straße"));
+
         H2 headline = new H2("Kundenliste");
         headline.getStyle().set("margin-top", "10px");
 

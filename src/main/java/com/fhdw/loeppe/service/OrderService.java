@@ -19,29 +19,19 @@ public class OrderService {
     private final Mapper mapper;
 
     public void saveOrder(Order order){
-        OrderEntity entity = new OrderEntity();
-        mapper.map(order, entity);
-        repository.saveAndFlush(entity);
+        repository.saveAndFlush(mapper.map(order, OrderEntity.class));
     }
 
     public void saveAllOrders(List<Order> orders){
-        List<OrderEntity> entitys = new ArrayList<>();
-        mapper.map(orders, entitys);
-        repository.saveAll(entitys);
+        repository.saveAll(mapper.mapAll(orders, OrderEntity.class));
     }
 
-    public Optional<Order> getOrder(long id) {
-        Optional<OrderEntity> entity = repository.findById(id);
-        Optional<Order> order = Optional.of(new Order());
-        mapper.map(entity, order);
-
-        return order;
+    public Order getOrder(long id) {
+        return mapper.map(repository.findById(id), Order.class);
     }
 
     public List<Order> getAllOrders(){
-        List<OrderEntity> entities = repository.findAll();
-        
-        return mapper.mapAllOrders(entities);
+        return mapper.mapAll(repository.findAll(), Order.class);
     }
 
     public void updateOrder(Order order) {

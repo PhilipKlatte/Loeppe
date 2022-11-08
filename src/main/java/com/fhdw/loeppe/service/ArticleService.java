@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,35 +21,20 @@ public class ArticleService {
     private final Mapper mapper;
 
     public void saveArticle(Article article){
-        ArticleEntity entity = new ArticleEntity();
-        mapper.map(article, entity);
-        repository.saveAndFlush(entity);
+        repository.saveAndFlush(mapper.map(article, ArticleEntity.class));
     }
 
     public void saveAllArticles(List<Article> articles){
-        List<ArticleEntity> entities = new ArrayList<>();
-
-        articles.forEach(article -> {
-            ArticleEntity entity = new ArticleEntity();
-            mapper.map(article, entity);
-            entities.add(entity);
-        });
-
-        repository.saveAll(entities);
+        repository.saveAll(Collections.singletonList(mapper.map(articles, ArticleEntity.class)));
     }
 
-    public Optional<Article> getArticle(long id) {
-        Optional<ArticleEntity> entity = repository.findById(id);
-        Optional<Article> article = Optional.of(new Article());
-        mapper.map(entity, article);
 
-        return article;
+    public Article getArticle(long id) {
+        return mapper.map(repository.findById(id), Article.class);
     }
 
     public List<Article> getAllArticles(){
-        List<ArticleEntity> entities = repository.findAll();
-
-        return mapper.mapAllArticles(entities);
+        return mapper.mapAll(repository.findAll(), Article.class);
     }
 
     public void updateArticle(Article article) {
