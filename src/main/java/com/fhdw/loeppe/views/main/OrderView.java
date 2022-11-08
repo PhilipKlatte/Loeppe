@@ -75,10 +75,10 @@ public class OrderView extends VerticalLayout {
     private void configureGrid() {
         grid.setColumns("id", "orderStatus");
 
-        /*grid.addColumn(order -> order.getCustomer().getId()).setHeader("Kunden ID");
+        grid.addColumn(order -> order.getCustomer().getId()).setHeader("Kunden ID");
         grid.addColumn(order -> order.getCustomer().getFirstname()).setHeader("Vorname");
         grid.addColumn(order -> order.getCustomer().getLastname()).setHeader("Nachname");
-        grid.addColumn(order -> order.getCustomer().getAddress()).setHeader("Adresse");*/
+        grid.addColumn(order -> order.getCustomer().getAddress()).setHeader("Adresse");
     }
 
     private void updateList() {

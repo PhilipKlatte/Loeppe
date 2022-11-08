@@ -1,5 +1,6 @@
 package com.fhdw.loeppe.service;
 
+import com.fhdw.loeppe.dto.Customer;
 import com.fhdw.loeppe.entity.CustomerEntity;
 import com.fhdw.loeppe.entity.OrderEntity;
 import com.fhdw.loeppe.dto.Order;
@@ -32,11 +33,22 @@ public class OrderService {
     }
 
     public Order getOrder(long id) {
-        return mapper.map(repository.findById(id), Order.class);
+        Order order = mapper.map(repository.findById(id), Order.class);
+        order.setCustomer(mapper.map(customerRepository.findById(repository.findById(id).get().getCustomerEntity().getId()), Customer.class));
+        return order;
     }
 
     public List<Order> getAllOrders(){
-        return mapper.mapAll(repository.findAll(), Order.class);
+        List<OrderEntity> orderEntities = repository.findAll();
+        List<Order> orders = new ArrayList<>();
+
+        for(int i = 0; i < orderEntities.size(); i++) {
+            Order order = mapper.map(orderEntities.get(i), Order.class);
+            order.setCustomer(mapper.map(customerRepository.findById(orderEntities.get(i).getId()), Customer.class));
+            orders.add(order);
+        }
+
+        return orders;
     }
 
     public void updateOrder(Order order) {
