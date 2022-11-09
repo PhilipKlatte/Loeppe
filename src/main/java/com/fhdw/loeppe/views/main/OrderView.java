@@ -24,32 +24,27 @@ import java.util.List;
 public class OrderView extends VerticalLayout {
 
     private final Grid<Order> grid = new Grid<>(Order.class);
-    final private IntegerField orderID;
-    final private IntegerField customerID;
-    final private TextField customerFirstname;
-    final private TextField customerLastname;
-    final private TextField customerAddress;
-    final private ComboBox<OrderStatus> orderStatus;
+    final private IntegerField orderID = new IntegerField();
+    final private IntegerField customerID = new IntegerField();
+    final private TextField customerFirstname = new TextField();
+    final private TextField customerLastname = new TextField();
+    final private TextField customerAddress = new TextField();
+    final private ComboBox<OrderStatus> orderStatus = new ComboBox<>();
     private final OrderService orderService;
+
+    private final ArticleService articleService;
+    private final CustomerService customerService;
 
     public OrderView(OrderService orderService, ArticleService articleService, CustomerService customerService) {
         this.orderService = orderService;
+        this.articleService = articleService;
+        this.customerService = customerService;
 
         H2 headline = new H2("Auftragsliste");
         headline.getStyle().set("margin-top", "10px");
-
-        orderID = new IntegerField();
-        customerID = new IntegerField();
-        customerFirstname = new TextField();
-        customerLastname = new TextField();
-        customerAddress = new TextField();
-        orderStatus = new ComboBox<>();
         orderStatus.setItems(OrderStatus.values());
-
         configureGrid();
-
         add(headline, createSearchForm(), grid);
-
         updateList();
     }
 

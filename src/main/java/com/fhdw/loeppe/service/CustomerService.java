@@ -39,8 +39,8 @@ public class CustomerService {
         saveCustomer(customer);
     }
 
-    public void deleteCustomer(long id) {
-        repository.deleteById(id);
+    public void deleteCustomer(Customer customer) {
+        repository.delete(mapper.map(customer, CustomerEntity.class));
     }
 
     public void deleteAllCustomers() {
