@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-//@SpringBootTest
+@SpringBootTest
 public class ArticleRepositoryTest {
 
     @Autowired
@@ -19,8 +19,12 @@ public class ArticleRepositoryTest {
 
     @BeforeEach
     public void setUp() {
-       /* ArticleEntity entity = new ArticleEntity("Taschentücher", "weiß", 1.10);
-        repository.save(entity);*/
+       ArticleEntity entity = new ArticleEntity();
+       entity.setName("Taschentücher");
+       entity.setDescription("weiß");
+       entity.setPrice(1.10);
+
+       repository.save(entity);
     }
 
     @Test
