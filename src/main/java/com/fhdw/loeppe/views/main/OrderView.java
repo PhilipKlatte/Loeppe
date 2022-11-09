@@ -32,13 +32,8 @@ public class OrderView extends VerticalLayout {
     final private ComboBox<OrderStatus> orderStatus = new ComboBox<>();
     private final OrderService orderService;
 
-    private final ArticleService articleService;
-    private final CustomerService customerService;
-
-    public OrderView(OrderService orderService, ArticleService articleService, CustomerService customerService) {
+    public OrderView(OrderService orderService) {
         this.orderService = orderService;
-        this.articleService = articleService;
-        this.customerService = customerService;
 
         H2 headline = new H2("Auftragsliste");
         headline.getStyle().set("margin-top", "10px");
