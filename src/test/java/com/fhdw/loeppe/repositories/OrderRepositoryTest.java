@@ -18,7 +18,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
+//@SpringBootTest
 public class OrderRepositoryTest {
 
     @Autowired
@@ -32,15 +32,28 @@ public class OrderRepositoryTest {
 
     @BeforeEach
     public void setUp(){
-        CustomerEntity customer = new CustomerEntity("John", "Doe", "Berlin");
+        CustomerEntity customer = new CustomerEntity();
+        customer.setFirstname("John");
+        customer.setLastname("Doe");
+        customer.setAddress("Berlin");
         customerRepository.save(customer);
 
-        ArticleEntity article1 = new ArticleEntity("Taschentücher", "weiß", 1.10);
-        ArticleEntity article2 = new ArticleEntity("Handseife", "Aloe Vera", 2.59);
+        ArticleEntity article1 = new ArticleEntity();
+        article1.setName("Taschentücher");
+        article1.setDescription("weiß");
+        article1.setPrice(1.10);
+        ArticleEntity article2 = new ArticleEntity();
+        article2.setName("Taschentücher");
+        article2.setDescription("weiß");
+        article2.setPrice(1.10);
+        
         List<ArticleEntity> articles = List.of(article1, article2);
         articleRepository.saveAll(articles);
 
-        OrderEntity entity = new OrderEntity(customer, articles, OrderStatus.PAID);
+        OrderEntity entity = new OrderEntity();
+        entity.setCustomerEntity(customer);
+        entity.setArticles(articles);
+        entity.setOrderStatus(OrderStatus.PAID);
         orderRepository.save(entity);
     }
 

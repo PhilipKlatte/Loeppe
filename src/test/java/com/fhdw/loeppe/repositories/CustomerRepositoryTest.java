@@ -19,7 +19,11 @@ public class CustomerRepositoryTest {
 
     @BeforeEach
     public void setUp(){
-        CustomerEntity entity = new CustomerEntity("John", "Doe", "Berlin");
+        CustomerEntity entity = new CustomerEntity();
+        entity.setFirstname("John");
+        entity.setLastname("Doe");
+        entity.setAddress("Berlin");
+
         repository.save(entity);
     }
 
