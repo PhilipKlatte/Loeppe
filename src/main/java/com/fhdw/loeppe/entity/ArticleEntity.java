@@ -3,10 +3,10 @@ package com.fhdw.loeppe.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Data
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class ArticleEntity {
 
@@ -15,12 +15,12 @@ public class ArticleEntity {
     @Column(name = "ID")
     private long id;
 
-    @NonNull
+    //@NotEmpty
     private String name;
 
-    @NonNull
+    //@NotEmpty
     private String description;
 
-    @NonNull
+    //@NotEmpty
     private Double price;
 }

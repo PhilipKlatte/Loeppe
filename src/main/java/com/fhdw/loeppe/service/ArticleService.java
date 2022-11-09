@@ -25,7 +25,7 @@ public class ArticleService {
     }
 
     public void saveAllArticles(List<Article> articles){
-        repository.saveAll(Collections.singletonList(mapper.map(articles, ArticleEntity.class)));
+        repository.saveAllAndFlush(Collections.singletonList(mapper.map(articles, ArticleEntity.class)));
     }
 
 

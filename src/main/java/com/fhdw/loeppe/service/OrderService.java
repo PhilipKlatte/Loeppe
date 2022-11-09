@@ -29,7 +29,7 @@ public class OrderService {
     }
 
     public void saveAllOrders(List<Order> orders){
-        repository.saveAll(mapper.mapAll(orders, OrderEntity.class));
+        repository.saveAllAndFlush(mapper.mapAll(orders, OrderEntity.class));
     }
 
     public Order getOrder(long id) {

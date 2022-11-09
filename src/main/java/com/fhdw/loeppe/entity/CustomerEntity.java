@@ -7,20 +7,18 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Data
-@NoArgsConstructor
-@RequiredArgsConstructor
 public class CustomerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NonNull
+    //@NotEmpty
     private String firstname;
 
-    @NonNull
+    //@NotEmpty
     private String lastname;
 
-    @NonNull
+    //@NotEmpty
     private String address;
 }
