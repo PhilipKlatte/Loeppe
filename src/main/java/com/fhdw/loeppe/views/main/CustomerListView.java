@@ -31,7 +31,6 @@ public class CustomerListView extends VerticalLayout {
     public CustomerListView(CustomerService service) {
         setSizeFull();
         this.service = service;
-        service.saveCustomer(new Customer(1,"Harald", "Bernd", "Coole-Straße"));
         custSearch = createCustSearch();
         buttonLayout = createButtons();
         configureGrid();
@@ -56,7 +55,7 @@ public class CustomerListView extends VerticalLayout {
         return custSearch;
     }
 
-    public FormLayout createButtons() {
+    private FormLayout createButtons() {
         FormLayout layout = new FormLayout();
         Button search = new Button("Kunden Hinzufügen");
         search.addClickListener(click -> addCustomer());
@@ -65,20 +64,20 @@ public class CustomerListView extends VerticalLayout {
         return layout;
     }
 
-    public H2 getHeader() {
+    private H2 getHeader() {
         H2 headline = new H2("Kundenliste");
         headline.getStyle().set("margin-top", "10px");
         return headline;
     }
 
-    public Component getTop() {
+    private Component getTop() {
         HorizontalLayout content = new HorizontalLayout(custSearch, buttonLayout);
         content.setFlexGrow(2, custSearch);
         content.setFlexGrow(1, buttonLayout);
         return content;
     }
 
-    public Component getContent() {
+    private Component getContent() {
         HorizontalLayout content = new HorizontalLayout(grid, form);
         content.setFlexGrow(2, grid);
         content.setFlexGrow(1, form);

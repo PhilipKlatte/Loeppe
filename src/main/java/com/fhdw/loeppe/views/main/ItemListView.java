@@ -3,6 +3,7 @@ package com.fhdw.loeppe.views.main;
 import com.fhdw.loeppe.dto.Article;
 import com.fhdw.loeppe.service.ArticleService;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
@@ -21,41 +22,62 @@ public class ItemListView extends VerticalLayout {
 
     final private Grid<Article> grid = new Grid<>(Article.class);
     ItemInputForm form;
-    final private IntegerField itemID = new IntegerField();
-    final private TextField itemName = new TextField();
-    final private TextField itemDes = new TextField();
-    final private NumberField itemPrice = new NumberField();
+    final private IntegerField id = new IntegerField();
+    final private TextField name = new TextField();
+    final private TextField description = new TextField();
+    final private NumberField price = new NumberField();
     final private ArticleService service;
+    private final FormLayout itemSearch;
+    private final FormLayout buttonLayout;
 
     public ItemListView(ArticleService service) {
         setSizeFull();
         this.service = service;
-        service.saveArticle(new Article(1,"Weniger Torben",  "Erzeugt weniger Torben", 25.00));
+        itemSearch = createItemSearch();
+        buttonLayout = createButtons();
         configurePriceField();
         configureGrid();
         configureForm();
-        add(getHeader(), createItemSearch(), getContent());
-        updateGrid();
+        add(getHeader(), getTop(), getContent());
+        updateList();
         closeForm();
     }
 
     private FormLayout createItemSearch() {
         FormLayout formLayout = new FormLayout();
-        itemID.setSizeFull();
-        itemName.setSizeFull();
-        itemDes.setSizeFull();
-        itemPrice.setSizeFull();
-        formLayout.addFormItem(itemID, "Artikelnummer");
-        formLayout.addFormItem(itemName, "Artikelname");
-        formLayout.addFormItem(itemDes, "Beschreibung");
-        formLayout.addFormItem(itemPrice, "Preis");
+        formLayout.setSizeFull();
+        id.setSizeFull();
+        name.setSizeFull();
+        description.setSizeFull();
+        price.setSizeFull();
+        formLayout.addFormItem(id, "Artikelnummer");
+        formLayout.addFormItem(name, "Artikelname");
+        formLayout.addFormItem(description, "Beschreibung");
+        formLayout.addFormItem(price, "Preis");
+
         return formLayout;
+    }
+
+    private FormLayout createButtons() {
+        FormLayout layout = new FormLayout();
+        Button search = new Button("Kunden Hinzufügen");
+        search.addClickListener(click -> addItem());
+        layout.add(search);
+        layout.setWidth("25em");
+        return layout;
+    }
+
+    private Component getTop() {
+        HorizontalLayout content = new HorizontalLayout(itemSearch, buttonLayout);
+        content.setFlexGrow(2, itemSearch);
+        content.setFlexGrow(1, buttonLayout);
+        return content;
     }
 
     private void configurePriceField() {
         Div euroSuffix = new Div();
         euroSuffix.setText("€");
-        itemPrice.setSuffixComponent(euroSuffix);
+        price.setSuffixComponent(euroSuffix);
     }
 
     public H2 getHeader() {
@@ -82,7 +104,7 @@ public class ItemListView extends VerticalLayout {
         if(article == null) {
             closeForm();
         } else {
-            form.setContent(article);
+            form.setArticle(article);
             form.setVisible(true);
         }
     }
@@ -90,9 +112,29 @@ public class ItemListView extends VerticalLayout {
     private void configureForm() {
         form = new ItemInputForm();
         form.setWidth("25em");
+        form.addListener(ItemInputForm.SaveEvent.class, this::saveItem);
+        form.addListener(ItemInputForm.DeleteEvent.class, this::deleteItem);
+        form.addListener(ItemInputForm.CancleEvent.class, e -> closeForm());
     }
 
-    private void updateGrid() {
+    private void saveItem(ItemInputForm.SaveEvent event) {
+        service.saveArticle(event.getArticle());
+        updateList();
+        closeForm();
+    }
+
+    private void deleteItem(ItemInputForm.DeleteEvent event) {
+        service.deleteArticle(event.getArticle());
+        updateList();
+        closeForm();
+    }
+
+    private void addItem() {
+        grid.asSingleSelect().clear();
+        editItem(new Article());
+    }
+
+    private void updateList() {
         grid.setItems(service.getAllArticles());
     }
 

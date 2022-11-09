@@ -41,8 +41,8 @@ public class ArticleService {
         saveArticle(article);
     }
 
-    public void deleteArticle(long id) {
-        repository.deleteById(id);
+    public void deleteArticle(Article article) {
+        repository.delete(mapper.map(article, ArticleEntity.class));
     }
 
     public void deleteAllArticles() {
