@@ -31,15 +31,9 @@ public class OrderView extends VerticalLayout {
     final private TextField customerAddress;
     final private ComboBox<OrderStatus> orderStatus;
     private final OrderService orderService;
-    private final ArticleService articleService;
-    private final CustomerService customerService;
 
     public OrderView(OrderService orderService, ArticleService articleService, CustomerService customerService) {
         this.orderService = orderService;
-        this.articleService = articleService;
-        this.customerService = customerService;
-
-        createSampleData();
 
         H2 headline = new H2("Auftragsliste");
         headline.getStyle().set("margin-top", "10px");
@@ -82,18 +76,5 @@ public class OrderView extends VerticalLayout {
 
     private void updateList() {
         grid.setItems(orderService.getAllOrders());
-    }
-
-    private void createSampleData(){
-        Customer customer = new Customer(3,"John", "Doe", "Berlin");
-        customerService.saveCustomer(customer);
-
-        Article article1 = new Article(1L, "Taschentücher", "weiß", 1.10);
-        Article article2 = new Article(2L, "Handseife", "Aloe Vera", 2.59);
-        List<Article> articles = List.of(article1, article2);
-        articleService.saveAllArticles(articles);
-
-        Order entity = new Order(1L, customer, articles, OrderStatus.PAID);
-        orderService.saveOrder(entity);
     }
 }

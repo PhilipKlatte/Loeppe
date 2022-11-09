@@ -4,11 +4,11 @@ import com.fhdw.loeppe.util.OrderStatus;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Entity
 @Data
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class OrderEntity {
 
@@ -18,7 +18,7 @@ public class OrderEntity {
     private long id;
 
     @ManyToOne
-    @NonNull
+    //@NotEmpty
     private CustomerEntity customerEntity;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -27,10 +27,9 @@ public class OrderEntity {
             joinColumns = @JoinColumn(name = "ORD_ID", referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(name = "ART_ID", referencedColumnName = "ID")
     )
-    @NonNull
+    //@NotEmpty
     private List<ArticleEntity> articles;
 
-    @NonNull
+    //@NotEmpty
     private OrderStatus orderStatus;
-
 }
