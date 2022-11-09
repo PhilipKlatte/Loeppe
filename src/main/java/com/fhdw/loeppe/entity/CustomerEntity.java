@@ -13,12 +13,7 @@ public class CustomerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    //@NotEmpty
     private String firstname;
-
-    //@NotEmpty
     private String lastname;
-
-    //@NotEmpty
     private String address;
 }
