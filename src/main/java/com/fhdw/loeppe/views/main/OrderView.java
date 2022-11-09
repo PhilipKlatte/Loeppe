@@ -31,7 +31,6 @@ public class OrderView extends VerticalLayout {
     final private TextField customerAddress;
     final private ComboBox<OrderStatus> orderStatus;
     private final OrderService orderService;
-
     private final ArticleService articleService;
     private final CustomerService customerService;
 
@@ -82,8 +81,6 @@ public class OrderView extends VerticalLayout {
     }
 
     private void updateList() {
-        Order order = orderService.getOrder(1);
-        Customer customer = customerService.getCustomer(3);
         grid.setItems(orderService.getAllOrders());
     }
 

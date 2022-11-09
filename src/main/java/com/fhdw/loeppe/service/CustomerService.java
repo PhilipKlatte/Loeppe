@@ -24,7 +24,7 @@ public class CustomerService {
 
     public void saveAllCustomers(List<Customer> customers){
         List<CustomerEntity> entitys = mapper.mapAll(customers, CustomerEntity.class);
-        repository.saveAll(entitys);
+        repository.saveAllAndFlush(entitys);
     }
 
     public Customer getCustomer(long id) {
