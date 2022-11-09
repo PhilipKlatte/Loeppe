@@ -24,7 +24,7 @@ public class CustomerInputForm extends FormLayout {
    private final Button save = new Button("Speichern");
    private final Button delete = new Button("Löschen");
    private final Button cancel = new Button("Abbruch");
-   Binder<Customer> binder = new BeanValidationBinder<>(Customer.class);
+   Binder<Customer> binder = new Binder<>(Customer.class);
 
 
    public CustomerInputForm() {

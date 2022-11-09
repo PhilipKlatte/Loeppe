@@ -23,7 +23,7 @@ public class ItemInputForm extends FormLayout {
     private final Button save = new Button("Speichern");
     private final Button delete = new Button("Löschen");
     private final Button cancel = new Button("Abbruch");
-    Binder<Article> binder = new BeanValidationBinder<>(Article.class);
+    Binder<Article> binder = new Binder<>(Article.class);
     Article article;
 
     public ItemInputForm() {

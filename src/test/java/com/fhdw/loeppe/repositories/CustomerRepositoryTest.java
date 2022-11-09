@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
+//@SpringBootTest
 public class CustomerRepositoryTest {
 
     @Autowired
@@ -19,8 +19,8 @@ public class CustomerRepositoryTest {
 
     @BeforeEach
     public void setUp(){
-        CustomerEntity entity = new CustomerEntity("John", "Doe", "Berlin");
-        repository.save(entity);
+        /*CustomerEntity entity = new CustomerEntity("John", "Doe", "Berlin");
+        repository.save(entity);*/
     }
 
     @Test

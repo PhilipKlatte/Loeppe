@@ -32,16 +32,8 @@ public class CustomerListView extends VerticalLayout {
         setSizeFull();
         this.service = service;
 
-        service.saveCustomer(new Customer(1,"Harald", "Bernd", "Coole-Straße"));
-        service.saveCustomer(new Customer(2,"arald", "ernd", "oole-Straße"));
-
         H2 headline = new H2("Kundenliste");
         headline.getStyle().set("margin-top", "10px");
-
-        custId = new IntegerField();
-        custLastName = new TextField();
-        custFirstName = new TextField();
-        custAddress = new TextField();
         custSearch = createCustSearch();
         buttonLayout = createButtons();
 

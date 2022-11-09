@@ -18,7 +18,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
+//@SpringBootTest
 public class OrderRepositoryTest {
 
     @Autowired
@@ -32,7 +32,7 @@ public class OrderRepositoryTest {
 
     @BeforeEach
     public void setUp(){
-        CustomerEntity customer = new CustomerEntity("John", "Doe", "Berlin");
+        /*CustomerEntity customer = new CustomerEntity("John", "Doe", "Berlin");
         customerRepository.save(customer);
 
         ArticleEntity article1 = new ArticleEntity("Taschentücher", "weiß", 1.10);
@@ -41,7 +41,7 @@ public class OrderRepositoryTest {
         articleRepository.saveAll(articles);
 
         OrderEntity entity = new OrderEntity(customer, articles, OrderStatus.PAID);
-        orderRepository.save(entity);
+        orderRepository.save(entity);*/
     }
 
     @Test
