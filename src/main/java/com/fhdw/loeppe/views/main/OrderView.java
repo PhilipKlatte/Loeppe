@@ -39,7 +39,7 @@ public class OrderView extends VerticalLayout {
         this.articleService = articleService;
         this.customerService = customerService;
 
-        createSampleData();
+        //createSampleData();
 
         H2 headline = new H2("Auftragsliste");
         headline.getStyle().set("margin-top", "10px");
@@ -82,18 +82,5 @@ public class OrderView extends VerticalLayout {
 
     private void updateList() {
         grid.setItems(orderService.getAllOrders());
-    }
-
-    private void createSampleData(){
-        Customer customer = new Customer("John", "Doe", "Berlin");
-        customerService.saveCustomer(customer);
-
-        Article article1 = new Article("Taschentücher", "weiß", 1.10);
-        Article article2 = new Article("Handseife", "Aloe Vera", 2.59);
-        List<Article> articles = List.of(article1, article2);
-        articleService.saveAllArticles(articles);
-
-        Order entity = new Order(customer, articles, OrderStatus.PAID);
-        orderService.saveOrder(entity);
     }
 }
