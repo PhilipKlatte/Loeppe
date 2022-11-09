@@ -88,15 +88,15 @@ public class OrderView extends VerticalLayout {
     }
 
     private void createSampleData(){
-        Customer customer = new Customer(3,"John", "Doe", "Berlin");
+        Customer customer = new Customer("John", "Doe", "Berlin");
         customerService.saveCustomer(customer);
 
-        Article article1 = new Article(1L, "Taschentücher", "weiß", 1.10);
-        Article article2 = new Article(2L, "Handseife", "Aloe Vera", 2.59);
+        Article article1 = new Article("Taschentücher", "weiß", 1.10);
+        Article article2 = new Article("Handseife", "Aloe Vera", 2.59);
         List<Article> articles = List.of(article1, article2);
         articleService.saveAllArticles(articles);
 
-        Order entity = new Order(1L, customer, articles, OrderStatus.PAID);
+        Order entity = new Order(customer, articles, OrderStatus.PAID);
         orderService.saveOrder(entity);
     }
 }

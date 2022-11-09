@@ -1,10 +1,7 @@
 package com.fhdw.loeppe.dto;
 
 import com.fhdw.loeppe.util.OrderStatus;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,7 +10,13 @@ import java.util.List;
 public class Order {
 
     private long id;
+
+    @NonNull
     private Customer customer;
+
+    @NonNull
     private List<Article> articles;
+
+    @NonNull
     private OrderStatus orderStatus;
 }
