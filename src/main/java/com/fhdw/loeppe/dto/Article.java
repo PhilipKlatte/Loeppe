@@ -1,9 +1,12 @@
 package com.fhdw.loeppe.dto;
 
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @Data
+@NoArgsConstructor
 public class Article {
 
     private long id;

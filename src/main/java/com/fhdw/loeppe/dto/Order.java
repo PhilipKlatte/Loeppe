@@ -5,8 +5,8 @@ import lombok.*;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @Data
+@NoArgsConstructor
 public class Order {
 
     private long id;

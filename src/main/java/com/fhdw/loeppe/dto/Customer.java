@@ -4,8 +4,8 @@ import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 
-@RequiredArgsConstructor
 @Data
+@NoArgsConstructor
 public class Customer {
 
     private long id;

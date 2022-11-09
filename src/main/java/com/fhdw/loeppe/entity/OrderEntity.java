@@ -9,7 +9,6 @@ import java.util.List;
 
 @Entity
 @Data
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class OrderEntity {
 
@@ -19,7 +18,7 @@ public class OrderEntity {
     private long id;
 
     @ManyToOne
-    @NotEmpty
+    //@NotEmpty
     private CustomerEntity customerEntity;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -28,9 +27,9 @@ public class OrderEntity {
             joinColumns = @JoinColumn(name = "ORD_ID", referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(name = "ART_ID", referencedColumnName = "ID")
     )
-    @NotEmpty
+    //@NotEmpty
     private List<ArticleEntity> articles;
 
-    @NotEmpty
+    //@NotEmpty
     private OrderStatus orderStatus;
 }
