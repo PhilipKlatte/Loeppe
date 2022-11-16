@@ -91,7 +91,7 @@ public class CustomerListView extends VerticalLayout {
 
     private void configureGrid() {
         grid.setSizeFull();
-        grid.setColumns("id", "firstname", "lastname", "address");
+        grid.setColumns("id", "firstname", "lastname", "street");
         grid.asSingleSelect().addValueChangeListener(event -> editCustomer(event.getValue()));
     }
 
