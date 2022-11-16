@@ -15,5 +15,10 @@ public class CustomerEntity {
 
     private String firstname;
     private String lastname;
-    private String address;
+    private String emailAdress;
+    private String phoneNumber;
+    private String street;
+    private String city;
+    private String postalCode;
+    private String country;
 }
