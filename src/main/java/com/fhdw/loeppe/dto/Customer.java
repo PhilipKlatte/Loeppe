@@ -1,5 +1,6 @@
 package com.fhdw.loeppe.dto;
 
+import com.fhdw.loeppe.util.Country;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
@@ -32,5 +33,5 @@ public class Customer {
     private String city;
 
     @NonNull
-    private String country;
+    private Country country;
 }

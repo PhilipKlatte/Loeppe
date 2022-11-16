@@ -1,5 +1,6 @@
 package com.fhdw.loeppe.entity;
 
+import com.fhdw.loeppe.util.Country;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,5 +21,5 @@ public class CustomerEntity {
     private String street;
     private String city;
     private String postalCode;
-    private String country;
+    private Country country;
 }
