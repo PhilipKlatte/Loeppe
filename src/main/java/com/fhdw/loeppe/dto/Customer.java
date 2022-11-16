@@ -1,5 +1,6 @@
 package com.fhdw.loeppe.dto;
 
+import com.fhdw.loeppe.util.Country;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
@@ -17,5 +18,20 @@ public class Customer {
     private String lastname;
 
     @NonNull
-    private String address;
+    private String phoneNumber;
+
+    @NonNull
+    private String emailAdress;
+
+    @NonNull
+    private String street;
+
+    @NonNull
+    private String postalCode;
+
+    @NonNull
+    private String city;
+
+    @NonNull
+    private Country country;
 }
