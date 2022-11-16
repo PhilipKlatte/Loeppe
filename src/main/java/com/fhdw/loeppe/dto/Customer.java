@@ -17,5 +17,20 @@ public class Customer {
     private String lastname;
 
     @NonNull
-    private String address;
+    private String phoneNumber;
+
+    @NonNull
+    private String emailAdress;
+
+    @NonNull
+    private String street;
+
+    @NonNull
+    private String postalCode;
+
+    @NonNull
+    private String city;
+
+    @NonNull
+    private String country;
 }
