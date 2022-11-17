@@ -37,10 +37,6 @@ public class ArticleService {
         return mapper.mapAll(repository.findAll(), Article.class);
     }
 
-    public void updateArticle(Article article) {
-        saveArticle(article);
-    }
-
     public void deleteArticle(Article article) {
         repository.delete(mapper.map(article, ArticleEntity.class));
     }

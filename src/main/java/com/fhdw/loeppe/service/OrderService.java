@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +19,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OrderService {
 
-    private final CustomerRepository customerRepository;
     private final OrderRepository repository;
     private final Mapper mapper;
 
@@ -33,8 +33,10 @@ public class OrderService {
     }
 
     public Order getOrder(long id) {
-        Order order = mapper.map(repository.findById(id), Order.class);
-        order.setCustomer(mapper.map(customerRepository.findById(repository.findById(id).get().getCustomerEntity().getId()), Customer.class));
+        OrderEntity entity = mapper.map(repository.findById(id), OrderEntity.class);
+        Order order = mapper.map(entity, Order.class);
+        order.setCustomer(mapper.map(entity.getCustomerEntity(), Customer.class));
+
         return order;
     }
 
@@ -44,15 +46,11 @@ public class OrderService {
 
         for(int i = 0; i < orderEntities.size(); i++) {
             Order order = mapper.map(orderEntities.get(i), Order.class);
-            order.setCustomer(mapper.map(customerRepository.findById(orderEntities.get(i).getId()), Customer.class));
+            order.setCustomer(mapper.map(orderEntities.get(i).getCustomerEntity(), Customer.class));
             orders.add(order);
         }
 
         return orders;
-    }
-
-    public void updateOrder(Order order) {
-        saveOrder(order);
     }
 
     public void deleteOrder(long id) {

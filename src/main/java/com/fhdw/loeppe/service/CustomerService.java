@@ -35,10 +35,6 @@ public class CustomerService {
         return mapper.mapAll(repository.findAll(), Customer.class);
     }
 
-    public void updateCustomer(Customer customer) {
-        saveCustomer(customer);
-    }
-
     public void deleteCustomer(Customer customer) {
         repository.delete(mapper.map(customer, CustomerEntity.class));
     }
