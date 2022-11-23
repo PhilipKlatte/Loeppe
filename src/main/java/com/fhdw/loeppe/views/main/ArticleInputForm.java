@@ -10,12 +10,11 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
 
-public class ItemInputForm extends FormLayout {
+public class ArticleInputForm extends FormLayout {
 
     final private TextField name = new TextField("Name");
     final private TextField description = new TextField("Beschreibung");
@@ -26,7 +25,7 @@ public class ItemInputForm extends FormLayout {
     Binder<Article> binder = new Binder<>(Article.class);
     Article article;
 
-    public ItemInputForm() {
+    public ArticleInputForm() {
         configurePriceField();
         binder.bindInstanceFields(this);
         add(name, description, price, creatButtonLayout());
@@ -64,10 +63,10 @@ public class ItemInputForm extends FormLayout {
         }
     }
 
-    public static abstract class ItemFormEvent extends ComponentEvent<ItemInputForm> {
+    public static abstract class ItemFormEvent extends ComponentEvent<ArticleInputForm> {
         private Article article;
 
-        protected ItemFormEvent(ItemInputForm source, Article article) {
+        protected ItemFormEvent(ArticleInputForm source, Article article) {
             super(source, false);
             this.article = article;
         }
@@ -78,19 +77,19 @@ public class ItemInputForm extends FormLayout {
     }
 
     public static class SaveEvent extends ItemFormEvent {
-        SaveEvent(ItemInputForm source, Article article) {
+        SaveEvent(ArticleInputForm source, Article article) {
             super(source, article);
         }
     }
 
     public static class DeleteEvent extends ItemFormEvent {
-        DeleteEvent(ItemInputForm source, Article article) {
+        DeleteEvent(ArticleInputForm source, Article article) {
             super(source, article);
         }
     }
 
     public static class CancleEvent extends ItemFormEvent {
-        CancleEvent(ItemInputForm source) {
+        CancleEvent(ArticleInputForm source) {
             super(source, null);
         }
     }
