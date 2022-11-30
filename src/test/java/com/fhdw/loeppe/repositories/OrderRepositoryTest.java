@@ -35,7 +35,7 @@ public class OrderRepositoryTest {
         CustomerEntity customer = new CustomerEntity();
         customer.setFirstname("John");
         customer.setLastname("Doe");
-        customer.setAddress("Berlin");
+        customer.setCity("Berlin");
         customerRepository.save(customer);
 
         ArticleEntity article1 = new ArticleEntity();
@@ -67,7 +67,7 @@ public class OrderRepositoryTest {
         assertThat(result.get().getCustomerEntity().getId()).isEqualTo( 1L);
         assertThat(result.get().getCustomerEntity().getFirstname()).isEqualTo( "John");
         assertThat(result.get().getCustomerEntity().getLastname()).isEqualTo( "Doe");
-        assertThat(result.get().getCustomerEntity().getAddress()).isEqualTo( "Berlin");
+        assertThat(result.get().getCustomerEntity().getCity()).isEqualTo( "Berlin");
 
         assertThat(result.get().getOrderStatus()).isEqualTo(OrderStatus.PAID);
 

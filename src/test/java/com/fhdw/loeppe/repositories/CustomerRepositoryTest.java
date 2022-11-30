@@ -22,7 +22,7 @@ public class CustomerRepositoryTest {
         CustomerEntity entity = new CustomerEntity();
         entity.setFirstname("John");
         entity.setLastname("Doe");
-        entity.setAddress("Berlin");
+        entity.setCity("Berlin");
 
         repository.save(entity);
     }
@@ -35,7 +35,7 @@ public class CustomerRepositoryTest {
         assertThat(result.get().getId()).isEqualTo( 2L); //TODO: Kapselung der Tests; IDs werden fortlaufend vergeben
         assertThat(result.get().getFirstname()).isEqualTo( "John");
         assertThat(result.get().getLastname()).isEqualTo( "Doe");
-        assertThat(result.get().getAddress()).isEqualTo( "Berlin");
+        assertThat(result.get().getCity()).isEqualTo( "Berlin");
     }
 
     @AfterEach
