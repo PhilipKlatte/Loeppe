@@ -1,18 +1,21 @@
 package com.fhdw.loeppe.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.UUID;
 
 @Entity
 @Data
 public class ArticleEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
+    @Type(type = "uuid-char")
     @Column(name = "ID")
-    private long id;
+    private UUID id;
 
     private String name;
     private String description;

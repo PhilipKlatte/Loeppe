@@ -10,10 +10,7 @@ import com.fhdw.loeppe.util.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +29,7 @@ public class OrderService {
         repository.saveAllAndFlush(mapper.mapAll(orders, OrderEntity.class));
     }
 
-    public Order getOrder(long id) {
+    public Order getOrder(UUID id) {
         OrderEntity entity = mapper.map(repository.findById(id), OrderEntity.class);
         Order order = mapper.map(entity, Order.class);
         order.setCustomer(mapper.map(entity.getCustomerEntity(), Customer.class));
@@ -53,7 +50,7 @@ public class OrderService {
         return orders;
     }
 
-    public void deleteOrder(long id) {
+    public void deleteOrder(UUID id) {
         repository.deleteById(id);
     }
 

@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -17,6 +19,8 @@ public class ArticleRepositoryTest {
     @Autowired
     private ArticleRepository repository;
 
+    private UUID entityID;
+
     @BeforeEach
     public void setUp() {
        ArticleEntity entity = new ArticleEntity();
@@ -24,22 +28,23 @@ public class ArticleRepositoryTest {
        entity.setDescription("weiß");
        entity.setPrice(1.10);
 
-       repository.save(entity);
+       entity = repository.save(entity);
+       entityID = entity.getId();
     }
 
     @Test
     public void saveArticleSuccess(){
-        var result = repository.findById(1L);
+        var result = repository.findById(entityID);
 
         assertTrue(result.isPresent());
-        assertThat(result.get().getId()).isEqualTo( 1L);
-        assertThat(result.get().getName()).isEqualTo( "Taschentücher");
-        assertThat(result.get().getDescription()).isEqualTo( "weiß");
-        assertThat(result.get().getPrice()).isEqualTo( 1.10);
+        assertThat(result.get().getId()).isEqualTo(entityID);
+        assertThat(result.get().getName()).isEqualTo("Taschentücher");
+        assertThat(result.get().getDescription()).isEqualTo("weiß");
+        assertThat(result.get().getPrice()).isEqualTo(1.10);
     }
 
     @AfterEach
     public void tearDown(){
-        repository.deleteAll();
+        repository.deleteById(entityID);
     }
 }

@@ -7,10 +7,7 @@ import com.fhdw.loeppe.util.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,7 +26,7 @@ public class ArticleService {
     }
 
 
-    public Article getArticle(long id) {
+    public Article getArticle(UUID id) {
         return mapper.map(repository.findById(id), Article.class);
     }
 

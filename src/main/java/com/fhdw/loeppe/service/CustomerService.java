@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class CustomerService {
         repository.saveAllAndFlush(entitys);
     }
 
-    public Customer getCustomer(long id) {
+    public Customer getCustomer(UUID id) {
         return mapper.map(repository.findById(id), Customer.class);
     }
 
