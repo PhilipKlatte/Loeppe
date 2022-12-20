@@ -9,10 +9,10 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+
 
 @PageTitle("Loeppe | Kunden")
 @Route(value = "customer", layout = LoeppeLayout.class)
@@ -28,12 +28,12 @@ public class CustomerListView extends VerticalLayout {
     private final FormLayout customerSearch;
     private final FormLayout buttonLayout;
 
+
     public CustomerListView(CustomerService service) {
         setSizeFull();
         this.service = service;
         customerSearch = createCustomerSearch();
         buttonLayout = createButtons();
-
         configureGrid();
         configureForm();
         add(getHeader(), getTop(), getContent());
