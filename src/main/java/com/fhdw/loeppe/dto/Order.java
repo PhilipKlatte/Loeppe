@@ -19,4 +19,16 @@ public class Order {
 
     @NonNull
     private OrderStatus orderStatus;
+
+    public Order(long id, Customer customer, OrderStatus status) {
+        this.id = id;
+        this.customer = customer;
+        orderStatus = status;
+    }
+
+    public Order(Customer customer, OrderStatus status) {
+        this.customer = customer;
+        orderStatus = status;
+    }
+
 }

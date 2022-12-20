@@ -2,6 +2,7 @@ package com.fhdw.loeppe.service;
 
 import com.fhdw.loeppe.dto.Article;
 import com.fhdw.loeppe.entity.ArticleEntity;
+import com.fhdw.loeppe.helpers.SearchHelper;
 import com.fhdw.loeppe.repo.ArticleRepository;
 import com.fhdw.loeppe.util.Mapper;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,14 @@ public class ArticleService {
         repository.saveAllAndFlush(Collections.singletonList(mapper.map(articles, ArticleEntity.class)));
     }
 
+    public List<Article> searchArticleWithID(Article art) {
+        final List<Article> repoID = SearchHelper.searchArticleID(getAllArticles(), art.getId());
+        return SearchHelper.searchArticleName(repoID, art.getName());
+    }
+
+    public List<Article> searchArticleWithoutID(Article art) {
+        return SearchHelper.searchArticleName(getAllArticles(), art.getName());
+    }
 
     public Article getArticle(long id) {
         return mapper.map(repository.findById(id), Article.class);

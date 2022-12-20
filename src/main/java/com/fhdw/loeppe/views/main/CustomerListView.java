@@ -9,34 +9,31 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+
 
 @PageTitle("Loeppe | Kunden")
 @Route(value = "customer", layout = LoeppeLayout.class)
 public class CustomerListView extends VerticalLayout {
 
-    private final Grid<Customer> grid = new Grid<>(Customer.class);
-    CustomerInputForm form;
-    private final IntegerField id = new IntegerField();
-    private final TextField lastname = new TextField();
-    private final TextField firstname = new TextField();
-    private final TextField address = new TextField();
+    private final Grid<Customer> grid = new Grid<>(Customer.class, false);
+    private CustomerInputForm form;
+    private final TextField idSearch = new TextField();
+    private final TextField firstnameSearch = new TextField();
+    private final TextField lastnameSearch = new TextField();
+    private final TextField addressSearch = new TextField();
     private final CustomerService service;
-    private final FormLayout custSearch;
+    private final FormLayout customerSearch;
     private final FormLayout buttonLayout;
+
 
     public CustomerListView(CustomerService service) {
         setSizeFull();
         this.service = service;
-
-        H2 headline = new H2("Kundenliste");
-        headline.getStyle().set("margin-top", "10px");
-        custSearch = createCustSearch();
+        customerSearch = createCustomerSearch();
         buttonLayout = createButtons();
-
         configureGrid();
         configureForm();
         add(getHeader(), getTop(), getContent());
@@ -44,41 +41,43 @@ public class CustomerListView extends VerticalLayout {
         closeForm();
     }
 
-    public FormLayout createCustSearch() {
-        FormLayout custSearch = new FormLayout();
-        custSearch.setSizeFull();
-        id.setSizeFull();
-        firstname.setSizeFull();
-        lastname.setSizeFull();
-        address.setSizeFull();
-        custSearch.addFormItem(id, "Kunden-ID");
-        custSearch.addFormItem(firstname, "Vorname");
-        custSearch.addFormItem(lastname, "Nachname");
-        custSearch.addFormItem(address, "Adresse");
+    private FormLayout createCustomerSearch() {
+        FormLayout customerSearch = new FormLayout();
+        customerSearch.setSizeFull();
+        idSearch.setSizeFull();
+        firstnameSearch.setSizeFull();
+        lastnameSearch.setSizeFull();
+        addressSearch.setSizeFull();
+        customerSearch.addFormItem(idSearch, "Kudennummer");
+        customerSearch.addFormItem(firstnameSearch, "Vorname");
+        customerSearch.addFormItem(lastnameSearch, "Nachname");
+        customerSearch.addFormItem(addressSearch, "Adresse");
 
-        return custSearch;
+        return customerSearch;
     }
 
     private FormLayout createButtons() {
-        FormLayout layout = new FormLayout();
-        Button search = new Button("Kunden Hinzufügen");
-        search.addClickListener(click -> addCustomer());
-        layout.add(search);
-        layout.setWidth("25em");
-        return layout;
+        FormLayout buttonLayout = new FormLayout();
+        Button search = new Button("Suchen");
+        search.addClickListener(click -> searchCustomer());
+        Button add = new Button("Kunden Hinzufügen");
+        add.addClickListener(click -> addCustomer());
+        buttonLayout.add(search, add);
+        buttonLayout.setWidth("25em");
+        return buttonLayout;
+    }
+
+    private Component getTop() {
+        HorizontalLayout top = new HorizontalLayout(customerSearch, buttonLayout);
+        top.setFlexGrow(2, customerSearch);
+        top.setFlexGrow(1, buttonLayout);
+        return top;
     }
 
     private H2 getHeader() {
         H2 headline = new H2("Kundenliste");
         headline.getStyle().set("margin-top", "10px");
         return headline;
-    }
-
-    private Component getTop() {
-        HorizontalLayout content = new HorizontalLayout(custSearch, buttonLayout);
-        content.setFlexGrow(2, custSearch);
-        content.setFlexGrow(1, buttonLayout);
-        return content;
     }
 
     private Component getContent() {
@@ -91,7 +90,10 @@ public class CustomerListView extends VerticalLayout {
 
     private void configureGrid() {
         grid.setSizeFull();
-        grid.setColumns("id", "firstname", "lastname", "street");
+        grid.addColumn(Customer::getId).setHeader("Kundennummer");
+        grid.addColumn(Customer::getFirstname).setHeader("Vorname");
+        grid.addColumn(Customer::getLastname).setHeader("Nachname");
+        grid.addColumn(Customer::getAddress).setHeader("Adresse");
         grid.asSingleSelect().addValueChangeListener(event -> editCustomer(event.getValue()));
     }
 
@@ -131,6 +133,27 @@ public class CustomerListView extends VerticalLayout {
 
     private void updateList() {
         grid.setItems(service.getAllCustomer());
+    }
+
+    private void searchCustomer() {
+        if(idSearch.isEmpty() && firstnameSearch.isEmpty() && lastnameSearch.isEmpty() && addressSearch.isEmpty()) {
+            grid.setItems(service.getAllCustomer());
+        } else {
+            if (!idSearch.isEmpty()) {
+                try {
+                    long id = Long.parseLong(idSearch.getValue());
+                    grid.setItems(service.searchCustomerWithID(new Customer(id,
+                                  firstnameSearch.getValue(), lastnameSearch.getValue(),
+                                  addressSearch.getValue())));
+                } catch (NumberFormatException e) {
+                    System.out.println("HEY");
+                }
+            } else {
+                grid.setItems(service.searchCustomerWithoutID(new Customer(
+                        firstnameSearch.getValue(), lastnameSearch.getValue(),
+                        addressSearch.getValue())));
+            }
+        }
     }
 
     private void closeForm() {

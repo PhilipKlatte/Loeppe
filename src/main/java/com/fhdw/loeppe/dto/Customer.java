@@ -1,6 +1,5 @@
 package com.fhdw.loeppe.dto;
 
-import com.fhdw.loeppe.util.Country;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
@@ -18,6 +17,8 @@ public class Customer {
     private String lastname;
 
     @NonNull
+    private String address;
+
     private String phoneNumber;
 
     @NonNull
@@ -34,4 +35,18 @@ public class Customer {
 
     @NonNull
     private Country country;
+
+    public Customer(long id, String firstname, String lastname, String address) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.address = address;
+    }
+
+    public Customer(String firstname, String lastname, String address) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.address = address;
+    }
+
 }
