@@ -1,5 +1,6 @@
 package com.fhdw.loeppe.views.main;
 
+import com.fhdw.loeppe.dto.Customer;
 import com.fhdw.loeppe.dto.Order;
 import com.fhdw.loeppe.service.CustomerService;
 import com.fhdw.loeppe.service.OrderService;
@@ -16,18 +17,19 @@ import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import org.aspectj.weaver.ast.Or;
 
 @PageTitle("Loeppe | Aufträge")
 @Route(value = "auftrag", layout = LoeppeLayout.class)
 public class OrderListView extends VerticalLayout {
 
-    private final Grid<Order> grid = new Grid<>(Order.class);
+    private final Grid<Order> grid = new Grid<>(Order.class, false);
     OrderInputForm form;
     final private IntegerField orderID = new IntegerField();
-    final private IntegerField customerID = new IntegerField();
-    final private TextField customerFirstname = new TextField();
-    final private TextField customerLastname = new TextField();
-    final private TextField customerAddress = new TextField();
+    final private IntegerField custID = new IntegerField();
+    final private TextField custFirstname = new TextField();
+    final private TextField custLastname = new TextField();
+    final private TextField custAddress = new TextField();
     final private ComboBox<OrderStatus> orderStatus = new ComboBox<>();
     private final OrderService service;
     private final CustomerService customerService;
@@ -38,7 +40,6 @@ public class OrderListView extends VerticalLayout {
         setSizeFull();
         this.service = service;
         this.customerService = customerService;
-
         custSearch = createSearchForm();
         buttonLayout = createButtons();
         orderStatus.setItems(OrderStatus.values());
@@ -54,16 +55,16 @@ public class OrderListView extends VerticalLayout {
         layout.setSizeFull();
         
         orderID.setSizeFull();
-        customerID.setSizeFull();
-        customerFirstname.setSizeFull();
-        customerLastname.setSizeFull();
-        customerAddress.setSizeFull();
+        custID.setSizeFull();
+        custFirstname.setSizeFull();
+        custLastname.setSizeFull();
+        custAddress.setSizeFull();
         orderStatus.setSizeFull();
-        layout.addFormItem(orderID, "Auftrags ID");
-        layout.addFormItem(customerID, "Kundennummer");
-        layout.addFormItem(customerFirstname, "Vorname");
-        layout.addFormItem(customerLastname, "Nachname");
-        layout.addFormItem(customerAddress, "Adresse");
+        layout.addFormItem(orderID, "Auftragsnummer");
+        layout.addFormItem(custID, "Kundennummer");
+        layout.addFormItem(custFirstname, "Vorname");
+        layout.addFormItem(custLastname, "Nachname");
+        layout.addFormItem(custAddress, "Adresse");
         layout.addFormItem(orderStatus, "Auftagsstatus");
 
         return layout;
@@ -71,9 +72,11 @@ public class OrderListView extends VerticalLayout {
 
     private FormLayout createButtons() {
         FormLayout layout = new FormLayout();
-        Button search = new Button("Auftrag Hinzufügen");
-        search.addClickListener(click -> addCustomer());
-        layout.add(search);
+        Button search = new Button("Suche");
+        search.addClickListener(click -> searchOrder());
+        Button add = new Button("Auftrag Hinzufügen");
+        add.addClickListener(click -> addCustomer());
+        layout.add(search, add);
         layout.setWidth("25em");
         return layout;
     }
@@ -101,9 +104,9 @@ public class OrderListView extends VerticalLayout {
 
     private void configureGrid() {
         grid.setSizeFull();
-        grid.setColumns("id", "orderStatus");
-
-        grid.addColumn(order -> order.getCustomer().getId()).setHeader("Kunden ID");
+        grid.addColumn(Order::getId).setHeader("Auftragsnummer");
+        grid.addColumn(Order::getOrderStatus).setHeader("Auftragsstatus");
+        grid.addColumn(order -> order.getCustomer().getId()).setHeader("Kundennummer");
         grid.addColumn(order -> order.getCustomer().getFirstname()).setHeader("Vorname");
         grid.addColumn(order -> order.getCustomer().getLastname()).setHeader("Nachname");
         grid.addColumn(order -> order.getCustomer().getAddress()).setHeader("Adresse");
@@ -149,6 +152,36 @@ public class OrderListView extends VerticalLayout {
         service.getAllOrders().forEach(System.out::println);
         grid.setItems(service.getAllOrders());
     }
+
+    private void searchOrder() {
+        if(orderID.isEmpty() && custID.isEmpty() && custFirstname.isEmpty() &&
+        custLastname.isEmpty() && custAddress.isEmpty() && orderStatus.isEmpty()) {
+            grid.setItems(service.getAllOrders());
+        } else {
+            if (!orderID.isEmpty() && !custID.isEmpty()) {
+                long oID = orderID.getValue();
+                long cID = custID.getValue();
+                Customer cust = new Customer(cID, custFirstname.getValue(), custLastname.getValue(), custAddress.getValue());
+                grid.setItems(service.searchOrderWithOrderIDAndCustID(new Order(oID,
+                        cust, orderStatus.getValue())));
+            } else if (orderID.isEmpty() && !custID.isEmpty()) {
+                long cID = custID.getValue();
+                Customer cust = new Customer(cID, custFirstname.getValue(), custLastname.getValue(), custAddress.getValue());
+                grid.setItems(service.searchOrderWithoutOrderIDAndWithCustID((new Order(
+                        cust, orderStatus.getValue()))));
+            } else if(!orderID.isEmpty() && custID.isEmpty()) {
+                long oID = orderID.getValue();
+                Customer cust = new Customer(custFirstname.getValue(), custLastname.getValue(), custAddress.getValue());
+                grid.setItems(service.searchOrderWithOrderIDAndWithoutCustID(new Order(oID,
+                        cust, orderStatus.getValue())));
+            } else if(orderID.isEmpty() && custID.isEmpty()){
+                Customer cust = new Customer(custFirstname.getValue(), custLastname.getValue(), custAddress.getValue());
+                grid.setItems(service.searchOrderWithoutOrderIDAndWithoutCustID(new Order(
+                        cust, orderStatus.getValue())));
+            }
+        }
+    }
+
 
     private void closeForm() {
         form.setVisible(false);

@@ -18,4 +18,18 @@ public class Customer {
 
     @NonNull
     private String address;
+
+    public Customer(long id, String firstname, String lastname, String address) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.address = address;
+    }
+
+
+    public Customer(String firstname, String lastname, String address) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.address = address;
+    }
 }

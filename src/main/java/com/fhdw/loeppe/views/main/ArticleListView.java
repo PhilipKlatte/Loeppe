@@ -6,12 +6,10 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
-import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -20,12 +18,10 @@ import com.vaadin.flow.router.Route;
 @Route(value = "item", layout = LoeppeLayout.class)
 public class ArticleListView extends VerticalLayout {
 
-    final private Grid<Article> grid = new Grid<>(Article.class);
+    final private Grid<Article> grid = new Grid<>(Article.class, false);
     ArticleInputForm form;
-    final private IntegerField id = new IntegerField();
-    final private TextField name = new TextField();
-    final private TextField description = new TextField();
-    final private NumberField price = new NumberField();
+    final private TextField idSearch = new TextField();
+    final private TextField nameSearch = new TextField();
     final private ArticleService service;
     private final FormLayout articleSearch;
     private final FormLayout buttonLayout;
@@ -35,7 +31,6 @@ public class ArticleListView extends VerticalLayout {
         this.service = service;
         articleSearch = createArticleSearch();
         buttonLayout = createButtons();
-        configurePriceField();
         configureGrid();
         configureForm();
         add(getHeader(), getTop(), getContent());
@@ -46,23 +41,20 @@ public class ArticleListView extends VerticalLayout {
     private FormLayout createArticleSearch() {
         FormLayout articleSearch = new FormLayout();
         articleSearch.setSizeFull();
-        id.setSizeFull();
-        name.setSizeFull();
-        description.setSizeFull();
-        price.setSizeFull();
-        articleSearch.addFormItem(id, "Artikelnummer");
-        articleSearch.addFormItem(name, "Artikelname");
-        articleSearch.addFormItem(description, "Beschreibung");
-        articleSearch.addFormItem(price, "Preis");
-
+        idSearch.setSizeFull();
+        nameSearch.setSizeFull();
+        articleSearch.addFormItem(idSearch, "Artikelnummer");
+        articleSearch.addFormItem(nameSearch, "Artikelname");
         return articleSearch;
     }
 
     private FormLayout createButtons() {
         FormLayout buttonLayout = new FormLayout();
-        Button search = new Button("Artikel Hinzufügen");
-        search.addClickListener(click -> addArticle());
-        buttonLayout.add(search);
+        Button search = new Button("Suchen");
+        search.addClickListener(click -> searchArticle());
+        Button add = new Button("Artikel Hinzufügen");
+        add.addClickListener(click -> addArticle());
+        buttonLayout.add(search, add);
         buttonLayout.setWidth("25em");
         return buttonLayout;
     }
@@ -72,12 +64,6 @@ public class ArticleListView extends VerticalLayout {
         top.setFlexGrow(2, articleSearch);
         top.setFlexGrow(1, buttonLayout);
         return top;
-    }
-
-    private void configurePriceField() {
-        Div euroSuffix = new Div();
-        euroSuffix.setText("€");
-        price.setSuffixComponent(euroSuffix);
     }
 
     public H2 getHeader() {
@@ -96,7 +82,10 @@ public class ArticleListView extends VerticalLayout {
 
     private void configureGrid() {
         grid.setSizeFull();
-        grid.setColumns("id", "name", "description", "price");
+        grid.addColumn(Article::getId).setHeader("Artikelnummer");
+        grid.addColumn(Article::getName).setHeader("Artikelname");
+        grid.addColumn(Article::getDescription).setHeader("Beschreibung");
+        grid.addColumn(Article::getPrice).setHeader("Preis");
         grid.asSingleSelect().addValueChangeListener(event -> editArticle(event.getValue()));
     }
 
@@ -136,6 +125,25 @@ public class ArticleListView extends VerticalLayout {
 
     private void updateList() {
         grid.setItems(service.getAllArticles());
+    }
+
+    private void searchArticle() {
+        if(idSearch.isEmpty() && nameSearch.isEmpty()) {
+            grid.setItems(service.getAllArticles());
+        } else {
+            if (!idSearch.isEmpty()) {
+                try {
+                    long id = Long.parseLong(idSearch.getValue());
+                    grid.setItems(service.searchArticleWithID(new Article(id,
+                            nameSearch.getValue())));
+                } catch (NumberFormatException e) {
+                    System.out.println("HEY");
+                }
+            } else {
+                grid.setItems(service.searchArticleWithoutID(new Article(
+                        nameSearch.getValue())));
+            }
+        }
     }
 
     private void closeForm() {

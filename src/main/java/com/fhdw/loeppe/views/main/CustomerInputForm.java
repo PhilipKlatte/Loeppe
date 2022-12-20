@@ -55,7 +55,7 @@ public class CustomerInputForm extends FormLayout {
    }
 
     public static abstract class CustomerFormEvent extends ComponentEvent<CustomerInputForm> {
-        private Customer customer;
+        private final Customer customer;
 
         protected CustomerFormEvent(CustomerInputForm source, Customer customer) {
             super(source, false);
