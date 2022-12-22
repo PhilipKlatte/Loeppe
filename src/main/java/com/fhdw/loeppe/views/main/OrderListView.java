@@ -19,6 +19,9 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.aspectj.weaver.ast.Or;
 
+import javax.annotation.security.PermitAll;
+
+@PermitAll
 @PageTitle("Loeppe | Aufträge")
 @Route(value = "auftrag", layout = LoeppeLayout.class)
 public class OrderListView extends VerticalLayout {
@@ -149,7 +152,6 @@ public class OrderListView extends VerticalLayout {
 
     private void updateList()
     {
-        service.getAllOrders().forEach(System.out::println);
         grid.setItems(service.getAllOrders());
     }
 

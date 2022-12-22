@@ -10,6 +10,9 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import javax.annotation.security.PermitAll;
+
+@PermitAll
 @PageTitle("Loeppe | Startseite")
 @Route(value = "", layout = LoeppeLayout.class)
 public class MainView extends VerticalLayout {
