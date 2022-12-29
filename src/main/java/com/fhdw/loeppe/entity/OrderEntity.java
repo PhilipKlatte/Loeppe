@@ -2,19 +2,22 @@ package com.fhdw.loeppe.entity;
 
 import com.fhdw.loeppe.util.OrderStatus;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
 public class OrderEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
+    @Type(type = "uuid-char")
     @Column(name = "ID")
-    private long id;
+    private UUID id;
 
     @ManyToOne
     private CustomerEntity customerEntity;
