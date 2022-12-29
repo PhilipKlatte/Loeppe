@@ -23,6 +23,7 @@ public class CustomerRepositoryTest {
         entity.setFirstname("John");
         entity.setLastname("Doe");
         entity.setAddress("Berlin");
+        
         repository.save(entity);
     }
 

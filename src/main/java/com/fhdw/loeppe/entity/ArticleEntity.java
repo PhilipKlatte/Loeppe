@@ -7,7 +7,6 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Data
-@RequiredArgsConstructor
 public class ArticleEntity {
 
     @Id
@@ -15,12 +14,7 @@ public class ArticleEntity {
     @Column(name = "ID")
     private long id;
 
-    //@NotEmpty
     private String name;
-
-    //@NotEmpty
     private String description;
-
-    //@NotEmpty
     private Double price;
 }

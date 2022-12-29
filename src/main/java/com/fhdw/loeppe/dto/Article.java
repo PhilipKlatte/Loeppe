@@ -19,4 +19,13 @@ public class Article {
 
     @NonNull
     private Double price;
+
+    public Article(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Article(String name) {
+        this.name = name;
+    }
 }

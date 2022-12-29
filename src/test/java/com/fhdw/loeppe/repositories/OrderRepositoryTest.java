@@ -42,10 +42,12 @@ public class OrderRepositoryTest {
         article1.setName("Taschentücher");
         article1.setDescription("weiß");
         article1.setPrice(1.10);
+        
         ArticleEntity article2 = new ArticleEntity();
         article2.setName("Handseife");
         article2.setDescription("Aloe Vera");
         article2.setPrice(2.59);
+        
         List<ArticleEntity> articles = List.of(article1, article2);
         articleRepository.saveAll(articles);
 

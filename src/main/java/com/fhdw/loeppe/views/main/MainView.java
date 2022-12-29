@@ -4,7 +4,6 @@ import com.fhdw.loeppe.service.TestService;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
@@ -20,9 +19,6 @@ public class MainView extends VerticalLayout {
     private final TestView testView = new TestView(new TestService());
 
     public MainView() {
-        Image flo = new Image("images/Flo.png", "Flo");
-        flo.getStyle().set("margin", "auto");
-
         H1 welcome = new H1("Willkommen in der Loeppe Auftagsverwaltung");
         welcome.getStyle().set("margin-top", "10px")
                           .set("margin-bottom", "10px");
@@ -33,7 +29,7 @@ public class MainView extends VerticalLayout {
 
         configureTextFields();
 
-        add(flo, welcome, user, createLoggedInAs(), testView);
+        add(welcome, user, createLoggedInAs(), testView);
     }
 
     private void configureTextFields() {

@@ -19,11 +19,12 @@ public class ArticleRepositoryTest {
 
     @BeforeEach
     public void setUp() {
-        ArticleEntity entity = new ArticleEntity();
-        entity.setName("Taschentücher");
-        entity.setDescription("weiß");
-        entity.setPrice(1.10);
-        repository.save(entity);
+       ArticleEntity entity = new ArticleEntity();
+       entity.setName("Taschentücher");
+       entity.setDescription("weiß");
+       entity.setPrice(1.10);
+
+       repository.save(entity);
     }
 
     @Test

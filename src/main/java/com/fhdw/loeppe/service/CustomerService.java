@@ -2,6 +2,7 @@ package com.fhdw.loeppe.service;
 
 import com.fhdw.loeppe.entity.CustomerEntity;
 import com.fhdw.loeppe.dto.Customer;
+import com.fhdw.loeppe.helpers.SearchHelper;
 import com.fhdw.loeppe.repo.CustomerRepository;
 import com.fhdw.loeppe.util.Mapper;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,21 @@ public class CustomerService {
         repository.saveAllAndFlush(entitys);
     }
 
+    public List<Customer> searchCustomerWithID(Customer cust) {
+        final List<Customer> repoID = SearchHelper.searchCustID(getAllCustomer(), cust.getId());
+        final List<Customer> repoFirstName = SearchHelper.searchCustFirstN(repoID, cust.getFirstname());
+        final List<Customer> repoLastName = SearchHelper.searchCustLarstN(repoFirstName, cust.getLastname());
+
+        return SearchHelper.searchCustAddress(repoLastName, cust.getAddress());
+    }
+
+    public List<Customer> searchCustomerWithoutID(Customer cust) {
+        final List<Customer> repoFirstName = SearchHelper.searchCustFirstN(getAllCustomer(), cust.getFirstname());
+        final List<Customer> repoLastName = SearchHelper.searchCustLarstN(repoFirstName, cust.getLastname());
+
+        return SearchHelper.searchCustAddress(repoLastName,cust.getAddress());
+    }
+
     public Customer getCustomer(long id) {
         return mapper.map(repository.findById(id), Customer.class);
     }
@@ -39,8 +55,8 @@ public class CustomerService {
         saveCustomer(customer);
     }
 
-    public void deleteCustomer(long id) {
-        repository.deleteById(id);
+    public void deleteCustomer(Customer customer) {
+        repository.delete(mapper.map(customer, CustomerEntity.class));
     }
 
     public void deleteAllCustomers() {

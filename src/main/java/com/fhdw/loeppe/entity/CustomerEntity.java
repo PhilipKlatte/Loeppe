@@ -1,9 +1,9 @@
 package com.fhdw.loeppe.entity;
 
+import com.fhdw.loeppe.util.Country;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Data
@@ -13,12 +13,12 @@ public class CustomerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    //@NotEmpty
     private String firstname;
-
-    //@NotEmpty
     private String lastname;
-
-    //@NotEmpty
-    private String address;
+    private String emailAdress;
+    private String phoneNumber;
+    private String street;
+    private String city;
+    private String postalCode;
+    private Country country;
 }
