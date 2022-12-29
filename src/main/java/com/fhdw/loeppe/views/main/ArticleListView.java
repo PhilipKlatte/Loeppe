@@ -14,9 +14,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-import javax.annotation.security.PermitAll;
-
-@PermitAll
 @PageTitle("Loeppe | Artikel")
 @Route(value = "item", layout = LoeppeLayout.class)
 public class ArticleListView extends VerticalLayout {
