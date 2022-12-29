@@ -9,10 +9,11 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+
+import java.util.UUID;
 
 @PageTitle("Loeppe | Artikel")
 @Route(value = "item", layout = LoeppeLayout.class)
@@ -133,7 +134,7 @@ public class ArticleListView extends VerticalLayout {
         } else {
             if (!idSearch.isEmpty()) {
                 try {
-                    long id = Long.parseLong(idSearch.getValue());
+                    UUID id = UUID.fromString(idSearch.getValue());
                     grid.setItems(service.searchArticleWithID(new Article(id,
                             nameSearch.getValue())));
                 } catch (NumberFormatException e) {

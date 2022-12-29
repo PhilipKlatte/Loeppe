@@ -3,13 +3,14 @@ package com.fhdw.loeppe.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 public class Article {
 
-    private long id;
+    private UUID id;
 
     @NonNull
     private String name;
@@ -20,7 +21,7 @@ public class Article {
     @NonNull
     private Double price;
 
-    public Article(long id, String name) {
+    public Article(UUID id, String name) {
         this.id = id;
         this.name = name;
     }

@@ -4,12 +4,13 @@ import com.fhdw.loeppe.util.OrderStatus;
 import lombok.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 public class Order {
 
-    private long id;
+    private UUID id;
 
     @NonNull
     private Customer customer;
@@ -20,7 +21,7 @@ public class Order {
     @NonNull
     private OrderStatus orderStatus;
 
-    public Order(long id, Customer customer, OrderStatus status) {
+    public Order(UUID id, Customer customer, OrderStatus status) {
         this.id = id;
         this.customer = customer;
         orderStatus = status;

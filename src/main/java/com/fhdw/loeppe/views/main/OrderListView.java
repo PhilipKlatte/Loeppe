@@ -13,11 +13,11 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import org.aspectj.weaver.ast.Or;
+
+import java.util.UUID;
 
 @PageTitle("Loeppe | Aufträge")
 @Route(value = "auftrag", layout = LoeppeLayout.class)
@@ -25,8 +25,8 @@ public class OrderListView extends VerticalLayout {
 
     private final Grid<Order> grid = new Grid<>(Order.class, false);
     OrderInputForm form;
-    final private IntegerField orderID = new IntegerField();
-    final private IntegerField custID = new IntegerField();
+    final private TextField orderID = new TextField();
+    final private TextField custID = new TextField();
     final private TextField custFirstname = new TextField();
     final private TextField custLastname = new TextField();
     final private TextField custAddress = new TextField();
@@ -159,18 +159,18 @@ public class OrderListView extends VerticalLayout {
             grid.setItems(service.getAllOrders());
         } else {
             if (!orderID.isEmpty() && !custID.isEmpty()) {
-                long oID = orderID.getValue();
-                long cID = custID.getValue();
+                UUID oID = UUID.fromString(orderID.getValue());
+                UUID cID = UUID.fromString(custID.getValue());
                 Customer cust = new Customer(cID, custFirstname.getValue(), custLastname.getValue(), custAddress.getValue());
                 grid.setItems(service.searchOrderWithOrderIDAndCustID(new Order(oID,
                         cust, orderStatus.getValue())));
             } else if (orderID.isEmpty() && !custID.isEmpty()) {
-                long cID = custID.getValue();
+                UUID cID = UUID.fromString(custID.getValue());
                 Customer cust = new Customer(cID, custFirstname.getValue(), custLastname.getValue(), custAddress.getValue());
                 grid.setItems(service.searchOrderWithoutOrderIDAndWithCustID((new Order(
                         cust, orderStatus.getValue()))));
             } else if(!orderID.isEmpty() && custID.isEmpty()) {
-                long oID = orderID.getValue();
+                UUID oID = UUID.fromString(orderID.getValue());
                 Customer cust = new Customer(custFirstname.getValue(), custLastname.getValue(), custAddress.getValue());
                 grid.setItems(service.searchOrderWithOrderIDAndWithoutCustID(new Order(oID,
                         cust, orderStatus.getValue())));

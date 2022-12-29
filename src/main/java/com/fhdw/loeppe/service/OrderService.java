@@ -1,9 +1,9 @@
 package com.fhdw.loeppe.service;
 
 import com.fhdw.loeppe.dto.Customer;
+import com.fhdw.loeppe.dto.Order;
 import com.fhdw.loeppe.entity.CustomerEntity;
 import com.fhdw.loeppe.entity.OrderEntity;
-import com.fhdw.loeppe.dto.Order;
 import com.fhdw.loeppe.helpers.SearchHelper;
 import com.fhdw.loeppe.repo.CustomerRepository;
 import com.fhdw.loeppe.repo.OrderRepository;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -64,7 +65,7 @@ public class OrderService {
         return SearchHelper.searchOrderStatus(repoCustAddress, order.getOrderStatus());
     }
 
-    public Order getOrder(long id) {
+    public Order getOrder(UUID id) {
         Order order = mapper.map(orderRepository.findById(id), Order.class);
         order.setCustomer(mapper.map(customerRepository.findById(orderRepository.findById(id).get().getCustomerEntity().getId()), Customer.class));
         return order;
@@ -87,7 +88,7 @@ public class OrderService {
         saveOrder(order);
     }
 
-    public void deleteOrder(long id) {
+    public void deleteOrder(UUID id) {
         orderRepository.deleteById(id);
     }
 

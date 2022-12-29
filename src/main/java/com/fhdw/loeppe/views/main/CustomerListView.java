@@ -13,6 +13,8 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import java.util.UUID;
+
 
 @PageTitle("Loeppe | Kunden")
 @Route(value = "customer", layout = LoeppeLayout.class)
@@ -141,7 +143,7 @@ public class CustomerListView extends VerticalLayout {
         } else {
             if (!idSearch.isEmpty()) {
                 try {
-                    long id = Long.parseLong(idSearch.getValue());
+                    UUID id = UUID.fromString(idSearch.getValue());
                     grid.setItems(service.searchCustomerWithID(new Customer(id,
                                   firstnameSearch.getValue(), lastnameSearch.getValue(),
                                   addressSearch.getValue())));

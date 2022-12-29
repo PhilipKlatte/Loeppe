@@ -8,10 +8,7 @@ import com.fhdw.loeppe.util.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,16 +35,12 @@ public class ArticleService {
         return SearchHelper.searchArticleName(getAllArticles(), art.getName());
     }
 
-    public Article getArticle(long id) {
+    public Article getArticle(UUID id) {
         return mapper.map(repository.findById(id), Article.class);
     }
 
     public List<Article> getAllArticles(){
         return mapper.mapAll(repository.findAll(), Article.class);
-    }
-
-    public void updateArticle(Article article) {
-        saveArticle(article);
     }
 
     public void deleteArticle(Article article) {

@@ -5,11 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 public class Customer {
 
-    private long id;
+    private UUID id;
 
     @NonNull
     private String firstname;
@@ -37,7 +39,7 @@ public class Customer {
     @NonNull
     private Country country;
 
-    public Customer(long id, String firstname, String lastname, String address) {
+    public Customer(UUID id, String firstname, String lastname, String address) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;

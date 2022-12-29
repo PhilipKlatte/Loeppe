@@ -1,16 +1,15 @@
 package com.fhdw.loeppe.service;
 
-import com.fhdw.loeppe.entity.CustomerEntity;
 import com.fhdw.loeppe.dto.Customer;
+import com.fhdw.loeppe.entity.CustomerEntity;
 import com.fhdw.loeppe.helpers.SearchHelper;
 import com.fhdw.loeppe.repo.CustomerRepository;
 import com.fhdw.loeppe.util.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +42,7 @@ public class CustomerService {
         return SearchHelper.searchCustAddress(repoLastName,cust.getAddress());
     }
 
-    public Customer getCustomer(long id) {
+    public Customer getCustomer(UUID id) {
         return mapper.map(repository.findById(id), Customer.class);
     }
 

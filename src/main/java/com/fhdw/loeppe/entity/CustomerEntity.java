@@ -1,17 +1,22 @@
 package com.fhdw.loeppe.entity;
 
 import com.fhdw.loeppe.util.Country;
-import lombok.*;
+import lombok.Data;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.util.UUID;
 
 @Entity
 @Data
 public class CustomerEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue
+    @Type(type = "uuid-char")
+    private UUID id;
 
     private String firstname;
     private String lastname;
