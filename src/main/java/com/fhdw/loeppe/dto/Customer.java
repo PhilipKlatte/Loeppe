@@ -20,23 +20,6 @@ public class Customer {
     @NonNull
     private String address;
 
-    private String phoneNumber;
-
-    @NonNull
-    private String emailAdress;
-
-    @NonNull
-    private String street;
-
-    @NonNull
-    private String postalCode;
-
-    @NonNull
-    private String city;
-
-    @NonNull
-    private Country country;
-
     public Customer(long id, String firstname, String lastname, String address) {
         this.id = id;
         this.firstname = firstname;
