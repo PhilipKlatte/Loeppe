@@ -1,7 +1,9 @@
 package com.fhdw.loeppe.dto;
 
-import lombok.*;
-
+import com.fhdw.loeppe.util.Country;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Data
 @NoArgsConstructor
