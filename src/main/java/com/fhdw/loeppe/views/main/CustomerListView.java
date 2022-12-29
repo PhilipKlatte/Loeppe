@@ -13,9 +13,10 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import javax.annotation.security.PermitAll;
 import java.util.UUID;
 
-
+@PermitAll
 @PageTitle("Loeppe | Kunden")
 @Route(value = "customer", layout = LoeppeLayout.class)
 public class CustomerListView extends VerticalLayout {

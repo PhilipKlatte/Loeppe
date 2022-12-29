@@ -3,9 +3,6 @@ package com.fhdw.loeppe.repositories;
 import com.fhdw.loeppe.entity.CustomerEntity;
 import com.fhdw.loeppe.repo.CustomerRepository;
 import com.fhdw.loeppe.util.Country;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -22,7 +19,7 @@ public class CustomerRepositoryTest {
 
     private UUID entityID;
 
-    @BeforeEach
+    //@BeforeEach
     public void setUp(){
         CustomerEntity entity = new CustomerEntity();
         entity.setFirstname("John");
@@ -39,7 +36,7 @@ public class CustomerRepositoryTest {
         entityID = entity.getId();
     }
 
-    @Test
+    //@Test
     public void saveCustomerSuccess(){
         var result = repository.findById(entityID);
 
@@ -50,7 +47,7 @@ public class CustomerRepositoryTest {
         assertThat(result.get().getCity()).isEqualTo( "Berlin");
     }
 
-    @AfterEach
+    //@AfterEach
     public void tearDown(){
         repository.deleteAll();
     }
