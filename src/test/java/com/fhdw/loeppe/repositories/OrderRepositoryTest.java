@@ -28,9 +28,13 @@ public class OrderRepositoryTest {
     @Autowired
     private ArticleRepository articleRepository;
 
+    CustomerEntity customer = new CustomerEntity();
+    ArticleEntity article1 = new ArticleEntity();
+    ArticleEntity article2 = new ArticleEntity();
+    OrderEntity order = new OrderEntity();
+
     //@BeforeEach
     public void setUp(){
-        CustomerEntity customer = new CustomerEntity();
         customer.setFirstname("John");
         customer.setLastname("Doe");
         customer.setCity("Berlin");
@@ -38,36 +42,34 @@ public class OrderRepositoryTest {
         customer.setPostalCode("12345");
         customer.setEmailAdress("johndoe@mail.com");
         customer.setPhoneNumber("12345 / 4321");
-        customerRepository.save(customer);
+        customer = customerRepository.save(customer);
 
-        ArticleEntity article1 = new ArticleEntity();
         article1.setName("Taschentücher");
         article1.setDescription("weiß");
         article1.setPrice(1.10);
+        article1 = articleRepository.save(article1);
         
-        ArticleEntity article2 = new ArticleEntity();
         article2.setName("Handseife");
         article2.setDescription("Aloe Vera");
         article2.setPrice(2.59);
-        
-        List<ArticleEntity> articles = List.of(article1, article2);
-        articleRepository.saveAll(articles);
+        article2 = articleRepository.save(article2);
 
-        OrderEntity entity = new OrderEntity();
-        entity.setCustomerEntity(customer);
-        entity.setArticles(articles);
-        entity.setOrderStatus(OrderStatus.PAID);
-        orderRepository.save(entity);
+        List<ArticleEntity> articles = List.of(article1, article2);
+
+        order.setCustomerEntity(customer);
+        order.setArticles(articles);
+        order.setOrderStatus(OrderStatus.PAID);
+        order = orderRepository.save(order);
     }
 
     //@Test
     public void saveOrderSuccess(){
-        var result = orderRepository.findById(1L);
+        var result = orderRepository.findById(order.getId());
 
         assertTrue(result.isPresent());
-        assertThat(result.get().getId()).isEqualTo( 1L);
+        assertThat(result.get().getId()).isEqualTo(order.getId());
 
-        assertThat(result.get().getCustomerEntity().getId()).isEqualTo(1L);
+        assertThat(result.get().getCustomerEntity().getId()).isEqualTo(customer.getId());
         assertThat(result.get().getCustomerEntity().getFirstname()).isEqualTo("John");
         assertThat(result.get().getCustomerEntity().getLastname()).isEqualTo("Doe");
         assertThat(result.get().getCustomerEntity().getCity()).isEqualTo("Berlin");
@@ -78,11 +80,11 @@ public class OrderRepositoryTest {
 
         assertThat(result.get().getOrderStatus()).isEqualTo(OrderStatus.PAID);
 
-        assertThat(result.get().getArticles().get(0).getId()).isEqualTo( 2L); //TODO: Kapselung der Tests; IDs werden fortlaufend vergeben
+        assertThat(result.get().getArticles().get(0).getId()).isEqualTo(article1.getId()); //TODO: Kapselung der Tests; IDs werden fortlaufend vergeben
         assertThat(result.get().getArticles().get(0).getName()).isEqualTo( "Taschentücher");
         assertThat(result.get().getArticles().get(0).getDescription()).isEqualTo( "weiß");
         assertThat(result.get().getArticles().get(0).getPrice()).isEqualTo( 1.10);
-        assertThat(result.get().getArticles().get(1).getId()).isEqualTo( 3L); //TODO: Kapselung der Tests; IDs werden fortlaufend vergeben
+        assertThat(result.get().getArticles().get(1).getId()).isEqualTo(article2.getId()); //TODO: Kapselung der Tests; IDs werden fortlaufend vergeben
         assertThat(result.get().getArticles().get(1).getName()).isEqualTo( "Handseife");
         assertThat(result.get().getArticles().get(1).getDescription()).isEqualTo( "Aloe Vera");
         assertThat(result.get().getArticles().get(1).getPrice()).isEqualTo( 2.59);

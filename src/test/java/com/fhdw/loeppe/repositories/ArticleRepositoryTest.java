@@ -14,22 +14,24 @@ public class ArticleRepositoryTest {
     @Autowired
     private ArticleRepository repository;
 
+    ArticleEntity article = new ArticleEntity();
+
+
     //@BeforeEach
     public void setUp() {
-       ArticleEntity entity = new ArticleEntity();
-       entity.setName("Taschentücher");
-       entity.setDescription("weiß");
-       entity.setPrice(1.10);
+       article.setName("Taschentücher");
+       article.setDescription("weiß");
+       article.setPrice(1.10);
 
-       repository.save(entity);
+       article = repository.save(article);
     }
 
     //@Test
     public void saveArticleSuccess(){
-        var result = repository.findById(1L);
+        var result = repository.findById(article.getId());
 
         assertTrue(result.isPresent());
-        assertThat(result.get().getId()).isEqualTo( 1L);
+        assertThat(result.get().getId()).isEqualTo(article.getId());
         assertThat(result.get().getName()).isEqualTo( "Taschentücher");
         assertThat(result.get().getDescription()).isEqualTo( "weiß");
         assertThat(result.get().getPrice()).isEqualTo( 1.10);

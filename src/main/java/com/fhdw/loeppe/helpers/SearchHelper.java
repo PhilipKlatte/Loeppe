@@ -6,11 +6,12 @@ import com.fhdw.loeppe.dto.Order;
 import com.fhdw.loeppe.util.OrderStatus;
 
 import java.util.List;
+import java.util.UUID;
 
 public class SearchHelper {
 
     //Customer
-    public static List<Customer> searchCustID(List<Customer> repo, long id) {
+    public static List<Customer> searchCustID(List<Customer> repo, UUID id) {
         if(!repo.isEmpty()) {
             for (int i = 0; i < repo.size(); i++) {
                 if (repo.get(i).getId() != id) {
@@ -59,7 +60,7 @@ public class SearchHelper {
     }
 
     //Article
-    public static List<Article> searchArticleID(List<Article> repo, long id) {
+    public static List<Article> searchArticleID(List<Article> repo, UUID id) {
         if(!repo.isEmpty()) {
             for (int i = 0; i < repo.size(); i++) {
                 if (repo.get(i).getId() != id) {
@@ -84,7 +85,7 @@ public class SearchHelper {
     }
 
     //Order
-    public static List<Order> searchOrderID(List<Order> repo, long id) {
+    public static List<Order> searchOrderID(List<Order> repo, UUID id) {
         if(!repo.isEmpty()) {
             for (int i = 0; i < repo.size(); i++) {
                 if (repo.get(i).getId() != id) {
@@ -96,7 +97,7 @@ public class SearchHelper {
         return repo;
     }
 
-    public static List<Order> searchOrderCustID(List<Order> repo, long id) {
+    public static List<Order> searchOrderCustID(List<Order> repo, UUID id) {
         if(!repo.isEmpty()) {
             for (int i = 0; i < repo.size(); i++) {
                 if (repo.get(i).getCustomer().getId() != id) {
