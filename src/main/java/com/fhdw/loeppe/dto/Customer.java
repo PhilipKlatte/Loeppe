@@ -20,36 +20,32 @@ public class Customer {
     private String lastname;
 
     @NonNull
-    private String address;
+    private String emailAdress;
 
     private String phoneNumber;
-
-    @NonNull
-    private String emailAdress;
 
     @NonNull
     private String street;
 
     @NonNull
-    private String postalCode;
+    private String city;
 
     @NonNull
-    private String city;
+    private String postalCode;
 
     @NonNull
     private Country country;
 
-    public Customer(UUID id, String firstname, String lastname, String address) {
-        this.id = id;
+    public Customer(String firstname, String lastname, String emailAdress, String phoneNumber,
+                    String street, String city, String postalCode, Country country) {
         this.firstname = firstname;
         this.lastname = lastname;
-        this.address = address;
-    }
-
-    public Customer(String firstname, String lastname, String address) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.address = address;
+        this.emailAdress = emailAdress;
+        this.phoneNumber = phoneNumber;
+        this.street = street;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.country = country;
     }
 
 }

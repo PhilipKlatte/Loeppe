@@ -2,8 +2,10 @@ package com.fhdw.loeppe.views.main;
 
 import com.fhdw.loeppe.dto.Customer;
 import com.fhdw.loeppe.service.CustomerService;
+import com.fhdw.loeppe.util.Country;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
@@ -14,7 +16,6 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 import javax.annotation.security.PermitAll;
-import java.util.UUID;
 
 @PermitAll
 @PageTitle("Loeppe | Kunden")
@@ -26,7 +27,12 @@ public class CustomerListView extends VerticalLayout {
     private final TextField idSearch = new TextField();
     private final TextField firstnameSearch = new TextField();
     private final TextField lastnameSearch = new TextField();
-    private final TextField addressSearch = new TextField();
+    private final TextField emailSearch = new TextField();
+    private final TextField phoneSearch = new TextField();
+    private final TextField streetSearch = new TextField();
+    private final TextField citySearch = new TextField();
+    private final TextField postalSearch = new TextField();
+    private final ComboBox<Country> countrySearch = new ComboBox<>();
     private final CustomerService service;
     private final FormLayout customerSearch;
     private final FormLayout buttonLayout;
@@ -50,11 +56,22 @@ public class CustomerListView extends VerticalLayout {
         idSearch.setSizeFull();
         firstnameSearch.setSizeFull();
         lastnameSearch.setSizeFull();
-        addressSearch.setSizeFull();
+        emailSearch.setSizeFull();
+        phoneSearch.setSizeFull();
+        streetSearch.setSizeFull();
+        citySearch.setSizeFull();
+        postalSearch.setSizeFull();
+        countrySearch.setSizeFull();
+        countrySearch.setItems(Country.values());
         customerSearch.addFormItem(idSearch, "Kudennummer");
         customerSearch.addFormItem(firstnameSearch, "Vorname");
         customerSearch.addFormItem(lastnameSearch, "Nachname");
-        customerSearch.addFormItem(addressSearch, "Adresse");
+        customerSearch.addFormItem(emailSearch, "Email");
+        customerSearch.addFormItem(phoneSearch, "Telefon");
+        customerSearch.addFormItem(streetSearch, "Straße");
+        customerSearch.addFormItem(citySearch, "Stadt");
+        customerSearch.addFormItem(postalSearch, "Postleitzahl");
+        customerSearch.addFormItem(countrySearch, "Land");
 
         return customerSearch;
     }
@@ -96,8 +113,15 @@ public class CustomerListView extends VerticalLayout {
         grid.addColumn(Customer::getId).setHeader("Kundennummer");
         grid.addColumn(Customer::getFirstname).setHeader("Vorname");
         grid.addColumn(Customer::getLastname).setHeader("Nachname");
-        grid.addColumn(Customer::getAddress).setHeader("Adresse");
+        grid.addColumn(Customer::getEmailAdress).setHeader("Email");
+        grid.addColumn(Customer::getPhoneNumber).setHeader("Telefonnummer");
+        grid.addColumn(Customer::getStreet).setHeader("Straße");
+        grid.addColumn(Customer::getCity).setHeader("Stadt");
+        grid.addColumn(Customer::getPostalCode).setHeader("Postleitzahl");
+        grid.addColumn(Customer::getCountry).setHeader("Land");
         grid.asSingleSelect().addValueChangeListener(event -> editCustomer(event.getValue()));
+        grid.getColumns().forEach(e -> e.setResizable(true));
+        grid.getColumns().forEach(e -> e.setAutoWidth(true));
     }
 
     private void editCustomer(Customer customer) {
@@ -139,23 +163,15 @@ public class CustomerListView extends VerticalLayout {
     }
 
     private void searchCustomer() {
-        if(idSearch.isEmpty() && firstnameSearch.isEmpty() && lastnameSearch.isEmpty() && addressSearch.isEmpty()) {
+        if(idSearch.isEmpty() && firstnameSearch.isEmpty() && lastnameSearch.isEmpty() &&
+                emailSearch.isEmpty() && phoneSearch.isEmpty() && streetSearch.isEmpty() &&
+                citySearch.isEmpty() && postalSearch.isEmpty() && countrySearch.isEmpty()) {
             grid.setItems(service.getAllCustomer());
         } else {
-            if (!idSearch.isEmpty()) {
-                try {
-                    UUID id = UUID.fromString(idSearch.getValue());
-                    grid.setItems(service.searchCustomerWithID(new Customer(id,
-                                  firstnameSearch.getValue(), lastnameSearch.getValue(),
-                                  addressSearch.getValue())));
-                } catch (NumberFormatException e) {
-                    System.out.println("HEY");
-                }
-            } else {
-                grid.setItems(service.searchCustomerWithoutID(new Customer(
-                        firstnameSearch.getValue(), lastnameSearch.getValue(),
-                        addressSearch.getValue())));
-            }
+            grid.setItems(service.searchCustomer(idSearch.getValue(), new Customer(
+                    firstnameSearch.getValue(), lastnameSearch.getValue(), emailSearch.getValue(),
+                    phoneSearch.getValue(), streetSearch.getValue(), citySearch.getValue(),
+                    postalSearch.getValue(), countrySearch.getValue())));
         }
     }
 

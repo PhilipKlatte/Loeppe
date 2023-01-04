@@ -14,7 +14,6 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 import javax.annotation.security.PermitAll;
-import java.util.UUID;
 
 @PermitAll
 @PageTitle("Loeppe | Artikel")
@@ -90,6 +89,8 @@ public class ArticleListView extends VerticalLayout {
         grid.addColumn(Article::getDescription).setHeader("Beschreibung");
         grid.addColumn(Article::getPrice).setHeader("Preis");
         grid.asSingleSelect().addValueChangeListener(event -> editArticle(event.getValue()));
+        grid.getColumns().forEach(e -> e.setResizable(true));
+        grid.getColumns().forEach(e -> e.setAutoWidth(true));
     }
 
     private void editArticle(Article article) {
@@ -134,18 +135,8 @@ public class ArticleListView extends VerticalLayout {
         if(idSearch.isEmpty() && nameSearch.isEmpty()) {
             grid.setItems(service.getAllArticles());
         } else {
-            if (!idSearch.isEmpty()) {
-                try {
-                    UUID id = UUID.fromString(idSearch.getValue());
-                    grid.setItems(service.searchArticleWithID(new Article(id,
-                            nameSearch.getValue())));
-                } catch (NumberFormatException e) {
-                    System.out.println("HEY");
-                }
-            } else {
-                grid.setItems(service.searchArticleWithoutID(new Article(
+            grid.setItems(service.searchArticle(idSearch.getValue(), new Article(
                         nameSearch.getValue())));
-            }
         }
     }
 

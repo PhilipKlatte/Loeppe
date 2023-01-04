@@ -3,6 +3,7 @@ package com.fhdw.loeppe.helpers;
 import com.fhdw.loeppe.dto.Article;
 import com.fhdw.loeppe.dto.Customer;
 import com.fhdw.loeppe.dto.Order;
+import com.fhdw.loeppe.util.Country;
 import com.fhdw.loeppe.util.OrderStatus;
 
 import java.util.List;
@@ -11,10 +12,10 @@ import java.util.UUID;
 public class SearchHelper {
 
     //Customer
-    public static List<Customer> searchCustID(List<Customer> repo, UUID id) {
-        if(!repo.isEmpty()) {
+    public static List<Customer> searchCustID(List<Customer> repo, String custID) {
+        if(!custID.isEmpty() && !repo.isEmpty()) {
             for (int i = 0; i < repo.size(); i++) {
-                if (repo.get(i).getId() != id) {
+                if (!repo.get(i).getId().toString().contains(custID)) {
                     repo.remove(i);
                     i--;
                 }
@@ -47,10 +48,70 @@ public class SearchHelper {
         return repo;
     }
 
-    public static List<Customer> searchCustAddress(List<Customer> repo, String address) {
-        if(!address.isEmpty() && !repo.isEmpty()) {
+    public static List<Customer> searchCustEmail(List<Customer> repo, String email) {
+        if(!email.isEmpty() && !repo.isEmpty()) {
             for(int i = 0; i < repo.size(); i++) {
-                if(!repo.get(i).getAddress().toLowerCase().contains(address.toLowerCase())) {
+                if(!repo.get(i).getEmailAdress().toLowerCase().contains(email.toLowerCase())) {
+                    repo.remove(i);
+                    i--;
+                }
+            }
+        }
+        return repo;
+    }
+
+    public static List<Customer> searchCustPhone(List<Customer> repo, String phone) {
+        if(!phone.isEmpty() && !repo.isEmpty()) {
+            for(int i = 0; i < repo.size(); i++) {
+                if(!repo.get(i).getPhoneNumber().toLowerCase().contains(phone.toLowerCase())) {
+                    repo.remove(i);
+                    i--;
+                }
+            }
+        }
+        return repo;
+    }
+
+    public static List<Customer> searchCustStreet(List<Customer> repo, String street) {
+        if(!street.isEmpty() && !repo.isEmpty()) {
+            for(int i = 0; i < repo.size(); i++) {
+                if(!repo.get(i).getStreet().toLowerCase().contains(street.toLowerCase())) {
+                    repo.remove(i);
+                    i--;
+                }
+            }
+        }
+        return repo;
+    }
+
+    public static List<Customer> searchCustCity(List<Customer> repo, String city) {
+        if(!city.isEmpty() && !repo.isEmpty()) {
+            for(int i = 0; i < repo.size(); i++) {
+                if(!repo.get(i).getCity().toLowerCase().contains(city.toLowerCase())) {
+                    repo.remove(i);
+                    i--;
+                }
+            }
+        }
+        return repo;
+    }
+
+    public static List<Customer> searchCustPostal(List<Customer> repo, String postal) {
+        if(!postal.isEmpty() && !repo.isEmpty()) {
+            for(int i = 0; i < repo.size(); i++) {
+                if(!repo.get(i).getPostalCode().toLowerCase().contains(postal.toLowerCase())) {
+                    repo.remove(i);
+                    i--;
+                }
+            }
+        }
+        return repo;
+    }
+
+    public static List<Customer> searchCustCountry(List<Customer> repo, Country country) {
+        if(country != null && !repo.isEmpty()) {
+            for(int i = 0; i < repo.size(); i++) {
+                if(repo.get(i).getCountry() != country) {
                     repo.remove(i);
                     i--;
                 }
@@ -60,10 +121,10 @@ public class SearchHelper {
     }
 
     //Article
-    public static List<Article> searchArticleID(List<Article> repo, UUID id) {
-        if(!repo.isEmpty()) {
+    public static List<Article> searchArticleID(List<Article> repo, String artId) {
+        if(!artId.isEmpty() && !repo.isEmpty()) {
             for (int i = 0; i < repo.size(); i++) {
-                if (repo.get(i).getId() != id) {
+                if (!repo.get(i).getId().toString().contains(artId)) {
                     repo.remove(i);
                     i--;
                 }
@@ -85,10 +146,10 @@ public class SearchHelper {
     }
 
     //Order
-    public static List<Order> searchOrderID(List<Order> repo, UUID id) {
-        if(!repo.isEmpty()) {
+    public static List<Order> searchOrderID(List<Order> repo, String orderID) {
+        if(!orderID.isEmpty() && !repo.isEmpty()) {
             for (int i = 0; i < repo.size(); i++) {
-                if (repo.get(i).getId() != id) {
+                if (!repo.get(i).getId().toString().contains(orderID)) {
                     repo.remove(i);
                     i--;
                 }
@@ -97,10 +158,10 @@ public class SearchHelper {
         return repo;
     }
 
-    public static List<Order> searchOrderCustID(List<Order> repo, UUID id) {
-        if(!repo.isEmpty()) {
+    public static List<Order> searchOrderCustID(List<Order> repo, String custID) {
+        if(!custID.isEmpty() && !repo.isEmpty()) {
             for (int i = 0; i < repo.size(); i++) {
-                if (repo.get(i).getCustomer().getId() != id) {
+                if (!repo.get(i).getCustomer().getId().toString().contains(custID)) {
                     repo.remove(i);
                     i--;
                 }
@@ -133,10 +194,70 @@ public class SearchHelper {
         return repo;
     }
 
-    public static List<Order> searchOrderAddress(List<Order> repo, String address) {
-        if(!address.isEmpty() && !repo.isEmpty()) {
+    public static List<Order> searchOrderEmail(List<Order> repo, String email) {
+        if(!email.isEmpty() && !repo.isEmpty()) {
             for(int i = 0; i < repo.size(); i++) {
-                if(!repo.get(i).getCustomer().getAddress().toLowerCase().contains(address.toLowerCase())) {
+                if(!repo.get(i).getCustomer().getEmailAdress().toLowerCase().contains(email.toLowerCase())) {
+                    repo.remove(i);
+                    i--;
+                }
+            }
+        }
+        return repo;
+    }
+
+    public static List<Order> searchOrderPhone(List<Order> repo, String phone) {
+        if(!phone.isEmpty() && !repo.isEmpty()) {
+            for(int i = 0; i < repo.size(); i++) {
+                if(!repo.get(i).getCustomer().getPhoneNumber().toLowerCase().contains(phone.toLowerCase())) {
+                    repo.remove(i);
+                    i--;
+                }
+            }
+        }
+        return repo;
+    }
+
+    public static List<Order> searchOrderStreet(List<Order> repo, String street) {
+        if(!street.isEmpty() && !repo.isEmpty()) {
+            for(int i = 0; i < repo.size(); i++) {
+                if(!repo.get(i).getCustomer().getStreet().toLowerCase().contains(street.toLowerCase())) {
+                    repo.remove(i);
+                    i--;
+                }
+            }
+        }
+        return repo;
+    }
+
+    public static List<Order> searchOrderCity(List<Order> repo, String city) {
+        if(!city.isEmpty() && !repo.isEmpty()) {
+            for(int i = 0; i < repo.size(); i++) {
+                if(!repo.get(i).getCustomer().getCity().toLowerCase().contains(city.toLowerCase())) {
+                    repo.remove(i);
+                    i--;
+                }
+            }
+        }
+        return repo;
+    }
+
+    public static List<Order> searchOrderPostal(List<Order> repo, String postal) {
+        if(!postal.isEmpty() && !repo.isEmpty()) {
+            for(int i = 0; i < repo.size(); i++) {
+                if(!repo.get(i).getCustomer().getPostalCode().toLowerCase().contains(postal.toLowerCase())) {
+                    repo.remove(i);
+                    i--;
+                }
+            }
+        }
+        return repo;
+    }
+
+    public static List<Order> searchOrderCountry(List<Order> repo, Country country) {
+        if(country != null && !repo.isEmpty()) {
+            for(int i = 0; i < repo.size(); i++) {
+                if(repo.get(i).getCustomer().getCountry() != country) {
                     repo.remove(i);
                     i--;
                 }
