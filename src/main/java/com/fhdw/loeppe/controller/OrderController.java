@@ -38,7 +38,10 @@ public class OrderController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Order postOrder(@RequestBody Order order){
-        return mapper.map(orderService.saveOrder(order), Order.class);
+        var orderDto = mapper.map(orderService.saveOrder(order), Order.class);
+        orderDto.setCustomer(order.getCustomer());
+
+        return orderDto;
     }
 
     @PutMapping(path = "/order",
