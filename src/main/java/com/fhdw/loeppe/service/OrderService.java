@@ -23,46 +23,29 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final Mapper mapper;
 
-    public void saveOrder(Order order){
+    public OrderEntity saveOrder(Order order){
         OrderEntity entity = mapper.map(order, OrderEntity.class);
         entity.setCustomerEntity(mapper.map(order.getCustomer(), CustomerEntity.class));
-        orderRepository.saveAndFlush(entity);
+
+        return orderRepository.saveAndFlush(entity);
     }
 
     public void saveAllOrders(List<Order> orders){
         orderRepository.saveAllAndFlush(mapper.mapAll(orders, OrderEntity.class));
     }
 
-    public List<Order> searchOrderWithOrderIDAndCustID(Order order) {
-        final List<Order> repoOrderID = SearchHelper.searchOrderID(getAllOrders(), order.getId());
-        final List<Order> repoCustID = SearchHelper.searchOrderCustID(repoOrderID, order.getCustomer().getId());
+    public List<Order> searchOrder(String orderID, String custID, Order order) {
+        final List<Order> repoOrderID = SearchHelper.searchOrderID(getAllOrders(), orderID);
+        final List<Order> repoStatus = SearchHelper.searchOrderStatus(repoOrderID, order.getOrderStatus());
+        final List<Order> repoCustID = SearchHelper.searchOrderCustID(repoStatus, custID);
         final List<Order> repoCustFirstname = SearchHelper.searchOrderFirstname(repoCustID, order.getCustomer().getFirstname());
         final List<Order> repoCustLastname = SearchHelper.searchOrderLastname(repoCustFirstname, order.getCustomer().getLastname());
-        final List<Order> repoCustAddress = SearchHelper.searchOrderAddress(repoCustLastname, order.getCustomer().getAddress());
-        return SearchHelper.searchOrderStatus(repoCustAddress, order.getOrderStatus());
-    }
-
-    public List<Order> searchOrderWithoutOrderIDAndWithCustID(Order order) {
-        final List<Order> repoCustID = SearchHelper.searchOrderCustID(getAllOrders(), order.getCustomer().getId());
-        final List<Order> repoCustFirstname = SearchHelper.searchOrderFirstname(repoCustID, order.getCustomer().getFirstname());
-        final List<Order> repoCustLastname = SearchHelper.searchOrderLastname(repoCustFirstname, order.getCustomer().getLastname());
-        final List<Order> repoCustAddress = SearchHelper.searchOrderAddress(repoCustLastname, order.getCustomer().getAddress());
-        return SearchHelper.searchOrderStatus(repoCustAddress, order.getOrderStatus());
-    }
-
-    public List<Order> searchOrderWithOrderIDAndWithoutCustID(Order order) {
-        final List<Order> repoOrderID = SearchHelper.searchOrderID(getAllOrders(), order.getId());
-        final List<Order> repoCustFirstname = SearchHelper.searchOrderFirstname(repoOrderID, order.getCustomer().getFirstname());
-        final List<Order> repoCustLastname = SearchHelper.searchOrderLastname(repoCustFirstname, order.getCustomer().getLastname());
-        final List<Order> repoCustAddress = SearchHelper.searchOrderAddress(repoCustLastname, order.getCustomer().getAddress());
-        return SearchHelper.searchOrderStatus(repoCustAddress, order.getOrderStatus());
-    }
-
-    public List<Order> searchOrderWithoutOrderIDAndWithoutCustID(Order order) {
-        final List<Order> repoCustFirstname = SearchHelper.searchOrderFirstname(getAllOrders(), order.getCustomer().getFirstname());
-        final List<Order> repoCustLastname = SearchHelper.searchOrderLastname(repoCustFirstname, order.getCustomer().getLastname());
-        final List<Order> repoCustAddress = SearchHelper.searchOrderAddress(repoCustLastname, order.getCustomer().getAddress());
-        return SearchHelper.searchOrderStatus(repoCustAddress, order.getOrderStatus());
+        final List<Order> repoCustEmail = SearchHelper.searchOrderEmail(repoCustLastname, order.getCustomer().getEmailAdress());
+        final List<Order> repoCustPhone = SearchHelper.searchOrderPhone(repoCustEmail, order.getCustomer().getPhoneNumber());
+        final List<Order> repoCustStreet = SearchHelper.searchOrderStreet(repoCustPhone, order.getCustomer().getStreet());
+        final List<Order> repoCustCity = SearchHelper.searchOrderCity(repoCustStreet, order.getCustomer().getCity());
+        final List<Order> repoCustPostal = SearchHelper.searchOrderPostal(repoCustCity, order.getCustomer().getPostalCode());
+        return SearchHelper.searchOrderCountry(repoCustPostal, order.getCustomer().getCountry());
     }
 
     public Order getOrder(UUID id) {
@@ -88,8 +71,8 @@ public class OrderService {
         saveOrder(order);
     }
 
-    public void deleteOrder(UUID id) {
-        orderRepository.deleteById(id);
+    public void deleteOrder(Order order) {
+        orderRepository.delete(mapper.map(order, OrderEntity.class));
     }
 
     public void deleteAllOrders() {

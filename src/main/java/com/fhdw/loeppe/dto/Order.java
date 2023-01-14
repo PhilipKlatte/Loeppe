@@ -12,13 +12,8 @@ public class Order {
 
     private UUID id;
 
-    @NonNull
     private Customer customer;
-
-    @NonNull
     private List<Article> articles;
-
-    @NonNull
     private OrderStatus orderStatus;
 
     public Order(UUID id, Customer customer, OrderStatus status) {
@@ -31,5 +26,4 @@ public class Order {
         this.customer = customer;
         orderStatus = status;
     }
-
 }

@@ -1,10 +1,12 @@
 package com.fhdw.loeppe.views.main;
 
 import com.fhdw.loeppe.dto.Customer;
+import com.fhdw.loeppe.util.Country;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -16,16 +18,22 @@ public class CustomerInputForm extends FormLayout {
    private Customer customer;
    final private TextField firstname = new TextField("Vorname");
    final private TextField lastname = new TextField("Nachname");
-   final private TextField address = new TextField("Adresse");
+   final private TextField emailAdress = new TextField("Email");
+   final private TextField phoneNumber = new TextField("Telefonnummer");
+   final private TextField street = new TextField("Straße");
+   final private TextField city = new TextField("Stadt");
+   final private TextField postalCode = new TextField("Postleitzahl");
+   final private ComboBox<Country> country = new ComboBox<>("Land");
    private final Button save = new Button("Speichern");
    private final Button delete = new Button("Löschen");
    private final Button cancel = new Button("Abbruch");
    private final Binder<Customer> binder = new Binder<>(Customer.class);
 
-
    public CustomerInputForm() {
+       country.setItems(Country.values());
        binder.bindInstanceFields(this);
-       add(firstname, lastname, address, creatButtonLayout());
+       add(firstname, lastname, emailAdress, phoneNumber, street,
+               city, postalCode, country, creatButtonLayout());
    }
 
    private HorizontalLayout creatButtonLayout() {

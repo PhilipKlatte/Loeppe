@@ -1,6 +1,5 @@
 package com.fhdw.loeppe.views.main;
 
-import com.fhdw.loeppe.service.TestService;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
@@ -19,8 +18,6 @@ public class MainView extends VerticalLayout {
     private final TextField userId;
     private final TextField userName;
 
-    private final TestView testView = new TestView(new TestService());
-
     public MainView() {
         H1 welcome = new H1("Willkommen in der Loeppe Auftagsverwaltung");
         welcome.getStyle().set("margin-top", "10px")
@@ -32,7 +29,7 @@ public class MainView extends VerticalLayout {
 
         configureTextFields();
 
-        add(welcome, user, createLoggedInAs(), testView);
+        add(welcome, user, createLoggedInAs());
     }
 
     private void configureTextFields() {

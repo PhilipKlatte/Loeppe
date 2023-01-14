@@ -18,8 +18,8 @@ public class CustomerService {
     private final CustomerRepository repository;
     private final Mapper mapper;
 
-    public void saveCustomer(Customer customer){
-        repository.saveAndFlush(mapper.map(customer, CustomerEntity.class));
+    public CustomerEntity saveCustomer(Customer customer){
+        return repository.saveAndFlush(mapper.map(customer, CustomerEntity.class));
     }
 
     public void saveAllCustomers(List<Customer> customers){
@@ -27,19 +27,17 @@ public class CustomerService {
         repository.saveAllAndFlush(entitys);
     }
 
-    public List<Customer> searchCustomerWithID(Customer cust) {
-        final List<Customer> repoID = SearchHelper.searchCustID(getAllCustomer(), cust.getId());
+    public List<Customer> searchCustomer(String id, Customer cust) {
+        final List<Customer> repoID = SearchHelper.searchCustID(getAllCustomer(), id);
         final List<Customer> repoFirstName = SearchHelper.searchCustFirstN(repoID, cust.getFirstname());
         final List<Customer> repoLastName = SearchHelper.searchCustLarstN(repoFirstName, cust.getLastname());
+        final List<Customer> repoEmail = SearchHelper.searchCustEmail(repoLastName, cust.getEmailAdress());
+        final List<Customer> repoPhone = SearchHelper.searchCustPhone(repoEmail, cust.getPhoneNumber());
+        final List<Customer> repoStreet = SearchHelper.searchCustStreet(repoPhone, cust.getStreet());
+        final List<Customer> repoCity = SearchHelper.searchCustCity(repoStreet, cust.getCity());
+        final List<Customer> repoPostal = SearchHelper.searchCustPostal(repoCity, cust.getPostalCode());
 
-        return SearchHelper.searchCustAddress(repoLastName, cust.getAddress());
-    }
-
-    public List<Customer> searchCustomerWithoutID(Customer cust) {
-        final List<Customer> repoFirstName = SearchHelper.searchCustFirstN(getAllCustomer(), cust.getFirstname());
-        final List<Customer> repoLastName = SearchHelper.searchCustLarstN(repoFirstName, cust.getLastname());
-
-        return SearchHelper.searchCustAddress(repoLastName,cust.getAddress());
+        return SearchHelper.searchCustCountry(repoPostal, cust.getCountry());
     }
 
     public Customer getCustomer(UUID id) {
@@ -48,10 +46,6 @@ public class CustomerService {
 
     public List<Customer> getAllCustomer(){
         return mapper.mapAll(repository.findAll(), Customer.class);
-    }
-
-    public void updateCustomer(Customer customer) {
-        saveCustomer(customer);
     }
 
     public void deleteCustomer(Customer customer) {

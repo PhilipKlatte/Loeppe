@@ -4,6 +4,7 @@ import com.fhdw.loeppe.dto.Customer;
 import com.fhdw.loeppe.dto.Order;
 import com.fhdw.loeppe.service.CustomerService;
 import com.fhdw.loeppe.service.OrderService;
+import com.fhdw.loeppe.util.Country;
 import com.fhdw.loeppe.util.OrderStatus;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -18,7 +19,6 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 import javax.annotation.security.PermitAll;
-import java.util.UUID;
 
 @PermitAll
 @PageTitle("Loeppe | Aufträge")
@@ -28,11 +28,16 @@ public class OrderListView extends VerticalLayout {
     private final Grid<Order> grid = new Grid<>(Order.class, false);
     OrderInputForm form;
     final private TextField orderID = new TextField();
+    final private ComboBox<OrderStatus> orderStatus = new ComboBox<>();
     final private TextField custID = new TextField();
     final private TextField custFirstname = new TextField();
     final private TextField custLastname = new TextField();
-    final private TextField custAddress = new TextField();
-    final private ComboBox<OrderStatus> orderStatus = new ComboBox<>();
+    final private TextField custEmail = new TextField();
+    final private TextField custPhone = new TextField();
+    final private TextField custStreet = new TextField();
+    final private TextField custCity = new TextField();
+    final private TextField custPostal = new TextField();
+    final private ComboBox<Country> custCountry = new ComboBox<>();
     private final OrderService service;
     private final CustomerService customerService;
     private final FormLayout custSearch;
@@ -55,19 +60,29 @@ public class OrderListView extends VerticalLayout {
     private FormLayout createSearchForm() {
         FormLayout layout = new FormLayout();
         layout.setSizeFull();
-        
         orderID.setSizeFull();
+        orderStatus.setSizeFull();
         custID.setSizeFull();
         custFirstname.setSizeFull();
         custLastname.setSizeFull();
-        custAddress.setSizeFull();
-        orderStatus.setSizeFull();
+        custEmail.setSizeFull();
+        custPhone.setSizeFull();
+        custStreet.setSizeFull();
+        custCity.setSizeFull();
+        custPostal.setSizeFull();
+        custCountry.setSizeFull();
+        custCountry.setItems(Country.values());
         layout.addFormItem(orderID, "Auftragsnummer");
+        layout.addFormItem(orderStatus, "Auftagsstatus");
         layout.addFormItem(custID, "Kundennummer");
         layout.addFormItem(custFirstname, "Vorname");
         layout.addFormItem(custLastname, "Nachname");
-        layout.addFormItem(custAddress, "Adresse");
-        layout.addFormItem(orderStatus, "Auftagsstatus");
+        layout.addFormItem(custEmail, "Email");
+        layout.addFormItem(custPhone, "Telefon");
+        layout.addFormItem(custStreet, "Straße");
+        layout.addFormItem(custCity, "Stadt");
+        layout.addFormItem(custPostal, "Postleitzahl");
+        layout.addFormItem(custCountry, "Land");
 
         return layout;
     }
@@ -111,8 +126,15 @@ public class OrderListView extends VerticalLayout {
         grid.addColumn(order -> order.getCustomer().getId()).setHeader("Kundennummer");
         grid.addColumn(order -> order.getCustomer().getFirstname()).setHeader("Vorname");
         grid.addColumn(order -> order.getCustomer().getLastname()).setHeader("Nachname");
-        grid.addColumn(order -> order.getCustomer().getAddress()).setHeader("Adresse");
+        grid.addColumn(order -> order.getCustomer().getEmailAdress()).setHeader("Email");
+        grid.addColumn(order -> order.getCustomer().getPhoneNumber()).setHeader("Telefon");
+        grid.addColumn(order -> order.getCustomer().getStreet()).setHeader("Straße");
+        grid.addColumn(order -> order.getCustomer().getCity()).setHeader("Stadt");
+        grid.addColumn(order -> order.getCustomer().getPostalCode()).setHeader("Postleitzahl");
+        grid.addColumn(order -> order.getCustomer().getCountry()).setHeader("Land");
         grid.asSingleSelect().addValueChangeListener(event -> editOrder(event.getValue()));
+        grid.getColumns().forEach(e -> e.setResizable(true));
+        grid.getColumns().forEach(e -> e.setAutoWidth(true));
     }
     
     private void editOrder(Order order) {
@@ -139,7 +161,7 @@ public class OrderListView extends VerticalLayout {
     }
 
     private void deleteOrder(OrderInputForm.DeleteEvent event) {
-        service.deleteOrder(event.getOrder().getId());
+        service.deleteOrder(event.getOrder());
         updateList();
         closeForm();
     }
@@ -151,39 +173,22 @@ public class OrderListView extends VerticalLayout {
 
     private void updateList()
     {
-        service.getAllOrders().forEach(System.out::println);
         grid.setItems(service.getAllOrders());
     }
 
     private void searchOrder() {
-        if(orderID.isEmpty() && custID.isEmpty() && custFirstname.isEmpty() &&
-        custLastname.isEmpty() && custAddress.isEmpty() && orderStatus.isEmpty()) {
+        if(orderID.isEmpty() && orderStatus.isEmpty() && custID.isEmpty() && custFirstname.isEmpty() &&
+        custLastname.isEmpty() && custEmail.isEmpty() && custPhone.isEmpty() &&
+        custStreet.isEmpty() && custCity.isEmpty() && custPostal.isEmpty() && custCountry.isEmpty()) {
             grid.setItems(service.getAllOrders());
         } else {
-            if (!orderID.isEmpty() && !custID.isEmpty()) {
-                UUID oID = UUID.fromString(orderID.getValue());
-                UUID cID = UUID.fromString(custID.getValue());
-                Customer cust = new Customer(cID, custFirstname.getValue(), custLastname.getValue(), custAddress.getValue());
-                grid.setItems(service.searchOrderWithOrderIDAndCustID(new Order(oID,
-                        cust, orderStatus.getValue())));
-            } else if (orderID.isEmpty() && !custID.isEmpty()) {
-                UUID cID = UUID.fromString(custID.getValue());
-                Customer cust = new Customer(cID, custFirstname.getValue(), custLastname.getValue(), custAddress.getValue());
-                grid.setItems(service.searchOrderWithoutOrderIDAndWithCustID((new Order(
-                        cust, orderStatus.getValue()))));
-            } else if(!orderID.isEmpty() && custID.isEmpty()) {
-                UUID oID = UUID.fromString(orderID.getValue());
-                Customer cust = new Customer(custFirstname.getValue(), custLastname.getValue(), custAddress.getValue());
-                grid.setItems(service.searchOrderWithOrderIDAndWithoutCustID(new Order(oID,
-                        cust, orderStatus.getValue())));
-            } else if(orderID.isEmpty() && custID.isEmpty()){
-                Customer cust = new Customer(custFirstname.getValue(), custLastname.getValue(), custAddress.getValue());
-                grid.setItems(service.searchOrderWithoutOrderIDAndWithoutCustID(new Order(
-                        cust, orderStatus.getValue())));
-            }
+            Customer cust = new Customer(custFirstname.getValue(), custLastname.getValue(), custEmail.getValue(),
+                    custPhone.getValue(), custStreet.getValue(), custCity.getValue(),
+                    custPostal.getValue(), custCountry.getValue());
+            grid.setItems(service.searchOrder(orderID.getValue(), custID.getValue(),
+                    new Order(cust, orderStatus.getValue())));
         }
     }
-
 
     private void closeForm() {
         form.setVisible(false);
