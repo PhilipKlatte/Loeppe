@@ -161,7 +161,7 @@ public class OrderListView extends VerticalLayout {
     }
 
     private void deleteOrder(OrderInputForm.DeleteEvent event) {
-        service.deleteOrder(event.getOrder().getId());
+        service.deleteOrder(event.getOrder());
         updateList();
         closeForm();
     }

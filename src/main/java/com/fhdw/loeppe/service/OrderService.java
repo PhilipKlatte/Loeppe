@@ -9,7 +9,6 @@ import com.fhdw.loeppe.repo.CustomerRepository;
 import com.fhdw.loeppe.repo.OrderRepository;
 import com.fhdw.loeppe.util.Mapper;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,10 +23,11 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final Mapper mapper;
 
-    public void saveOrder(Order order){
+    public OrderEntity saveOrder(Order order){
         OrderEntity entity = mapper.map(order, OrderEntity.class);
         entity.setCustomerEntity(mapper.map(order.getCustomer(), CustomerEntity.class));
-        orderRepository.saveAndFlush(entity);
+
+        return orderRepository.saveAndFlush(entity);
     }
 
     public void saveAllOrders(List<Order> orders){
@@ -71,8 +71,8 @@ public class OrderService {
         saveOrder(order);
     }
 
-    public void deleteOrder(UUID id) {
-        orderRepository.deleteById(id);
+    public void deleteOrder(Order order) {
+        orderRepository.delete(mapper.map(order, OrderEntity.class));
     }
 
     public void deleteAllOrders() {
