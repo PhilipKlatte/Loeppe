@@ -126,12 +126,6 @@ public class OrderListView extends VerticalLayout {
         grid.addColumn(order -> order.getCustomer().getId()).setHeader("Kundennummer");
         grid.addColumn(order -> order.getCustomer().getFirstname()).setHeader("Vorname");
         grid.addColumn(order -> order.getCustomer().getLastname()).setHeader("Nachname");
-        grid.addColumn(order -> order.getCustomer().getEmailAdress()).setHeader("Email");
-        grid.addColumn(order -> order.getCustomer().getPhoneNumber()).setHeader("Telefon");
-        grid.addColumn(order -> order.getCustomer().getStreet()).setHeader("Straße");
-        grid.addColumn(order -> order.getCustomer().getCity()).setHeader("Stadt");
-        grid.addColumn(order -> order.getCustomer().getPostalCode()).setHeader("Postleitzahl");
-        grid.addColumn(order -> order.getCustomer().getCountry()).setHeader("Land");
         grid.asSingleSelect().addValueChangeListener(event -> editOrder(event.getValue()));
         grid.getColumns().forEach(e -> e.setResizable(true));
         grid.getColumns().forEach(e -> e.setAutoWidth(true));
