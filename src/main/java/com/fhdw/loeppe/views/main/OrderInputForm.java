@@ -64,7 +64,6 @@ public class OrderInputForm extends FormLayout {
 
     private void validateAndSave() {
         try {
-            System.out.println(order);
             binder.writeBean(order);
             fireEvent(new SaveEvent(this, order));
         } catch (ValidationException e) {
