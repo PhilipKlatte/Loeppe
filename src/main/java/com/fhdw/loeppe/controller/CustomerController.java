@@ -45,7 +45,7 @@ public class CustomerController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Customer putCustomer(@RequestBody Customer customer){
-        return mapper.map(customerService.updateCustomer(customer), Customer.class);
+        return mapper.map(customerService.saveCustomer(customer), Customer.class);
     }
 
     @DeleteMapping(value = "/customer/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
