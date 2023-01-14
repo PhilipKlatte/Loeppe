@@ -17,8 +17,8 @@ public class ArticleService {
     private final ArticleRepository repository;
     private final Mapper mapper;
 
-    public void saveArticle(Article article){
-        repository.saveAndFlush(mapper.map(article, ArticleEntity.class));
+    public ArticleEntity saveArticle(Article article){
+        return repository.saveAndFlush(mapper.map(article, ArticleEntity.class));
     }
 
     public void saveAllArticles(List<Article> articles){
