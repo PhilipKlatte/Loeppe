@@ -18,8 +18,8 @@ public class CustomerService {
     private final CustomerRepository repository;
     private final Mapper mapper;
 
-    public void saveCustomer(Customer customer){
-        repository.saveAndFlush(mapper.map(customer, CustomerEntity.class));
+    public CustomerEntity saveCustomer(Customer customer){
+        return repository.saveAndFlush(mapper.map(customer, CustomerEntity.class));
     }
 
     public void saveAllCustomers(List<Customer> customers){
@@ -36,6 +36,7 @@ public class CustomerService {
         final List<Customer> repoStreet = SearchHelper.searchCustStreet(repoPhone, cust.getStreet());
         final List<Customer> repoCity = SearchHelper.searchCustCity(repoStreet, cust.getCity());
         final List<Customer> repoPostal = SearchHelper.searchCustPostal(repoCity, cust.getPostalCode());
+
         return SearchHelper.searchCustCountry(repoPostal, cust.getCountry());
     }
 
@@ -47,8 +48,8 @@ public class CustomerService {
         return mapper.mapAll(repository.findAll(), Customer.class);
     }
 
-    public void updateCustomer(Customer customer) {
-        saveCustomer(customer);
+    public CustomerEntity updateCustomer(Customer customer) {
+        return saveCustomer(customer);
     }
 
     public void deleteCustomer(Customer customer) {
