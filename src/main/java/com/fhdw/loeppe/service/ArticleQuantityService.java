@@ -1,12 +1,16 @@
 package com.fhdw.loeppe.service;
 
 import com.fhdw.loeppe.dto.ArticleQuantity;
+import com.fhdw.loeppe.dto.Order;
+import com.fhdw.loeppe.entity.ArticleEntity;
 import com.fhdw.loeppe.entity.ArticleQuantityEntity;
+import com.fhdw.loeppe.entity.OrderEntity;
 import com.fhdw.loeppe.repo.ArticleQuantityRepository;
 import com.fhdw.loeppe.util.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -19,7 +23,13 @@ public class ArticleQuantityService {
     private final Mapper mapper;
 
     public ArticleQuantityEntity saveArticleQuantity(ArticleQuantity articleQuantity){
-        return repository.saveAndFlush(mapper.map(articleQuantity, ArticleQuantityEntity.class));
+        var orderEntity = mapper.map(articleQuantity.getOrder(), OrderEntity.class);
+        var articleEntity = articleQuantity.getArticle() != null ? mapper.map(articleQuantity.getArticle(), ArticleEntity.class) : null;
+        var articleQuantityEntity = mapper.map(articleQuantity, ArticleQuantityEntity.class);
+        articleQuantityEntity.setOrderEntity(orderEntity);
+        articleQuantityEntity.setArticleEntity(articleEntity);
+
+        return repository.saveAndFlush(articleQuantityEntity);
     }
 
     public void saveAllArticleQuantitys(List<ArticleQuantity> articleQuantitys){
@@ -31,7 +41,17 @@ public class ArticleQuantityService {
     }
 
     public List<ArticleQuantity> getAllArticleQuantitys(){
-        return mapper.mapAll(repository.findAll(), ArticleQuantity.class);
+        List<ArticleQuantity> articleQuantities = new ArrayList<>();
+
+        var articleQuantityEntities = repository.findAll();
+        articleQuantityEntities.forEach(articleQuantityEntity -> {
+            Order order = mapper.map(articleQuantityEntity.getOrderEntity(), Order.class);
+            ArticleQuantity articleQuantity = mapper.map(articleQuantityEntity, ArticleQuantity.class);
+            articleQuantity.setOrder(order);
+            articleQuantities.add(articleQuantity);
+        });
+
+        return articleQuantities;
     }
 
     public void deleteArticleQuantity(ArticleQuantity articleQuantity) {
