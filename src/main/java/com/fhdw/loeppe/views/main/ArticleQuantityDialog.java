@@ -13,6 +13,7 @@ import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 
 public class ArticleQuantityDialog extends Dialog {
@@ -60,7 +61,20 @@ public class ArticleQuantityDialog extends Dialog {
     private void configureGrid() {
         grid.setSizeFull();
 
-        grid.addColumn(ArticleQuantity::getQuantity).setHeader("Quantity");
+        //grid.addColumn(ArticleQuantity::getQuantity).setHeader("Quantity1");
+
+        grid.addComponentColumn(articleQuantity -> {
+            TextField textField = new TextField();
+            textField.setValue(String.valueOf(articleQuantity.getQuantity()));
+            textField.addValueChangeListener(event -> {
+                articleQuantity.setQuantity(Integer.parseInt(event.getValue()));
+                articleQuantityService.saveArticleQuantity(articleQuantity);
+            });
+            textField.setSizeFull();
+
+
+            return textField;
+        }).setHeader("Quantity");
 
         grid.addColumn(articleQuantity -> articleQuantity.getArticle().getName()).setHeader("Artikel");
 
