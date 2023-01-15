@@ -7,7 +7,6 @@ import com.fhdw.loeppe.service.ArticleQuantityService;
 import com.fhdw.loeppe.service.ArticleService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
@@ -35,7 +34,7 @@ public class ArticleQuantityDialog extends Dialog {
         this.articleService = articleService;
         this.orderLabel.setText("Artikel für Auftrag " + order.getId());
 
-        addArticleButton.addClickListener(event -> addArticle());
+        addArticleButton.addClickListener(event -> openSelectArticleDialog());
         closeDialogButton.addClickListener(event -> close());
         configureGrid();
         setSizeFull();
@@ -44,38 +43,26 @@ public class ArticleQuantityDialog extends Dialog {
         updateList();
     }
 
-    private void addArticle(){
+    public void addArticle(Article article){
         var articalQuantity = new ArticleQuantity();
         articalQuantity.setOrder(this.order);
+        articalQuantity.setArticle(article);
 
         articleQuantityService.saveArticleQuantity(articalQuantity);
         updateList();
     }
 
-    private void selectArticleDialog(){
-
+    private void openSelectArticleDialog(){
+        Article article = new Article();
+        new SelectArticleDialog(article, articleService, this);
     }
 
     private void configureGrid() {
         grid.setSizeFull();
 
-        grid.addColumn(ArticleQuantity::getId).setHeader("ID");
         grid.addColumn(ArticleQuantity::getQuantity).setHeader("Quantity");
 
-        grid.addComponentColumn(articleQuantity -> {
-            ComboBox<Article> comboBox = new ComboBox<>();
-            comboBox.setValue(articleQuantity.getArticle());
-            comboBox.setItemLabelGenerator(Article::getName);
-            comboBox.setItems(articleService.getAllArticles());
-            comboBox.addValueChangeListener(event -> {
-                articleQuantity.setArticle(event.getValue());
-                articleQuantityService.saveArticleQuantity(articleQuantity);
-            });
-            comboBox.setSizeFull();
-
-
-            return comboBox;
-        }).setHeader("Artikel");
+        grid.addColumn(articleQuantity -> articleQuantity.getArticle().getName()).setHeader("Artikel");
 
         grid.addColumn(
                 new ComponentRenderer<>(Button::new, (button, articleQuantity) -> {
@@ -91,7 +78,7 @@ public class ArticleQuantityDialog extends Dialog {
     }
 
     private void updateList() {
-        var orderArticles = articleQuantityService.getAllArticleQuantitys();
+        var orderArticles = articleQuantityService.getAllArticleQuantities();
         grid.setItems(orderArticles);
     }
 

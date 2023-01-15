@@ -1,5 +1,6 @@
 package com.fhdw.loeppe.service;
 
+import com.fhdw.loeppe.dto.Article;
 import com.fhdw.loeppe.dto.ArticleQuantity;
 import com.fhdw.loeppe.dto.Order;
 import com.fhdw.loeppe.entity.ArticleEntity;
@@ -40,14 +41,20 @@ public class ArticleQuantityService {
         return mapper.map(repository.findById(id), ArticleQuantity.class);
     }
 
-    public List<ArticleQuantity> getAllArticleQuantitys(){
+    public List<ArticleQuantity> getAllArticleQuantities(){
         List<ArticleQuantity> articleQuantities = new ArrayList<>();
 
         var articleQuantityEntities = repository.findAll();
         articleQuantityEntities.forEach(articleQuantityEntity -> {
+            Article article = new Article();
+            article.setDescription(articleQuantityEntity.getArticleEntity().getDescription());
+            article.setName(articleQuantityEntity.getArticleEntity().getName());
+            article.setId(articleQuantityEntity.getArticleEntity().getId());
+            article.setPrice(articleQuantityEntity.getArticleEntity().getPrice());
             Order order = mapper.map(articleQuantityEntity.getOrderEntity(), Order.class);
             ArticleQuantity articleQuantity = mapper.map(articleQuantityEntity, ArticleQuantity.class);
             articleQuantity.setOrder(order);
+            articleQuantity.setArticle(article);
             articleQuantities.add(articleQuantity);
         });
 
