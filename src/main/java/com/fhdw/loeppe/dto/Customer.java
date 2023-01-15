@@ -28,6 +28,11 @@ public class Customer {
 
     private Country country;
 
+    public Customer(String firstname, String lastname) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+
     public Customer(String firstname, String lastname, String emailAdress, String phoneNumber,
                     String street, String city, String postalCode, Country country) {
         this.firstname = firstname;

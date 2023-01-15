@@ -26,7 +26,6 @@ public class OrderInputForm extends FormLayout {
     private final Button save = new Button("Speichern");
     private final Button delete = new Button("Löschen");
     private final Button cancel = new Button("Abbruch");
-
     private final Button openArticleQuantityDialogButton = new Button("Artikel bearbeiten");
     final private Binder<Order> binder = new Binder<>(Order.class);
     CustomerService service;

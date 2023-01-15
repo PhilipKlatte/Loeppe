@@ -34,12 +34,6 @@ public class OrderListView extends VerticalLayout {
     final private TextField custID = new TextField();
     final private TextField custFirstname = new TextField();
     final private TextField custLastname = new TextField();
-    final private TextField custEmail = new TextField();
-    final private TextField custPhone = new TextField();
-    final private TextField custStreet = new TextField();
-    final private TextField custCity = new TextField();
-    final private TextField custPostal = new TextField();
-    final private ComboBox<Country> custCountry = new ComboBox<>();
     private final OrderService service;
     private final CustomerService customerService;
     private final ArticleQuantityService articleQuantityService;
@@ -76,24 +70,11 @@ public class OrderListView extends VerticalLayout {
         custID.setSizeFull();
         custFirstname.setSizeFull();
         custLastname.setSizeFull();
-        custEmail.setSizeFull();
-        custPhone.setSizeFull();
-        custStreet.setSizeFull();
-        custCity.setSizeFull();
-        custPostal.setSizeFull();
-        custCountry.setSizeFull();
-        custCountry.setItems(Country.values());
         layout.addFormItem(orderID, "Auftragsnummer");
         layout.addFormItem(orderStatus, "Auftagsstatus");
         layout.addFormItem(custID, "Kundennummer");
         layout.addFormItem(custFirstname, "Vorname");
         layout.addFormItem(custLastname, "Nachname");
-        layout.addFormItem(custEmail, "Email");
-        layout.addFormItem(custPhone, "Telefon");
-        layout.addFormItem(custStreet, "Straße");
-        layout.addFormItem(custCity, "Stadt");
-        layout.addFormItem(custPostal, "Postleitzahl");
-        layout.addFormItem(custCountry, "Land");
 
         return layout;
     }
@@ -183,13 +164,10 @@ public class OrderListView extends VerticalLayout {
 
     private void searchOrder() {
         if(orderID.isEmpty() && orderStatus.isEmpty() && custID.isEmpty() && custFirstname.isEmpty() &&
-        custLastname.isEmpty() && custEmail.isEmpty() && custPhone.isEmpty() &&
-        custStreet.isEmpty() && custCity.isEmpty() && custPostal.isEmpty() && custCountry.isEmpty()) {
+        custLastname.isEmpty()) {
             grid.setItems(service.getAllOrders());
         } else {
-            Customer cust = new Customer(custFirstname.getValue(), custLastname.getValue(), custEmail.getValue(),
-                    custPhone.getValue(), custStreet.getValue(), custCity.getValue(),
-                    custPostal.getValue(), custCountry.getValue());
+            Customer cust = new Customer(custFirstname.getValue(), custLastname.getValue());
             grid.setItems(service.searchOrder(orderID.getValue(), custID.getValue(),
                     new Order(cust, orderStatus.getValue())));
         }

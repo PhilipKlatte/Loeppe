@@ -194,78 +194,6 @@ public class SearchHelper {
         return repo;
     }
 
-    public static List<Order> searchOrderEmail(List<Order> repo, String email) {
-        if(!email.isEmpty() && !repo.isEmpty()) {
-            for(int i = 0; i < repo.size(); i++) {
-                if(!repo.get(i).getCustomer().getEmailAdress().toLowerCase().contains(email.toLowerCase())) {
-                    repo.remove(i);
-                    i--;
-                }
-            }
-        }
-        return repo;
-    }
-
-    public static List<Order> searchOrderPhone(List<Order> repo, String phone) {
-        if(!phone.isEmpty() && !repo.isEmpty()) {
-            for(int i = 0; i < repo.size(); i++) {
-                if(!repo.get(i).getCustomer().getPhoneNumber().toLowerCase().contains(phone.toLowerCase())) {
-                    repo.remove(i);
-                    i--;
-                }
-            }
-        }
-        return repo;
-    }
-
-    public static List<Order> searchOrderStreet(List<Order> repo, String street) {
-        if(!street.isEmpty() && !repo.isEmpty()) {
-            for(int i = 0; i < repo.size(); i++) {
-                if(!repo.get(i).getCustomer().getStreet().toLowerCase().contains(street.toLowerCase())) {
-                    repo.remove(i);
-                    i--;
-                }
-            }
-        }
-        return repo;
-    }
-
-    public static List<Order> searchOrderCity(List<Order> repo, String city) {
-        if(!city.isEmpty() && !repo.isEmpty()) {
-            for(int i = 0; i < repo.size(); i++) {
-                if(!repo.get(i).getCustomer().getCity().toLowerCase().contains(city.toLowerCase())) {
-                    repo.remove(i);
-                    i--;
-                }
-            }
-        }
-        return repo;
-    }
-
-    public static List<Order> searchOrderPostal(List<Order> repo, String postal) {
-        if(!postal.isEmpty() && !repo.isEmpty()) {
-            for(int i = 0; i < repo.size(); i++) {
-                if(!repo.get(i).getCustomer().getPostalCode().toLowerCase().contains(postal.toLowerCase())) {
-                    repo.remove(i);
-                    i--;
-                }
-            }
-        }
-        return repo;
-    }
-
-    public static List<Order> searchOrderCountry(List<Order> repo, Country country) {
-        if(country != null && !repo.isEmpty()) {
-            for(int i = 0; i < repo.size(); i++) {
-                if(repo.get(i).getCustomer().getCountry() != country) {
-                    repo.remove(i);
-                    i--;
-                }
-            }
-        }
-        return repo;
-    }
-
     public static List<Order> searchOrderStatus(List<Order> repo, OrderStatus status) {
         if(status != null && !repo.isEmpty()) {
             for(int i = 0; i < repo.size(); i++) {
@@ -277,5 +205,4 @@ public class SearchHelper {
         }
         return repo;
     }
-
 }

@@ -39,13 +39,7 @@ public class OrderService {
         final List<Order> repoStatus = SearchHelper.searchOrderStatus(repoOrderID, order.getOrderStatus());
         final List<Order> repoCustID = SearchHelper.searchOrderCustID(repoStatus, custID);
         final List<Order> repoCustFirstname = SearchHelper.searchOrderFirstname(repoCustID, order.getCustomer().getFirstname());
-        final List<Order> repoCustLastname = SearchHelper.searchOrderLastname(repoCustFirstname, order.getCustomer().getLastname());
-        final List<Order> repoCustEmail = SearchHelper.searchOrderEmail(repoCustLastname, order.getCustomer().getEmailAdress());
-        final List<Order> repoCustPhone = SearchHelper.searchOrderPhone(repoCustEmail, order.getCustomer().getPhoneNumber());
-        final List<Order> repoCustStreet = SearchHelper.searchOrderStreet(repoCustPhone, order.getCustomer().getStreet());
-        final List<Order> repoCustCity = SearchHelper.searchOrderCity(repoCustStreet, order.getCustomer().getCity());
-        final List<Order> repoCustPostal = SearchHelper.searchOrderPostal(repoCustCity, order.getCustomer().getPostalCode());
-        return SearchHelper.searchOrderCountry(repoCustPostal, order.getCustomer().getCountry());
+        return SearchHelper.searchOrderLastname(repoCustFirstname, order.getCustomer().getLastname());
     }
 
     public Order getOrder(UUID id) {
