@@ -2,6 +2,8 @@ package com.fhdw.loeppe.views.main;
 
 import com.fhdw.loeppe.dto.Customer;
 import com.fhdw.loeppe.dto.Order;
+import com.fhdw.loeppe.service.ArticleQuantityService;
+import com.fhdw.loeppe.service.ArticleService;
 import com.fhdw.loeppe.service.CustomerService;
 import com.fhdw.loeppe.util.OrderStatus;
 import com.vaadin.flow.component.ComponentEvent;
@@ -24,17 +26,29 @@ public class OrderInputForm extends FormLayout {
     private final Button save = new Button("Speichern");
     private final Button delete = new Button("Löschen");
     private final Button cancel = new Button("Abbruch");
+
+    private final Button openArticleQuantityDialogButton = new Button("Artikel bearbeiten");
     final private Binder<Order> binder = new Binder<>(Order.class);
     CustomerService service;
+    ArticleQuantityService articleQuantityService;
+    ArticleService articleService;
 
-    public OrderInputForm(CustomerService service) {
+    public OrderInputForm(CustomerService service, ArticleQuantityService articleQuantityService, ArticleService articleService) {
         this.service = service;
+        this.articleQuantityService = articleQuantityService;
+        this.articleService = articleService;
+
         statusBox.setItems(OrderStatus.values());
         customerBox.setItems(service.getAllCustomer());
+
         configureCustomerBox();
+
         binder.forField(statusBox).bind(Order::getOrderStatus, Order::setOrderStatus);
         binder.forField(customerBox).bind(Order::getCustomer, Order::setCustomer);
-        add(statusBox, customerBox, createButtonLayout());
+
+        openArticleQuantityDialogButton.addClickListener(event -> openArticleQuantityDialog());
+
+        add(statusBox, customerBox, openArticleQuantityDialogButton, createButtonLayout());
     }
 
     private void configureCustomerBox() {
@@ -43,6 +57,11 @@ public class OrderInputForm extends FormLayout {
                 + customer.getFirstname()
                 + " " +
                 customer.getLastname());
+    }
+
+    private void openArticleQuantityDialog(){
+        ArticleQuantityDialog articleQuantityDialog = new ArticleQuantityDialog(this.order, this.articleQuantityService, this.articleService);
+        articleQuantityDialog.open();
     }
 
     private HorizontalLayout createButtonLayout() {

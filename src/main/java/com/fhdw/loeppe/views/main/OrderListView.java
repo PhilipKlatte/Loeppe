@@ -2,6 +2,8 @@ package com.fhdw.loeppe.views.main;
 
 import com.fhdw.loeppe.dto.Customer;
 import com.fhdw.loeppe.dto.Order;
+import com.fhdw.loeppe.service.ArticleQuantityService;
+import com.fhdw.loeppe.service.ArticleService;
 import com.fhdw.loeppe.service.CustomerService;
 import com.fhdw.loeppe.service.OrderService;
 import com.fhdw.loeppe.util.Country;
@@ -40,13 +42,22 @@ public class OrderListView extends VerticalLayout {
     final private ComboBox<Country> custCountry = new ComboBox<>();
     private final OrderService service;
     private final CustomerService customerService;
+    private final ArticleQuantityService articleQuantityService;
+    private final ArticleService articleService;
     private final FormLayout custSearch;
     private final FormLayout buttonLayout;
 
-    public OrderListView(OrderService service, CustomerService customerService) {
+    public OrderListView(
+            OrderService service,
+            CustomerService customerService,
+            ArticleQuantityService articleQuantityService,
+            ArticleService articleService) {
         setSizeFull();
         this.service = service;
         this.customerService = customerService;
+        this.articleQuantityService = articleQuantityService;
+        this.articleService = articleService;
+
         custSearch = createSearchForm();
         buttonLayout = createButtons();
         orderStatus.setItems(OrderStatus.values());
@@ -126,12 +137,6 @@ public class OrderListView extends VerticalLayout {
         grid.addColumn(order -> order.getCustomer().getId()).setHeader("Kundennummer");
         grid.addColumn(order -> order.getCustomer().getFirstname()).setHeader("Vorname");
         grid.addColumn(order -> order.getCustomer().getLastname()).setHeader("Nachname");
-        grid.addColumn(order -> order.getCustomer().getEmailAdress()).setHeader("Email");
-        grid.addColumn(order -> order.getCustomer().getPhoneNumber()).setHeader("Telefon");
-        grid.addColumn(order -> order.getCustomer().getStreet()).setHeader("Straße");
-        grid.addColumn(order -> order.getCustomer().getCity()).setHeader("Stadt");
-        grid.addColumn(order -> order.getCustomer().getPostalCode()).setHeader("Postleitzahl");
-        grid.addColumn(order -> order.getCustomer().getCountry()).setHeader("Land");
         grid.asSingleSelect().addValueChangeListener(event -> editOrder(event.getValue()));
         grid.getColumns().forEach(e -> e.setResizable(true));
         grid.getColumns().forEach(e -> e.setAutoWidth(true));
@@ -147,7 +152,7 @@ public class OrderListView extends VerticalLayout {
     }
     
     private void configureForm() {
-        form = new OrderInputForm(customerService);
+        form = new OrderInputForm(customerService, articleQuantityService, articleService);
         form.setWidth("25em");
         form.addListener(OrderInputForm.SaveEvent.class, this::saveOrder);
         form.addListener(OrderInputForm.DeleteEvent.class, this::deleteOrder);
